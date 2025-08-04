@@ -1,14 +1,14 @@
 package com.zsb.bluex.core.def;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class FunctionDef implements Serializable {
     // 函数名，如 Test
     private String name;

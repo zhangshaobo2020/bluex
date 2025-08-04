@@ -1,14 +1,14 @@
 package com.zsb.bluex.core.def;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class ControlDef implements Serializable {
     // 控制节点名称，如 Branch、While、ForLoop
     private String name;

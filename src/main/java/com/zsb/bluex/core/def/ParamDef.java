@@ -1,12 +1,12 @@
 package com.zsb.bluex.core.def;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class ParamDef implements Serializable {
     // 形参名称（例如 Num）
     private String name;

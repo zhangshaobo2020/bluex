@@ -1,7 +1,7 @@
 package com.zsb.bluex.core.def;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class TypeDef implements Serializable {
     // 简短类型名，例如 Integer、String、MyType
     private String name;

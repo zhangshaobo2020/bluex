@@ -10,10 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 @Slf4j
 @Data
@@ -22,8 +20,6 @@ public class ExecutionContext {
 
     private final Map<String, ExecNode> execNodes = new LinkedHashMap<>();
     private final Map<String, PureNode> pureNodes = new LinkedHashMap<>();
-
-    private final Set<String> breakRequests = new HashSet<>();
 
     public void addExecNode(ExecNode node) {
         execNodes.put(node.getId(), node);

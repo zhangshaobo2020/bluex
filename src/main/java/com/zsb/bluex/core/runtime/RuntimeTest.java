@@ -16,10 +16,6 @@ public class RuntimeTest {
     public static void main(String[] args) throws Exception {
         ExecutionContext ctx = new ExecutionContext();
 
-        BeginPlayNode beginPlayNode = new BeginPlayNode("0001", "BeginPlay");
-        beginPlayNode.setNextExec("0002");
-        ctx.addExecNode(beginPlayNode);
-
         Method method1 = CommonLib.class.getMethod("Print", INPUT.class);
         FuncExecNode funcExecNode = new FuncExecNode("0002", "FuncExec", method1);
         funcExecNode.setInputParam("Obj", new NodeOutputSource<>("0003", "Sum"));
@@ -32,6 +28,6 @@ public class RuntimeTest {
         funcPureNode.setOutputParam("Sum", new OUTPUT<Integer>());
         ctx.addPureNode(funcPureNode);
 
-        ctx.run("0001");
+        ctx.run("0002");
     }
 }

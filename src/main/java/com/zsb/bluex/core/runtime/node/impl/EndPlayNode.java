@@ -5,6 +5,7 @@ import com.zsb.bluex.core.runtime.node.ExecNode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@Deprecated
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class EndPlayNode extends ExecNode {

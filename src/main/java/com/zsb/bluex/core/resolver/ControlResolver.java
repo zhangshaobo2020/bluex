@@ -12,9 +12,9 @@ public class ControlResolver {
     public static Map<String, ControlDef> processDefaultControl() {
         Map<String, ControlDef> map = new HashMap<>();
         // BeginPlay节点
-        map.put("CONTROL.BeginPlay", definitionBeginPlay());
+        // map.put("CONTROL.BeginPlay", definitionBeginPlay());
         // EndPlay节点
-        map.put("CONTROL.EndPlay", definitionEndPlay());
+        // map.put("CONTROL.EndPlay", definitionEndPlay());
         // Branch节点
         map.put("CONTROL.Branch", definitionBranch());
         // While节点

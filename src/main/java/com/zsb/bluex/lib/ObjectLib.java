@@ -5,7 +5,7 @@ import com.zsb.bluex.core.anno.BluexFunctionLib;
 import com.zsb.bluex.core.param.INPUT;
 
 @BluexFunctionLib
-public class CommonLib {
+public class ObjectLib {
 
     @BluexFunction(description = "打印到控制台")
     public static void Print(

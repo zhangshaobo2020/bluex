@@ -2,6 +2,7 @@ package com.zsb.bluex.core.runtime;
 
 import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.param.OUTPUT;
+import com.zsb.bluex.core.runtime.connection.PinConnection;
 import com.zsb.bluex.core.runtime.node.ExecNode;
 import com.zsb.bluex.core.runtime.node.PureNode;
 import com.zsb.bluex.core.runtime.param.ParamSource;
@@ -10,28 +11,51 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Data
 @SuppressWarnings("unchecked")
 public class ExecutionContext {
 
+    private final Queue<ExecTask> taskQueue = new LinkedList<>();
+
+    public void schedule(ExecTask task) {
+        taskQueue.offer(task);
+    }
+
+    public void run() throws Exception {
+        while (!taskQueue.isEmpty()) {
+            ExecTask task = taskQueue.poll();
+            if (task.nodeId == null) {
+                log.info("流程执行结束");
+                break;
+            }
+            ExecNode execNode = getExecNode(task.nodeId);
+            execNode.execute(this);
+        }
+    }
+
     private final Map<String, ExecNode> execNodes = new LinkedHashMap<>();
     private final Map<String, PureNode> pureNodes = new LinkedHashMap<>();
 
+    private final List<PinConnection> connections = new LinkedList<>();
+
     public void addExecNode(ExecNode node) {
-        execNodes.put(node.getId(), node);
-        node.setCtx(this);
+        node.ctx = this;
+        execNodes.put(node.id, node);
     }
 
     public void addPureNode(PureNode node) {
-        pureNodes.put(node.getId(), node);
-        node.setCtx(this);
+        node.ctx = this;
+        pureNodes.put(node.id, node);
     }
 
-    public <T> T getNodeOutputParamValue(String nodeId, String outputParamName) {
+    public ExecNode getExecNode(String nodeId) {
+        return execNodes.get(nodeId);
+    }
+
+    public <T> T getNodeOutputParamValue(String nodeId, String outputParamName) throws Exception {
         PureNode pure = pureNodes.get(nodeId);
         if (pure != null) {
             return (T) pure.evaluate(outputParamName, this);
@@ -42,15 +66,6 @@ public class ExecutionContext {
             return (T) execNode.getOutputParam(outputParamName).value;
         }
         return null;
-    }
-
-    public void run(String startId) {
-        String current = startId;
-        while (current != null) {
-            ExecNode node = execNodes.get(current);
-            log.debug("当前执行的节点是:{}", node.getName());
-            current = node.execute(this);
-        }
     }
 
     public static void prepareArgs(ExecutionContext ctx,
@@ -68,7 +83,7 @@ public class ExecutionContext {
                 } else if (outputs.containsKey(paramName)) {
                     args[i] = outputs.get(paramName);
                 } else {
-                    String msg = String.format("未在方法{%s}中找到{%s}参数", method.getName(), paramName);
+                    String msg = String.format("未在方法%s中找到%s参数", method.getName(), paramName);
                     throw new RuntimeException(msg);
                 }
             } else {

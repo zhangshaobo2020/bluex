@@ -14,7 +14,7 @@ public class NodeOutputSource<T> implements ParamSource<T> {
     }
 
     @Override
-    public T getValue(ExecutionContext ctx) {
+    public T getValue(ExecutionContext ctx) throws Exception {
         return ctx.getNodeOutputParamValue(nodeId, outputParamName);
     }
 }

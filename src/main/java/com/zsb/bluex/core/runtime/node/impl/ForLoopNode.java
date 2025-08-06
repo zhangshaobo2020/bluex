@@ -1,24 +1,22 @@
 package com.zsb.bluex.core.runtime.node.impl;
 
 import com.zsb.bluex.core.param.OUTPUT;
+import com.zsb.bluex.core.runtime.ExecTask;
 import com.zsb.bluex.core.runtime.ExecutionContext;
 import com.zsb.bluex.core.runtime.node.ExecNode;
 import com.zsb.bluex.core.runtime.param.ParamSource;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.SneakyThrows;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
 public class ForLoopNode extends ExecNode {
 
-    private ParamSource<Integer> from;
-    private ParamSource<Integer> to;
-    private String stepExec;
-    private String completedExec;
-    private int currentIndex;
-    private boolean started = false;
+    public ParamSource<Integer> from;
+    public ParamSource<Integer> to;
+    public String stepExec;
+    public String completedExec;
+    public int currentIndex;
+    public boolean started = false;
     // 缓存值
-    private int cachedIndex;
+    public int cachedIndex;
 
     public static String INDEX = "Index";
 
@@ -26,11 +24,12 @@ public class ForLoopNode extends ExecNode {
         super(id, name);
     }
 
+    @SneakyThrows
     public void setRange(ParamSource<Integer> from, ParamSource<Integer> to) {
         this.from = from;
         this.to = to;
         // 赋值from作为起始索引
-        cachedIndex = from.getValue(getCtx());
+        cachedIndex = from.getValue(ctx);
     }
 
     @Override
@@ -43,7 +42,7 @@ public class ForLoopNode extends ExecNode {
     }
 
     @Override
-    public String execute(ExecutionContext ctx) {
+    public void execute(ExecutionContext ctx) throws Exception {
         if (!started) {
             currentIndex = from.getValue(ctx);
             started = true;
@@ -52,9 +51,14 @@ public class ForLoopNode extends ExecNode {
             // 缓存当前值
             cachedIndex = currentIndex;
             currentIndex++;
-            return stepExec != null ? stepExec : getId();
+            if (stepExec != null) {
+                ctx.schedule(new ExecTask(stepExec, null));
+            }
+            ctx.schedule(new ExecTask(id, null));
         } else {
-            return completedExec;
+            if (completedExec != null) {
+                ctx.schedule(new ExecTask(completedExec, null));
+            }
         }
     }
 }

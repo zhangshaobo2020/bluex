@@ -1,25 +1,30 @@
 package com.zsb.bluex.core.runtime.node.impl;
 
+import com.zsb.bluex.core.runtime.ExecTask;
 import com.zsb.bluex.core.runtime.ExecutionContext;
 import com.zsb.bluex.core.runtime.node.ExecNode;
 import com.zsb.bluex.core.runtime.param.ParamSource;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
 public class BranchNode extends ExecNode {
-    private ParamSource<Boolean> condition;
-    private String trueExec;
-    private String falseExec;
+    public ParamSource<Boolean> condition;
+    public String trueExec;
+    public String falseExec;
 
     public BranchNode(String id, String name) {
         super(id, name);
     }
 
     @Override
-    public String execute(ExecutionContext ctx) {
+    public void execute(ExecutionContext ctx) throws Exception {
         boolean cond = condition.getValue(ctx);
-        return cond ? trueExec : falseExec;
+        if (cond) {
+            if (trueExec != null) {
+                ctx.schedule(new ExecTask(trueExec, null));
+            }
+        } else {
+            if (falseExec != null) {
+                ctx.schedule(new ExecTask(falseExec, null));
+            }
+        }
     }
 }

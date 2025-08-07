@@ -1,5 +1,9 @@
 package com.zsb.bluex.web.controller;
 
+import com.zsb.bluex.core.def.ControlDef;
+import com.zsb.bluex.core.def.FunctionDef;
+import com.zsb.bluex.core.def.TypeDef;
+import com.zsb.bluex.core.launch.MetaHolder;
 import com.zsb.bluex.web.WebResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +16,13 @@ import java.util.Map;
 public class MetaController {
 
     @GetMapping("/graphDefinition")
-    public WebResult<Map<String, Object>> graphDefinition() throws Exception {
+    public WebResult<MetaHolder.MetaInfo> graphDefinition() throws Exception {
         // 获取Type定义
+        Map<String, TypeDef> typeDef = MetaHolder.TYPE_DEFINITION;
         // 获取Control定义
+        Map<String, ControlDef> controlDef = MetaHolder.CONTROL_DEFINITION;
         // 获取Function定义
-        return WebResult.success(null);
+        Map<String, FunctionDef> functionDef = MetaHolder.FUNCTION_DEFINITION;
+        return WebResult.success(new MetaHolder.MetaInfo(typeDef, controlDef, functionDef));
     }
 }

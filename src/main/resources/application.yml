@@ -28,4 +28,4 @@ bluex:
   type-scan-paths:
     - com.zsb.bluex.example
   function-scan-paths:
-    - com.zsb.bluex.example
+    - com.zsb.bluex.lib

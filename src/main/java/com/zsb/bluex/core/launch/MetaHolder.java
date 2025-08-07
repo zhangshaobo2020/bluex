@@ -8,12 +8,15 @@ import com.zsb.bluex.core.def.TypeDef;
 import com.zsb.bluex.core.resolver.ControlResolver;
 import com.zsb.bluex.core.resolver.FunctionResolver;
 import com.zsb.bluex.core.resolver.TypeResolver;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,6 +25,14 @@ import java.util.Map;
 @Slf4j
 @Component
 public class MetaHolder {
+
+    @Data
+    @AllArgsConstructor
+    public static class MetaInfo implements Serializable {
+        private Map<String, TypeDef> typeDef;
+        private Map<String, ControlDef> controlDef;
+        private Map<String, FunctionDef> functionDef;
+    }
 
     public static final Map<String, TypeDef> PRIMITIVE_TYPE_DEFINITION = new LinkedHashMap<>();
     public static final Map<String, TypeDef> TYPE_DEFINITION = new LinkedHashMap<>();

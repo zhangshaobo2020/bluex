@@ -1,11 +1,13 @@
 package com.zsb.bluex.core.resolver;
 
 import com.zsb.bluex.core.anno.BluexFunction;
+import com.zsb.bluex.core.anno.BluexFunctionLib;
 import com.zsb.bluex.core.def.FunctionDef;
 import com.zsb.bluex.core.def.ParamDef;
 import com.zsb.bluex.core.def.TypeDef;
 import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.param.OUTPUT;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.*;
 import java.util.ArrayList;
@@ -16,6 +18,12 @@ public class FunctionResolver {
     public static List<FunctionDef> resolveFromClass(Class<?> clazz) {
         List<FunctionDef> functions = new ArrayList<>();
 
+        BluexFunctionLib bfl = clazz.getAnnotation(BluexFunctionLib.class);
+        String functionLibCategory = bfl.category();
+        if (StringUtils.isEmpty(functionLibCategory)) {
+            functionLibCategory = clazz.getSimpleName();
+        }
+
         for (Method method : clazz.getDeclaredMethods()) {
             if (!Modifier.isStatic(method.getModifiers())) continue;
             BluexFunction bf = method.getAnnotation(BluexFunction.class);
@@ -24,11 +32,11 @@ public class FunctionResolver {
             FunctionDef func = new FunctionDef();
             func.setName(method.getName());
             func.setQualifiedName(clazz.getName() + "." + method.getName());
-            func.setCategory(clazz.getSimpleName());
+            func.setCategory(functionLibCategory + "|" + method.getName());
             func.setDisplayName(bf.displayName());
             func.setDescription(bf.description());
 
-            func.setPure(bf.pure());
+            func.setExecutable(bf.executable());
             func.setLatent(bf.latent());
             func.setUnsafe(bf.unsafe());
 

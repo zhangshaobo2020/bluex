@@ -8,4 +8,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BluexFunctionLib {
+    // 蓝图编辑器上展示的分类(以|分隔)
+    String category() default "";
 }

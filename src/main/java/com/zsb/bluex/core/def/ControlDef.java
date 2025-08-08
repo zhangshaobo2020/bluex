@@ -23,7 +23,7 @@ public class ControlDef implements Serializable {
     // 输出数据引脚
     private List<ParamDef> outputParamDefs = new ArrayList<>();
     // 分类
-    private String category = "CONTROL";
+    private String category;
     // 控制节点的详细描述
     private String description;
     // 展示的名称

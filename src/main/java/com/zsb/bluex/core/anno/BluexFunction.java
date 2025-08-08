@@ -14,11 +14,8 @@ public @interface BluexFunction {
     // 蓝图编辑器上展示的详细描述
     String description() default "";
 
-    // 蓝图编辑器上展示的分类
-    String category() default "";
-
-    // 是否是纯函数
-    boolean pure() default false;
+    // 是否是可执行函数/纯函数
+    boolean executable() default true;
 
     // 是否是延时函数
     boolean latent() default false;

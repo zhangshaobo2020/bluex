@@ -8,7 +8,6 @@ import com.zsb.bluex.core.runtime.node.impl.FuncPureNode;
 import com.zsb.bluex.core.runtime.param.LiteralValueSource;
 import com.zsb.bluex.core.runtime.param.NodeOutputSource;
 import com.zsb.bluex.lib.ObjectLib;
-import com.zsb.bluex.lib.MathLib;
 import com.zsb.bluex.lib.RandomLib;
 
 import java.lang.reflect.Method;
@@ -27,7 +26,7 @@ public class RuntimeTest {
         funcExecNode.setInputParam("Obj", new NodeOutputSource<>("0003", "Ret"));
         ctx.addExecNode(funcExecNode);
 
-        Method method2 = RandomLib.class.getMethod("RandomInteger", INPUT.class, INPUT.class, OUTPUT.class);
+        Method method2 = RandomLib.class.getMethod("RandomIntRange", INPUT.class, INPUT.class, OUTPUT.class);
         FuncPureNode funcPureNode = new FuncPureNode("0003", "FuncPure", method2);
         funcPureNode.setInputParam("Min", new LiteralValueSource<>(0));
         funcPureNode.setInputParam("Max", new LiteralValueSource<>(10));

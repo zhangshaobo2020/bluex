@@ -3,7 +3,6 @@ package com.zsb.bluex.core.runtime.node.impl;
 import com.zsb.bluex.core.runtime.ExecutionContext;
 import com.zsb.bluex.core.runtime.node.ExecNode;
 
-@Deprecated
 public class BeginPlayNode extends ExecNode {
 
     public String nextExec;

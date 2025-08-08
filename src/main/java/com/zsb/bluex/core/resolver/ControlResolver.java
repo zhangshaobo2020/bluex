@@ -19,6 +19,8 @@ public class ControlResolver {
         map.put("CONTROL.While", definitionWhile());
         // ForLoop节点
         map.put("CONTROL.ForLoop", definitionForLoop());
+        // Delay节点
+        map.put("CONTROL.Delay", definitionDelay());
         return map;
     }
 
@@ -26,6 +28,7 @@ public class ControlResolver {
         ControlDef def = new ControlDef();
         def.setName("BeginPlay");
         def.setDisplayName("开始运行");
+        def.setCategory("CONTROL|BeginPlay");
         def.setQualifiedName("CONTROL.BeginPlay");
 
         def.getOutputExecDefs().add(new ParamDef("Exec"));
@@ -36,6 +39,7 @@ public class ControlResolver {
         ControlDef def = new ControlDef();
         def.setName("Branch");
         def.setDisplayName("Branch分支");
+        def.setCategory("CONTROL|Branch");
         def.setQualifiedName("CONTROL.Branch");
 
         def.getInputExecDefs().add(new ParamDef("Exec"));
@@ -55,6 +59,7 @@ public class ControlResolver {
         ControlDef def = new ControlDef();
         def.setName("While");
         def.setDisplayName("While循环");
+        def.setCategory("CONTROL|While");
         def.setQualifiedName("CONTROL.While");
 
         def.getInputExecDefs().add(new ParamDef("Exec"));
@@ -74,6 +79,7 @@ public class ControlResolver {
         ControlDef def = new ControlDef();
         def.setName("ForLoop");
         def.setDisplayName("For循环");
+        def.setCategory("CONTROL|ForLoop");
         def.setQualifiedName("CONTROL.ForLoop");
 
         def.getInputExecDefs().add(new ParamDef("Exec"));
@@ -96,6 +102,25 @@ public class ControlResolver {
                 new ParamDef(
                         "Index",
                         MetaHolder.PRIMITIVE_TYPE_DEFINITION.get("java.lang.Integer")
+                )
+        );
+        return def;
+    }
+
+    private static ControlDef definitionDelay() {
+        ControlDef def = new ControlDef();
+        def.setName("Delay");
+        def.setDisplayName("延迟");
+        def.setCategory("CONTROL|Delay");
+        def.setQualifiedName("CONTROL.Delay");
+
+        def.getInputExecDefs().add(new ParamDef("Exec"));
+        def.getOutputExecDefs().add(new ParamDef("Exec"));
+
+        def.getInputParamDefs().add(
+                new ParamDef(
+                        "Delay(ms)",
+                        MetaHolder.PRIMITIVE_TYPE_DEFINITION.get("java.lang.Long")
                 )
         );
         return def;

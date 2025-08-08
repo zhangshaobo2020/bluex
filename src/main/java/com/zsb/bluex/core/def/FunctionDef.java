@@ -18,14 +18,14 @@ public class FunctionDef implements Serializable {
     private List<ParamDef> inputParamDefs = new ArrayList<>();
     // 所有输出参数定义
     private List<ParamDef> outputParamDefs = new ArrayList<>();
-    // 分类
+    // 蓝图编辑器上展示的分类(以|分隔)
     private String category;
     // 函数的详细描述
     private String description;
     // 展示的名称
     private String displayName;
-    // 是否是纯函数
-    private boolean pure = false;
+    // 是否是可执行函数/纯函数
+    private boolean executable = true;
     // 是否是延时函数
     private boolean latent = false;
     // 是否是unsafe函数

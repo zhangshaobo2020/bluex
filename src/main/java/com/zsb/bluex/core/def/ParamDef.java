@@ -17,4 +17,8 @@ public class ParamDef implements Serializable {
         this.name = name;
         this.typeDef = typeDef;
     }
+
+    public ParamDef(String name) {
+        this.name = name;
+    }
 }

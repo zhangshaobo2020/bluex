@@ -18,6 +18,8 @@ public class FunctionDef implements Serializable {
     private List<ParamDef> inputParamDefs = new ArrayList<>();
     // 所有输出参数定义
     private List<ParamDef> outputParamDefs = new ArrayList<>();
+    // 分类
+    private String category;
     // 函数的详细描述
     private String description;
     // 展示的名称

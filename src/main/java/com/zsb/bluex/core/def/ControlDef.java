@@ -15,13 +15,15 @@ public class ControlDef implements Serializable {
     // "Control" + 控制节点名称（如 Control.Branch）
     private String qualifiedName;
     // 输入控制引脚
-    private List<String> inputExecPins = new ArrayList<>();
+    private List<ParamDef> inputExecDefs = new ArrayList<>();
     // 输出控制引脚
-    private List<String> outputExecPins = new ArrayList<>();
+    private List<ParamDef> outputExecDefs = new ArrayList<>();
     // 输入数据引脚
-    private List<ParamDef> inputParamPins = new ArrayList<>();
+    private List<ParamDef> inputParamDefs = new ArrayList<>();
     // 输出数据引脚
-    private List<ParamDef> outputParamPins = new ArrayList<>();
+    private List<ParamDef> outputParamDefs = new ArrayList<>();
+    // 分类
+    private String category = "CONTROL";
     // 控制节点的详细描述
     private String description;
     // 展示的名称

@@ -8,7 +8,7 @@ import com.zsb.bluex.core.param.OUTPUT;
 @BluexFunctionLib
 public class MathLib {
 
-    @BluexFunction(description = "整数加法")
+    @BluexFunction(displayName = "整数加法")
     public static void AddInteger(
             INPUT<Integer> Num1,
             INPUT<Integer> Num2,

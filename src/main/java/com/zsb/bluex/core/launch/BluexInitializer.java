@@ -18,18 +18,13 @@ public class BluexInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        // 解析默认的流程控制节点
-        metaHolder.processDefaultControl();
         // 解析默认的内置Java类型
         metaHolder.processDefaultType();
+        // 解析默认的流程控制节点
+        metaHolder.processDefaultControl();
         // 扫描自定义的@BluexType
         metaHolder.processBluexType(customPathConfig.getTypeScanPaths());
         // 扫描自定义的@BluexFunctionLib
         metaHolder.processBluexFunction(customPathConfig.getFunctionScanPaths());
-
-        System.out.println(MetaHolder.CONTROL_DEFINITION);
-        System.out.println(MetaHolder.PRIMITIVE_TYPE_DEFINITION);
-        System.out.println(MetaHolder.TYPE_DEFINITION);
-        System.out.println(MetaHolder.FUNCTION_DEFINITION);
     }
 }

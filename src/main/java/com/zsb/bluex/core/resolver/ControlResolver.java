@@ -12,9 +12,7 @@ public class ControlResolver {
     public static Map<String, ControlDef> processDefaultControl() {
         Map<String, ControlDef> map = new HashMap<>();
         // BeginPlay节点
-        // map.put("CONTROL.BeginPlay", definitionBeginPlay());
-        // EndPlay节点
-        // map.put("CONTROL.EndPlay", definitionEndPlay());
+        map.put("CONTROL.BeginPlay", definitionBeginPlay());
         // Branch节点
         map.put("CONTROL.Branch", definitionBranch());
         // While节点
@@ -30,17 +28,7 @@ public class ControlResolver {
         def.setDisplayName("开始运行");
         def.setQualifiedName("CONTROL.BeginPlay");
 
-        def.getOutputExecPins().add("Exec");
-        return def;
-    }
-
-    private static ControlDef definitionEndPlay() {
-        ControlDef def = new ControlDef();
-        def.setName("EndPlay");
-        def.setDisplayName("结束运行");
-        def.setQualifiedName("CONTROL.EndPlay");
-
-        def.getInputExecPins().add("Exec");
+        def.getOutputExecDefs().add(new ParamDef("Exec"));
         return def;
     }
 
@@ -50,11 +38,11 @@ public class ControlResolver {
         def.setDisplayName("Branch分支");
         def.setQualifiedName("CONTROL.Branch");
 
-        def.getInputExecPins().add("Exec");
-        def.getOutputExecPins().add("True");
-        def.getOutputExecPins().add("False");
+        def.getInputExecDefs().add(new ParamDef("Exec"));
+        def.getOutputExecDefs().add(new ParamDef("True"));
+        def.getOutputExecDefs().add(new ParamDef("False"));
 
-        def.getInputParamPins().add(
+        def.getInputParamDefs().add(
                 new ParamDef(
                         "Cond",
                         MetaHolder.PRIMITIVE_TYPE_DEFINITION.get("java.lang.Boolean")
@@ -69,11 +57,11 @@ public class ControlResolver {
         def.setDisplayName("While循环");
         def.setQualifiedName("CONTROL.While");
 
-        def.getInputExecPins().add("Exec");
-        def.getOutputExecPins().add("Body");
-        def.getOutputExecPins().add("Completed");
+        def.getInputExecDefs().add(new ParamDef("Exec"));
+        def.getOutputExecDefs().add(new ParamDef("Body"));
+        def.getOutputExecDefs().add(new ParamDef("Completed"));
 
-        def.getInputParamPins().add(
+        def.getInputParamDefs().add(
                 new ParamDef(
                         "Cond",
                         MetaHolder.PRIMITIVE_TYPE_DEFINITION.get("java.lang.Boolean")
@@ -88,23 +76,23 @@ public class ControlResolver {
         def.setDisplayName("For循环");
         def.setQualifiedName("CONTROL.ForLoop");
 
-        def.getInputExecPins().add("Exec");
-        def.getOutputExecPins().add("Step");
-        def.getOutputExecPins().add("Completed");
+        def.getInputExecDefs().add(new ParamDef("Exec"));
+        def.getOutputExecDefs().add(new ParamDef("Step"));
+        def.getOutputExecDefs().add(new ParamDef("Completed"));
 
-        def.getInputParamPins().add(
+        def.getInputParamDefs().add(
                 new ParamDef(
                         "From",
                         MetaHolder.PRIMITIVE_TYPE_DEFINITION.get("java.lang.Integer")
                 )
         );
-        def.getInputParamPins().add(
+        def.getInputParamDefs().add(
                 new ParamDef(
                         "To",
                         MetaHolder.PRIMITIVE_TYPE_DEFINITION.get("java.lang.Integer")
                 )
         );
-        def.getOutputParamPins().add(
+        def.getOutputParamDefs().add(
                 new ParamDef(
                         "Index",
                         MetaHolder.PRIMITIVE_TYPE_DEFINITION.get("java.lang.Integer")

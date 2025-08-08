@@ -10,7 +10,7 @@ import java.util.Random;
 @BluexFunctionLib
 public class RandomLib {
 
-    @BluexFunction(description = "随机整数")
+    @BluexFunction(displayName = "随机整数")
     public static void RandomInteger(
             INPUT<Integer> Min,
             INPUT<Integer> Max,

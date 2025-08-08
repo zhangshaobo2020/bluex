@@ -24,6 +24,7 @@ public class FunctionResolver {
             FunctionDef func = new FunctionDef();
             func.setName(method.getName());
             func.setQualifiedName(clazz.getName() + "." + method.getName());
+            func.setCategory(clazz.getSimpleName());
             func.setDisplayName(bf.displayName());
             func.setDescription(bf.description());
 

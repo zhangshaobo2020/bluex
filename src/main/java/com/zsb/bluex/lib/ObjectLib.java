@@ -15,6 +15,14 @@ public class ObjectLib {
         System.out.println(Obj.value);
     }
 
+    @BluexFunction(displayName = "Object转String")
+    public static void ObjectToString(
+            INPUT<Object> Obj,
+            OUTPUT<Object> Str
+    ) {
+        Str.value = Obj.value;
+    }
+
     @BluexFunction(displayName = "判断是否为null", executable = false)
     public static void IsNull(
             INPUT<Object> Obj,

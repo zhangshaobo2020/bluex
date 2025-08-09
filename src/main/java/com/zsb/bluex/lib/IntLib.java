@@ -176,4 +176,58 @@ public class IntLib {
     ) {
         Out.value = String.valueOf(In.value);
     }
+
+    @BluexFunction(displayName = "Int等于", executable = false)
+    public static void Equal(
+            INPUT<Integer> Num1,
+            INPUT<Integer> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value.equals(Num2.value);
+    }
+
+    @BluexFunction(displayName = "Int不等于", executable = false)
+    public static void NotEqual(
+            INPUT<Integer> Num1,
+            INPUT<Integer> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = !Num1.value.equals(Num2.value);
+    }
+
+    @BluexFunction(displayName = "Int大于", executable = false)
+    public static void GreaterThan(
+            INPUT<Integer> Num1,
+            INPUT<Integer> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value > Num2.value;
+    }
+
+    @BluexFunction(displayName = "Int大于等于", executable = false)
+    public static void GreaterEqualThan(
+            INPUT<Integer> Num1,
+            INPUT<Integer> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value >= Num2.value;
+    }
+
+    @BluexFunction(displayName = "Int小于", executable = false)
+    public static void LessThan(
+            INPUT<Integer> Num1,
+            INPUT<Integer> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value < Num2.value;
+    }
+
+    @BluexFunction(displayName = "Int小于等于", executable = false)
+    public static void LessEqualThan(
+            INPUT<Integer> Num1,
+            INPUT<Integer> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value <= Num2.value;
+    }
 }

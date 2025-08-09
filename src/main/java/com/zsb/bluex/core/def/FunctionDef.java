@@ -30,4 +30,6 @@ public class FunctionDef implements Serializable {
     private boolean latent = false;
     // 是否是unsafe函数
     private boolean unsafe = false;
+    // 类型签名(用以确定唯一性)
+    private String signature;
 }

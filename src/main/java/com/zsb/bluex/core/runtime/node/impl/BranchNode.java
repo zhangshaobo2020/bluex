@@ -10,8 +10,8 @@ public class BranchNode extends ExecNode {
     public String trueExec;
     public String falseExec;
 
-    public BranchNode(String id, String name) {
-        super(id, name);
+    public BranchNode(String id) {
+        super(id, "BranchNode");
     }
 
     @Override

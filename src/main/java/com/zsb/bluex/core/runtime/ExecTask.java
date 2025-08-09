@@ -1,12 +1,13 @@
 package com.zsb.bluex.core.runtime;
 
+import java.util.Map;
+
 public class ExecTask {
     public String nodeId;
-    // input执行节点的名称
-    public String execPort;
+    public Map<String, Object> payload;
 
-    public ExecTask(String nodeId, String execPort) {
+    public ExecTask(String nodeId, Map<String, Object> payload) {
         this.nodeId = nodeId;
-        this.execPort = execPort;
+        this.payload = payload;
     }
 }

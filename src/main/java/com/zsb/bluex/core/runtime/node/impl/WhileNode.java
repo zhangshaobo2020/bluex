@@ -7,18 +7,18 @@ import com.zsb.bluex.core.runtime.param.ParamSource;
 
 public class WhileNode extends ExecNode {
     public ParamSource<Boolean> condition;
-    public String bodyExec;
+    public String loopBodyExec;
     public String completedExec;
 
-    public WhileNode(String id, String name) {
-        super(id, name);
+    public WhileNode(String id) {
+        super(id, "WhileNode");
     }
 
     @Override
     public void execute(ExecutionContext ctx) throws Exception {
         if (Boolean.TRUE.equals(condition.getValue(ctx))) {
-            if (bodyExec != null) {
-                ctx.schedule(new ExecTask(bodyExec, null));
+            if (loopBodyExec != null) {
+                ctx.schedule(new ExecTask(loopBodyExec, null));
             }
             ctx.schedule(new ExecTask(id, null));
         } else {

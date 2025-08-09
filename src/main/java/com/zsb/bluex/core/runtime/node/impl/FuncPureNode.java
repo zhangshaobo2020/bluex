@@ -3,28 +3,15 @@ package com.zsb.bluex.core.runtime.node.impl;
 import com.zsb.bluex.core.param.OUTPUT;
 import com.zsb.bluex.core.runtime.ExecutionContext;
 import com.zsb.bluex.core.runtime.node.PureNode;
-import com.zsb.bluex.core.runtime.param.ParamSource;
 
 import java.lang.reflect.Method;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class FuncPureNode extends PureNode {
     public final Method method;
-    public final Map<String, ParamSource<?>> inputParams = new LinkedHashMap<>();
-    public final Map<String, OUTPUT<?>> outputs = new LinkedHashMap<>();
 
-    public FuncPureNode(String id, String name, Method method) {
-        super(id, name);
+    public FuncPureNode(String id, Method method) {
+        super(id, "FuncPureNode" + "->" + method.getName());
         this.method = method;
-    }
-
-    public void setInputParam(String name, ParamSource<?> source) {
-        inputParams.put(name, source);
-    }
-
-    public <T> void setOutputParam(String name, OUTPUT<T> output) {
-        outputs.put(name, output);
     }
 
     @Override

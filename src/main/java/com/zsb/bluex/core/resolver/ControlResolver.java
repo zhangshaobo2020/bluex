@@ -28,8 +28,9 @@ public class ControlResolver {
         ControlDef def = new ControlDef();
         def.setName("BeginPlay");
         def.setDisplayName("开始运行");
-        def.setCategory("CONTROL|BeginPlay");
+        def.setCategory("控制节点|BeginPlay");
         def.setQualifiedName("CONTROL.BeginPlay");
+        def.setSignature("CONTROL.BeginPlay");
 
         def.getOutputExecDefs().add(new ParamDef("Exec"));
         return def;
@@ -39,8 +40,9 @@ public class ControlResolver {
         ControlDef def = new ControlDef();
         def.setName("Branch");
         def.setDisplayName("Branch分支");
-        def.setCategory("CONTROL|Branch");
+        def.setCategory("控制节点|Branch");
         def.setQualifiedName("CONTROL.Branch");
+        def.setSignature("CONTROL.Branch");
 
         def.getInputExecDefs().add(new ParamDef("Exec"));
         def.getOutputExecDefs().add(new ParamDef("True"));
@@ -59,11 +61,12 @@ public class ControlResolver {
         ControlDef def = new ControlDef();
         def.setName("While");
         def.setDisplayName("While循环");
-        def.setCategory("CONTROL|While");
+        def.setCategory("控制节点|While");
         def.setQualifiedName("CONTROL.While");
+        def.setSignature("CONTROL.While");
 
         def.getInputExecDefs().add(new ParamDef("Exec"));
-        def.getOutputExecDefs().add(new ParamDef("Body"));
+        def.getOutputExecDefs().add(new ParamDef("LoopBody"));
         def.getOutputExecDefs().add(new ParamDef("Completed"));
 
         def.getInputParamDefs().add(
@@ -79,11 +82,12 @@ public class ControlResolver {
         ControlDef def = new ControlDef();
         def.setName("ForLoop");
         def.setDisplayName("For循环");
-        def.setCategory("CONTROL|ForLoop");
+        def.setCategory("控制节点|ForLoop");
         def.setQualifiedName("CONTROL.ForLoop");
+        def.setSignature("CONTROL.ForLoop");
 
         def.getInputExecDefs().add(new ParamDef("Exec"));
-        def.getOutputExecDefs().add(new ParamDef("Step"));
+        def.getOutputExecDefs().add(new ParamDef("LoopBody"));
         def.getOutputExecDefs().add(new ParamDef("Completed"));
 
         def.getInputParamDefs().add(
@@ -111,8 +115,9 @@ public class ControlResolver {
         ControlDef def = new ControlDef();
         def.setName("Delay");
         def.setDisplayName("延迟");
-        def.setCategory("CONTROL|Delay");
+        def.setCategory("控制节点|Delay");
         def.setQualifiedName("CONTROL.Delay");
+        def.setSignature("CONTROL.Delay");
 
         def.getInputExecDefs().add(new ParamDef("Exec"));
         def.getOutputExecDefs().add(new ParamDef("Exec"));

@@ -13,7 +13,7 @@ public class RandomLib {
     private static final Random random = new Random();
 
     @BluexFunction(displayName = "随机Int [0,1)", executable = false)
-    public static void RandomIntRange(
+    public static void RandomInt(
             OUTPUT<Integer> Ret
     ) {
         Ret.value = random.nextInt();

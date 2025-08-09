@@ -11,7 +11,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FunctionResolver {
 
@@ -39,6 +41,7 @@ public class FunctionResolver {
             func.setExecutable(bf.executable());
             func.setLatent(bf.latent());
             func.setUnsafe(bf.unsafe());
+            func.setSignature(getSignature(method));
 
             Parameter[] parameters = method.getParameters();
             for (Parameter param : parameters) {
@@ -71,6 +74,44 @@ public class FunctionResolver {
             return TypeResolver.resolveType(actualType);
         }
         throw new IllegalArgumentException("请使用INPUT<T>或OUTPUT<T>");
+    }
+
+    private static String getSignature(Method method) {
+        String className = method.getDeclaringClass().getName();
+        String methodName = method.getName();
+
+        String params = Arrays.stream(method.getParameters())
+                .map(p -> typeToString(p.getParameterizedType()) + p.getName())
+                .collect(Collectors.joining(","));
+
+        return className + "." + methodName + "(" + params + ")";
+    }
+
+    private static String typeToString(Type type) {
+        if (type instanceof ParameterizedType) {
+            ParameterizedType pt = (ParameterizedType) type;
+            String rawTypeName = typeToString(pt.getRawType());
+            String typeArgs = Arrays.stream(pt.getActualTypeArguments())
+                    .map(FunctionResolver::typeToString)
+                    .collect(Collectors.joining(","));
+            return rawTypeName + "<" + typeArgs + ">";
+        } else if (type instanceof Class<?>) {
+            Class<?> clazz = (Class<?>) type;
+            return clazz.getSimpleName();
+        } else if (type instanceof TypeVariable<?>) {
+            return ((TypeVariable<?>) type).getName();
+        } else if (type instanceof WildcardType) {
+            WildcardType wt = (WildcardType) type;
+            StringBuilder sb = new StringBuilder("?");
+            if (wt.getUpperBounds().length > 0 && wt.getUpperBounds()[0] != Object.class) {
+                sb.append(" extends ").append(typeToString(wt.getUpperBounds()[0]));
+            }
+            if (wt.getLowerBounds().length > 0) {
+                sb.append(" super ").append(typeToString(wt.getLowerBounds()[0]));
+            }
+            return sb.toString();
+        }
+        return type.getTypeName().replace("java.lang.", "");
     }
 }
 

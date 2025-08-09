@@ -178,4 +178,58 @@ public class ShortLib {
     ) {
         Out.value = String.valueOf(In.value);
     }
+
+    @BluexFunction(displayName = "Short等于", executable = false)
+    public static void Equal(
+            INPUT<Short> Num1,
+            INPUT<Short> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value.equals(Num2.value);
+    }
+
+    @BluexFunction(displayName = "Short不等于", executable = false)
+    public static void NotEqual(
+            INPUT<Short> Num1,
+            INPUT<Short> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = !Num1.value.equals(Num2.value);
+    }
+
+    @BluexFunction(displayName = "Short大于", executable = false)
+    public static void GreaterThan(
+            INPUT<Short> Num1,
+            INPUT<Short> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value > Num2.value;
+    }
+
+    @BluexFunction(displayName = "Short大于等于", executable = false)
+    public static void GreaterEqualThan(
+            INPUT<Short> Num1,
+            INPUT<Short> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value >= Num2.value;
+    }
+
+    @BluexFunction(displayName = "Short小于", executable = false)
+    public static void LessThan(
+            INPUT<Short> Num1,
+            INPUT<Short> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value < Num2.value;
+    }
+
+    @BluexFunction(displayName = "Short小于等于", executable = false)
+    public static void LessEqualThan(
+            INPUT<Short> Num1,
+            INPUT<Short> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value <= Num2.value;
+    }
 }

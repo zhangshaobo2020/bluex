@@ -16,21 +16,21 @@ public class RuntimeTest {
     public static void main(String[] args) throws Exception {
         ExecutionContext ctx = new ExecutionContext();
 
-        ForLoopNode forLoopNode = new ForLoopNode("0001", "ForLoop");
+        ForLoopNode forLoopNode = new ForLoopNode("0001");
         forLoopNode.setRange(new LiteralValueSource<>(0), new LiteralValueSource<>(10));
-        forLoopNode.stepExec = "0002";
+        forLoopNode.loopBodyExec = "0002";
         ctx.addExecNode(forLoopNode);
 
         Method method1 = ObjectLib.class.getMethod("Print", INPUT.class);
-        FuncExecNode funcExecNode = new FuncExecNode("0002", "FuncExec", method1);
+        FuncExecNode funcExecNode = new FuncExecNode("0002", method1);
         funcExecNode.setInputParam("Obj", new NodeOutputSource<>("0003", "Ret"));
         ctx.addExecNode(funcExecNode);
 
         Method method2 = RandomLib.class.getMethod("RandomIntRange", INPUT.class, INPUT.class, OUTPUT.class);
-        FuncPureNode funcPureNode = new FuncPureNode("0003", "FuncPure", method2);
+        FuncPureNode funcPureNode = new FuncPureNode("0003", method2);
         funcPureNode.setInputParam("Min", new LiteralValueSource<>(0));
         funcPureNode.setInputParam("Max", new LiteralValueSource<>(10));
-        funcPureNode.setOutputParam("Ret", new OUTPUT<Integer>());
+        funcPureNode.setOutput("Ret", new OUTPUT<Integer>());
         ctx.addPureNode(funcPureNode);
 
         ctx.schedule(new ExecTask("0001", null));

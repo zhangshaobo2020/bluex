@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public WebResult<?> handleException(Exception e) {
+    @ExceptionHandler(Throwable.class)
+    public WebResult<?> handleException(Throwable e) {
         log.error("GlobalExceptionHandler捕获到异常:", e);
         return WebResult.failure(e.getMessage());
     }

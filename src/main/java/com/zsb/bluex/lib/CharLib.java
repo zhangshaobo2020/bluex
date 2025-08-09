@@ -5,7 +5,7 @@ import com.zsb.bluex.core.anno.BluexFunctionLib;
 import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.param.OUTPUT;
 
-@BluexFunctionLib(category = "Math|Char")
+@BluexFunctionLib(category = "Char")
 public class CharLib {
 
     @BluexFunction(displayName = "Char加法（字符码相加）", executable = false)

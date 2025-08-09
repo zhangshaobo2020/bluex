@@ -12,6 +12,13 @@ import java.util.List;
 @BluexFunctionLib(category = "String")
 public class StringLib {
 
+    @BluexFunction(displayName = "打印到控制台")
+    public static void Print(
+            INPUT<String> Str
+    ) {
+        System.out.println(Str.value);
+    }
+
     @BluexFunction(displayName = "字符串连接", executable = false)
     public static void Concat(
             INPUT<String> Str1,

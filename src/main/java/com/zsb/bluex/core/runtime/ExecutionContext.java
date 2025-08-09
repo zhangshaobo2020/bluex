@@ -20,20 +20,25 @@ public class ExecutionContext {
 
     private final Queue<ExecTask> taskQueue = new LinkedList<>();
 
-    public void schedule(ExecTask task) {
+    public void schedule(ExecTask task) throws Exception {
+        taskQueue.offer(task);
+        ExecTask immediateTask = taskQueue.poll();
+        if (immediateTask != null) {
+            ExecNode execNode = getExecNode(immediateTask.nodeId);
+            execNode.execute(this);
+        }
+    }
+
+    public void initFirstNode(ExecTask task) throws Exception {
         taskQueue.offer(task);
     }
 
     public void run() throws Exception {
         while (!taskQueue.isEmpty()) {
             ExecTask task = taskQueue.poll();
-            if (task.nodeId == null) {
-                log.info("流程执行结束");
-                break;
-            }
-            ExecNode execNode = getExecNode(task.nodeId);
-            execNode.execute(this);
+            schedule(task);
         }
+        log.info("流程执行结束");
     }
 
     private final Map<String, ExecNode> execNodes = new LinkedHashMap<>();

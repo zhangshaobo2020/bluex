@@ -178,4 +178,58 @@ public class DoubleLib {
     ) {
         Out.value = String.valueOf(In.value);
     }
+
+    @BluexFunction(displayName = "Double等于", executable = false)
+    public static void Equal(
+            INPUT<Double> Num1,
+            INPUT<Double> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value.equals(Num2.value);
+    }
+
+    @BluexFunction(displayName = "Double不等于", executable = false)
+    public static void NotEqual(
+            INPUT<Double> Num1,
+            INPUT<Double> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = !Num1.value.equals(Num2.value);
+    }
+
+    @BluexFunction(displayName = "Double大于", executable = false)
+    public static void GreaterThan(
+            INPUT<Double> Num1,
+            INPUT<Double> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value > Num2.value;
+    }
+
+    @BluexFunction(displayName = "Double大于等于", executable = false)
+    public static void GreaterEqualThan(
+            INPUT<Double> Num1,
+            INPUT<Double> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value >= Num2.value;
+    }
+
+    @BluexFunction(displayName = "Double小于", executable = false)
+    public static void LessThan(
+            INPUT<Double> Num1,
+            INPUT<Double> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value < Num2.value;
+    }
+
+    @BluexFunction(displayName = "Double小于等于", executable = false)
+    public static void LessEqualThan(
+            INPUT<Double> Num1,
+            INPUT<Double> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value <= Num2.value;
+    }
 }

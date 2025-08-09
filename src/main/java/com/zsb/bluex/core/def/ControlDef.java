@@ -28,4 +28,8 @@ public class ControlDef implements Serializable {
     private String description;
     // 展示的名称
     private String displayName;
+    // 控制节点必定为可执行函数
+    private boolean executable = true;
+    // 类型签名(用以确定唯一性)
+    private String signature;
 }

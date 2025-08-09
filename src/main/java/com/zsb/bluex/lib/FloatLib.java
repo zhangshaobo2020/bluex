@@ -178,4 +178,58 @@ public class FloatLib {
     ) {
         Out.value = String.valueOf(In.value);
     }
+
+    @BluexFunction(displayName = "Float等于", executable = false)
+    public static void Equal(
+            INPUT<Float> Num1,
+            INPUT<Float> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value.equals(Num2.value);
+    }
+
+    @BluexFunction(displayName = "Float不等于", executable = false)
+    public static void NotEqual(
+            INPUT<Float> Num1,
+            INPUT<Float> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = !Num1.value.equals(Num2.value);
+    }
+
+    @BluexFunction(displayName = "Float大于", executable = false)
+    public static void GreaterThan(
+            INPUT<Float> Num1,
+            INPUT<Float> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value > Num2.value;
+    }
+
+    @BluexFunction(displayName = "Float大于等于", executable = false)
+    public static void GreaterEqualThan(
+            INPUT<Float> Num1,
+            INPUT<Float> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value >= Num2.value;
+    }
+
+    @BluexFunction(displayName = "Float小于", executable = false)
+    public static void LessThan(
+            INPUT<Float> Num1,
+            INPUT<Float> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value < Num2.value;
+    }
+
+    @BluexFunction(displayName = "Float小于等于", executable = false)
+    public static void LessEqualThan(
+            INPUT<Float> Num1,
+            INPUT<Float> Num2,
+            OUTPUT<Boolean> Ret
+    ) {
+        Ret.value = Num1.value <= Num2.value;
+    }
 }

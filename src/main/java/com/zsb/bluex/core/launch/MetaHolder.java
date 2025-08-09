@@ -80,6 +80,10 @@ public class MetaHolder {
             }
         }
         definitionList.forEach(definition -> {
+            // PUT之前校验是否有同名函数
+            if (FUNCTION_DEFINITION.containsKey(definition.getQualifiedName())) {
+                throw new IllegalArgumentException("检测到同名函数:" + definition.getQualifiedName());
+            }
             FUNCTION_DEFINITION.put(definition.getQualifiedName(), definition);
         });
     }

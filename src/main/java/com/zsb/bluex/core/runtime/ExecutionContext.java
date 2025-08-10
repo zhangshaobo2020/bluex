@@ -38,7 +38,6 @@ public class ExecutionContext {
             ExecTask task = taskQueue.poll();
             schedule(task);
         }
-        log.info("流程执行结束");
     }
 
     private final Map<String, ExecNode> execNodes = new LinkedHashMap<>();

@@ -22,8 +22,12 @@ public class TypeDef implements Serializable {
     private boolean list = false;
     // 是否是Map泛型包装类型
     private boolean map = false;
+    // 是否是枚举类型
+    private boolean enumeration = false;
     // Map 或 List 的子类型
     private List<TypeDef> generics = new ArrayList<>();
     // 自定义类型下的字段
     private Map<String, TypeDef> fields = new HashMap<>();
+    // 枚举所有常量名称
+    private List<String> enumOptions;
 }

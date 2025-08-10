@@ -7,4 +7,6 @@ public class OUTPUT<T> extends BaseParam<T> {
     public OUTPUT(T value) {
         super(value);
     }
+
+    public String castedTypeName;
 }

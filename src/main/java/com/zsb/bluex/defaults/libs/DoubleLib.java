@@ -1,11 +1,11 @@
-package com.zsb.bluex.lib;
+package com.zsb.bluex.defaults.libs;
 
 import com.zsb.bluex.core.anno.BluexFunction;
 import com.zsb.bluex.core.anno.BluexFunctionLib;
 import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.param.OUTPUT;
 
-@BluexFunctionLib(category = "Math|Double")
+@BluexFunctionLib(category = "数字|Double")
 public class DoubleLib {
 
     @BluexFunction(displayName = "Double加法", executable = false)

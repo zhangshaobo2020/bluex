@@ -1,11 +1,11 @@
-package com.zsb.bluex.lib;
+package com.zsb.bluex.defaults.libs;
 
 import com.zsb.bluex.core.anno.BluexFunction;
 import com.zsb.bluex.core.anno.BluexFunctionLib;
 import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.param.OUTPUT;
 
-@BluexFunctionLib(category = "Char")
+@BluexFunctionLib(category = "字符(串)|Char")
 public class CharLib {
 
     @BluexFunction(displayName = "Char加法（字符码相加）", executable = false)

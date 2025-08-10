@@ -6,6 +6,8 @@ import com.zsb.bluex.core.def.TypeDef;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class TypeResolver {
@@ -28,9 +30,9 @@ public class TypeResolver {
         PRIMITIVE_CLASSES.add(Character.class);
 
         PRIMITIVE_CLASSES.add(String.class);
-        PRIMITIVE_CLASSES.add(java.math.BigDecimal.class);
+        PRIMITIVE_CLASSES.add(BigDecimal.class);
         PRIMITIVE_CLASSES.add(Date.class);
-        PRIMITIVE_CLASSES.add(java.time.LocalDateTime.class);
+        PRIMITIVE_CLASSES.add(LocalDateTime.class);
     }
 
     public static TypeDef resolveType(Type genericType) {
@@ -68,14 +70,31 @@ public class TypeResolver {
             def.setName(clazz.getSimpleName());
             def.setQualifiedName(clazz.getName());
 
-            def.setPrimitive(isPrimitive(clazz));
-            def.setList(false);
-            def.setMap(false);
+            // 处理枚举
+            if (clazz.isEnum()) {
+                def.setEnumeration(true);
+                // 取枚举常量名
+                Object[] enumConstants = clazz.getEnumConstants();
+                List<String> enumNames = new ArrayList<>();
+                if (enumConstants != null) {
+                    for (Object enumConst : enumConstants) {
+                        enumNames.add(enumConst.toString());
+                    }
+                }
+                def.setEnumOptions(enumNames);
 
-            if (clazz.isAnnotationPresent(BluexType.class)) {
-                def.setFields(resolveFields(clazz));
+                def.setPrimitive(false);
+                def.setList(false);
+                def.setMap(false);
+            } else {
+                def.setPrimitive(isPrimitive(clazz));
+                def.setList(false);
+                def.setMap(false);
+
+                if (clazz.isAnnotationPresent(BluexType.class)) {
+                    def.setFields(resolveFields(clazz));
+                }
             }
-
         }
         return def;
     }

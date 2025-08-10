@@ -4,7 +4,7 @@ import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.runtime.node.impl.DelayNode;
 import com.zsb.bluex.core.runtime.node.impl.FuncExecNode;
 import com.zsb.bluex.core.runtime.param.LiteralValueSource;
-import com.zsb.bluex.lib.ObjectLib;
+import com.zsb.bluex.defaults.libs.ObjectLib;
 
 import java.lang.reflect.Method;
 

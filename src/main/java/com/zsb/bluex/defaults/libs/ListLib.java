@@ -1,4 +1,4 @@
-package com.zsb.bluex.lib;
+package com.zsb.bluex.defaults.libs;
 
 import com.zsb.bluex.core.anno.BluexFunction;
 import com.zsb.bluex.core.anno.BluexFunctionLib;
@@ -8,7 +8,7 @@ import com.zsb.bluex.core.param.OUTPUT;
 import java.util.ArrayList;
 import java.util.List;
 
-@BluexFunctionLib(category = "Collection|List")
+@BluexFunctionLib(category = "集合|List")
 public class ListLib {
 
     @BluexFunction(displayName = "创建空List", executable = false)

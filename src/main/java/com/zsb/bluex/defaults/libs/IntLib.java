@@ -1,11 +1,11 @@
-package com.zsb.bluex.lib;
+package com.zsb.bluex.defaults.libs;
 
 import com.zsb.bluex.core.anno.BluexFunction;
 import com.zsb.bluex.core.anno.BluexFunctionLib;
 import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.param.OUTPUT;
 
-@BluexFunctionLib(category = "Math|Int")
+@BluexFunctionLib(category = "数字|Int")
 public class IntLib {
 
     @BluexFunction(displayName = "Int加法", executable = false)

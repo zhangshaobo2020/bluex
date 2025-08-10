@@ -1,18 +1,20 @@
-package com.zsb.bluex.lib;
+package com.zsb.bluex.defaults.libs;
 
 import com.zsb.bluex.core.anno.BluexFunction;
 import com.zsb.bluex.core.anno.BluexFunctionLib;
 import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.param.OUTPUT;
+import lombok.extern.slf4j.Slf4j;
 
-@BluexFunctionLib(category = "Object")
+@Slf4j
+@BluexFunctionLib(category = "工具|Object")
 public class ObjectLib {
 
     @BluexFunction(displayName = "打印到控制台")
     public static void Print(
             INPUT<Object> Obj
     ) {
-        System.out.println(Obj.value);
+        log.info(String.valueOf(Obj.value));
     }
 
     @BluexFunction(displayName = "Object转String")

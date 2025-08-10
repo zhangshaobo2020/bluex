@@ -10,7 +10,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Throwable.class)
     public WebResult<?> handleException(Throwable e) {
-        log.error("GlobalExceptionHandler捕获到异常:", e);
+        log.error("捕获到Throwable:", e);
         return WebResult.failure(e.getMessage());
     }
 }

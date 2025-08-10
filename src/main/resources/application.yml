@@ -26,6 +26,6 @@ spring:
       allow_single_quotes: true
 bluex:
   type-scan-paths:
-    - com.zsb.bluex.example
+    - com.zsb.bluex.defaults.types
   function-scan-paths:
-    - com.zsb.bluex.lib
+    - com.zsb.bluex.defaults.libs

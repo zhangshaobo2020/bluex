@@ -1,4 +1,4 @@
-package com.zsb.bluex.lib;
+package com.zsb.bluex.defaults.libs;
 
 import com.zsb.bluex.core.anno.BluexFunction;
 import com.zsb.bluex.core.anno.BluexFunctionLib;
@@ -7,7 +7,7 @@ import com.zsb.bluex.core.param.OUTPUT;
 
 import java.util.Random;
 
-@BluexFunctionLib(category = "Random")
+@BluexFunctionLib(category = "工具|Random")
 public class RandomLib {
 
     private static final Random random = new Random();

@@ -28,11 +28,11 @@ public class DelayNode extends ExecNode {
     @Override
     public void execute(ExecutionContext ctx) throws Exception {
         log.debug("[DelayNode] 延迟开始 {}", LocalDateTime.now());
-//        long start = System.currentTimeMillis();
-//        while (System.currentTimeMillis() - start < delayMillis.getValue(ctx)) {
-//            spin();
-//        }
-        Thread.sleep(delayMillis.getValue(ctx));
+        long start = System.currentTimeMillis();
+        while (System.currentTimeMillis() - start < delayMillis.getValue(ctx)) {
+            spin();
+        }
+//        Thread.sleep(delayMillis.getValue(ctx));
         log.debug("[DelayNode] 延迟结束 {}", LocalDateTime.now());
         if (nextExec != null) {
             ctx.schedule(new ExecTask(nextExec, null));

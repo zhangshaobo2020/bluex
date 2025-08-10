@@ -13,6 +13,7 @@ import java.util.List;
 @Component
 @ConfigurationProperties(prefix = "bluex")
 public class CustomPathConfig {
+    private List<String> enumScanPaths;
     private List<String> typeScanPaths;
     private List<String> functionScanPaths;
 }

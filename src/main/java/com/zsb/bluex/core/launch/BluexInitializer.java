@@ -22,6 +22,8 @@ public class BluexInitializer implements ApplicationRunner {
         metaHolder.processDefaultType();
         // 解析默认的流程控制节点
         metaHolder.processDefaultControl();
+        // 扫描自定义的@BluexEnum
+        metaHolder.processBluexEnum(customPathConfig.getEnumScanPaths());
         // 扫描自定义的@BluexType
         metaHolder.processBluexType(customPathConfig.getTypeScanPaths());
         // 扫描自定义的@BluexFunctionLib

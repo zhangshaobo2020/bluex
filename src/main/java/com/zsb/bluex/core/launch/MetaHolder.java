@@ -1,5 +1,6 @@
 package com.zsb.bluex.core.launch;
 
+import com.zsb.bluex.core.anno.BluexEnum;
 import com.zsb.bluex.core.anno.BluexFunctionLib;
 import com.zsb.bluex.core.anno.BluexType;
 import com.zsb.bluex.core.def.ControlDef;
@@ -52,11 +53,23 @@ public class MetaHolder {
         CONTROL_DEFINITION.putAll(map);
     }
 
+    public void processBluexEnum(List<String> basePackages) throws Exception {
+        ClassPathScanningCandidateComponentProvider scanner =
+                new ClassPathScanningCandidateComponentProvider(false);
+
+        scanner.addIncludeFilter(new AnnotationTypeFilter(BluexEnum.class));
+        loopProcessEnumAndType(basePackages, scanner);
+    }
+
     public void processBluexType(List<String> basePackages) throws Exception {
         ClassPathScanningCandidateComponentProvider scanner =
                 new ClassPathScanningCandidateComponentProvider(false);
 
         scanner.addIncludeFilter(new AnnotationTypeFilter(BluexType.class));
+        loopProcessEnumAndType(basePackages, scanner);
+    }
+
+    private void loopProcessEnumAndType(List<String> basePackages, ClassPathScanningCandidateComponentProvider scanner) throws ClassNotFoundException {
         for (String basePackage : basePackages) {
             for (BeanDefinition bd : scanner.findCandidateComponents(basePackage)) {
                 Class<?> clazz = Class.forName(bd.getBeanClassName());

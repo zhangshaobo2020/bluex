@@ -25,6 +25,8 @@ spring:
       #允许出现单引号
       allow_single_quotes: true
 bluex:
+  enum-scan-paths:
+    - com.zsb.bluex.defaults.enums
   type-scan-paths:
     - com.zsb.bluex.defaults.types
   function-scan-paths:

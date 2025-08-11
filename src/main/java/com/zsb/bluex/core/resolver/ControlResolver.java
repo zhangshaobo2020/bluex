@@ -11,8 +11,6 @@ public class ControlResolver {
 
     public static Map<String, ControlDef> processDefaultControl() {
         Map<String, ControlDef> map = new HashMap<>();
-        // BeginPlay节点
-        map.put("CONTROL.BeginPlay", definitionBeginPlay());
         // Branch节点
         map.put("CONTROL.Branch", definitionBranch());
         // While节点
@@ -22,18 +20,6 @@ public class ControlResolver {
         // Delay节点
         map.put("CONTROL.Delay", definitionDelay());
         return map;
-    }
-
-    private static ControlDef definitionBeginPlay() {
-        ControlDef def = new ControlDef();
-        def.setName("BeginPlay");
-        def.setDisplayName("开始运行");
-        def.setCategory("控制节点|BeginPlay");
-        def.setQualifiedName("CONTROL.BeginPlay");
-        def.setSignature("CONTROL.BeginPlay");
-
-        def.getOutputExecDefs().add(new ParamDef("Exec"));
-        return def;
     }
 
     private static ControlDef definitionBranch() {

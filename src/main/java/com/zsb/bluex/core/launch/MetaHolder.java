@@ -7,6 +7,7 @@ import com.zsb.bluex.core.def.ControlDef;
 import com.zsb.bluex.core.def.FunctionDef;
 import com.zsb.bluex.core.def.TypeDef;
 import com.zsb.bluex.core.resolver.ControlResolver;
+import com.zsb.bluex.core.resolver.DelegateResolver;
 import com.zsb.bluex.core.resolver.FunctionResolver;
 import com.zsb.bluex.core.resolver.TypeResolver;
 import lombok.AllArgsConstructor;
@@ -50,6 +51,11 @@ public class MetaHolder {
 
     public void processDefaultControl() {
         Map<String, ControlDef> map = ControlResolver.processDefaultControl();
+        CONTROL_DEFINITION.putAll(map);
+    }
+
+    public void processDefaultDelegate() {
+        Map<String, ControlDef> map = DelegateResolver.processDefaultDelegate();
         CONTROL_DEFINITION.putAll(map);
     }
 

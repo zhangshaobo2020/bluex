@@ -8,7 +8,7 @@ import com.zsb.bluex.core.runtime.node.ExecNode;
 import java.lang.reflect.Method;
 
 public class FuncExecNode extends ExecNode {
-    public final Method method;
+    public Method method;
     public String nextExec;
 
     public FuncExecNode(String id, Method method) {

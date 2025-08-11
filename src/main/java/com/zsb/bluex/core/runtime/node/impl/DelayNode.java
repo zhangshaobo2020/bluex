@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 
 @Slf4j
 public class DelayNode extends ExecNode {
-
     public String nextExec;
 
     /**

@@ -7,7 +7,7 @@ import com.zsb.bluex.core.runtime.node.PureNode;
 import java.lang.reflect.Method;
 
 public class FuncPureNode extends PureNode {
-    public final Method method;
+    public Method method;
 
     public FuncPureNode(String id, Method method) {
         super(id, "FuncPureNode" + "->" + method.getName());

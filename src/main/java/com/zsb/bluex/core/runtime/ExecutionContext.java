@@ -2,7 +2,6 @@ package com.zsb.bluex.core.runtime;
 
 import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.param.OUTPUT;
-import com.zsb.bluex.core.runtime.connection.PinConnection;
 import com.zsb.bluex.core.runtime.node.ExecNode;
 import com.zsb.bluex.core.runtime.node.PureNode;
 import com.zsb.bluex.core.runtime.param.ParamSource;
@@ -29,7 +28,24 @@ public class ExecutionContext {
         }
     }
 
-    public void initFirstNode(ExecTask task) throws Exception {
+    public ExecNode findStartupNode() {
+        List<ExecNode> candidateNodeList = new LinkedList<>();
+        for (ExecNode execNode : execNodes.values()) {
+            if ("DelegateNode".equals(execNode.name)) {
+                candidateNodeList.add(execNode);
+            }
+        }
+        if (candidateNodeList.size() == 1) {
+            return candidateNodeList.get(0);
+        } else {
+            throw new RuntimeException("超过一个事件委托节点！");
+        }
+    }
+
+    public void initStartupNode() throws Exception {
+        // 找到事件委托节点
+        ExecNode startupNode = findStartupNode();
+        ExecTask task = new ExecTask(startupNode.id, null);
         taskQueue.offer(task);
     }
 
@@ -42,8 +58,6 @@ public class ExecutionContext {
 
     private final Map<String, ExecNode> execNodes = new LinkedHashMap<>();
     private final Map<String, PureNode> pureNodes = new LinkedHashMap<>();
-
-    private final List<PinConnection> connections = new LinkedList<>();
 
     public void addExecNode(ExecNode node) {
         node.ctx = this;

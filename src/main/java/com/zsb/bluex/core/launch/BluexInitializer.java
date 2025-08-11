@@ -20,13 +20,15 @@ public class BluexInitializer implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         // 解析默认的内置Java类型
         metaHolder.processDefaultType();
-        // 解析默认的流程控制节点
-        metaHolder.processDefaultControl();
         // 扫描自定义的@BluexEnum
         metaHolder.processBluexEnum(customPathConfig.getEnumScanPaths());
         // 扫描自定义的@BluexType
         metaHolder.processBluexType(customPathConfig.getTypeScanPaths());
+        // 解析默认的流程控制节点
+        metaHolder.processDefaultControl();
         // 扫描自定义的@BluexFunctionLib
         metaHolder.processBluexFunction(customPathConfig.getFunctionScanPaths());
+        // 解析默认的流程控制节点
+        metaHolder.processDefaultDelegate();
     }
 }

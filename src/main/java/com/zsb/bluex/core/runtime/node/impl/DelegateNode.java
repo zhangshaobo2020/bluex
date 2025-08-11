@@ -4,17 +4,16 @@ import com.zsb.bluex.core.runtime.ExecTask;
 import com.zsb.bluex.core.runtime.ExecutionContext;
 import com.zsb.bluex.core.runtime.node.ExecNode;
 
-public class BeginPlayNode extends ExecNode {
-
+public class DelegateNode extends ExecNode {
     public String nextExec;
 
-    public BeginPlayNode(String id) {
-        super(id, "BeginPlayNode");
+    public DelegateNode(String id) {
+        super(id, "DelegateNode");
     }
 
     @Override
     public void execute(ExecutionContext ctx) throws Exception {
-        // BeginPlay 仅作为起点，直接进入下一节点
+        // DelegateNode 仅作为起点，直接进入下一节点
         if (nextExec != null) {
             ctx.schedule(new ExecTask(nextExec, null));
         }

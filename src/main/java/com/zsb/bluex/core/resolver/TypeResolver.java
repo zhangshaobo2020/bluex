@@ -3,6 +3,7 @@ package com.zsb.bluex.core.resolver;
 import com.zsb.bluex.core.anno.BluexType;
 import com.zsb.bluex.core.def.TypeDef;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -33,6 +34,8 @@ public class TypeResolver {
         PRIMITIVE_CLASSES.add(BigDecimal.class);
         PRIMITIVE_CLASSES.add(Date.class);
         PRIMITIVE_CLASSES.add(LocalDateTime.class);
+
+        PRIMITIVE_CLASSES.add(File.class);
     }
 
     public static TypeDef resolveType(Type genericType) {

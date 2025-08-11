@@ -17,6 +17,10 @@ public abstract class BaseNode implements Serializable {
     public Map<String, ParamSource<?>> inputParams = new LinkedHashMap<>();
     public Map<String, OUTPUT<?>> outputs = new LinkedHashMap<>();
 
+    public ParamSource<?> getInputParam(String name) {
+        return inputParams.get(name);
+    }
+
     public void setInputParam(String name, ParamSource<?> source) {
         inputParams.put(name, source);
     }

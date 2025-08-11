@@ -1,11 +1,11 @@
 package com.zsb.bluex.core.graph;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zsb.bluex.core.def.ControlDef;
 import com.zsb.bluex.core.def.FunctionDef;
 import com.zsb.bluex.core.def.ParamDef;
 import com.zsb.bluex.core.launch.MetaHolder;
 import com.zsb.bluex.core.param.OUTPUT;
-import com.zsb.bluex.core.runtime.ExecTask;
 import com.zsb.bluex.core.runtime.ExecutionContext;
 import com.zsb.bluex.core.runtime.node.BaseNode;
 import com.zsb.bluex.core.runtime.node.impl.*;
@@ -37,106 +37,115 @@ public class GraphView implements Serializable {
 
         for (GraphNode node : nodes) {
             if (node.isExecutable()) {
-                switch (node.getQualifiedName()) {
-                    // 匹配 BeginPlay
-                    case "CONTROL.BeginPlay": {
-                        BeginPlayNode beginPlayNode = new BeginPlayNode(node.getId());
-                        beginPlayNode.nextExec = findForNextExecNode(node, "Exec");
-                        ctx.addExecNode(beginPlayNode);
-                        break;
-                    }
-                    // 匹配 Branch
-                    case "CONTROL.Branch": {
-                        BranchNode branchNode = new BranchNode(node.getId());
-                        // 查找Cond引脚是否有进行连接
-                        String nodePinMapping = findSourceParamNodeAndPin(node, "Cond");
-                        if (StringUtils.isBlank(nodePinMapping)) {
-                            Boolean cond = findForCurrentPinValue(node, "Cond", Boolean.class);
-                            branchNode.condition = new LiteralValueSource<>(cond);
-                        } else {
-                            String[] split = nodePinMapping.split("-");
-                            branchNode.condition = new NodeOutputSource<>(split[0], split[1]);
+                if (node.getQualifiedName().startsWith("CONTROL.")) {
+                    switch (node.getQualifiedName()) {
+                        // 匹配 Branch
+                        case "CONTROL.Branch": {
+                            BranchNode branchNode = new BranchNode(node.getId());
+                            // 查找Cond引脚是否有进行连接
+                            String nodePinMapping = findSourceParamNodeAndPin(node, "Cond");
+                            if (StringUtils.isBlank(nodePinMapping)) {
+                                Boolean cond = findForCurrentPinValue(node, "Cond", Boolean.class);
+                                branchNode.condition = new LiteralValueSource<>(cond);
+                            } else {
+                                String[] split = nodePinMapping.split("-");
+                                branchNode.condition = new NodeOutputSource<>(split[0], split[1]);
+                            }
+                            branchNode.trueExec = findForNextExecNode(node, "True");
+                            branchNode.falseExec = findForNextExecNode(node, "False");
+                            ctx.addExecNode(branchNode);
+                            break;
                         }
-                        branchNode.trueExec = findForNextExecNode(node, "True");
-                        branchNode.falseExec = findForNextExecNode(node, "False");
-                        ctx.addExecNode(branchNode);
-                        break;
-                    }
-                    // 匹配 While
-                    case "CONTROL.While": {
-                        WhileNode whileNode = new WhileNode(node.getId());
-                        // 查找Cond引脚是否有进行连接
-                        String nodePinMapping = findSourceParamNodeAndPin(node, "Cond");
-                        if (StringUtils.isBlank(nodePinMapping)) {
-                            Boolean cond = findForCurrentPinValue(node, "Cond", Boolean.class);
-                            whileNode.condition = new LiteralValueSource<>(cond);
-                        } else {
-                            String[] split = nodePinMapping.split("-");
-                            whileNode.condition = new NodeOutputSource<>(split[0], split[1]);
-                            log.debug("While节点使用NodeOutputSource");
+                        // 匹配 While
+                        case "CONTROL.While": {
+                            WhileNode whileNode = new WhileNode(node.getId());
+                            // 查找Cond引脚是否有进行连接
+                            String nodePinMapping = findSourceParamNodeAndPin(node, "Cond");
+                            if (StringUtils.isBlank(nodePinMapping)) {
+                                Boolean cond = findForCurrentPinValue(node, "Cond", Boolean.class);
+                                whileNode.condition = new LiteralValueSource<>(cond);
+                            } else {
+                                String[] split = nodePinMapping.split("-");
+                                whileNode.condition = new NodeOutputSource<>(split[0], split[1]);
+                                log.debug("While节点使用NodeOutputSource");
+                            }
+                            whileNode.loopBodyExec = findForNextExecNode(node, "LoopBody");
+                            whileNode.completedExec = findForNextExecNode(node, "Completed");
+                            ctx.addExecNode(whileNode);
+                            break;
                         }
-                        whileNode.loopBodyExec = findForNextExecNode(node, "LoopBody");
-                        whileNode.completedExec = findForNextExecNode(node, "Completed");
-                        ctx.addExecNode(whileNode);
-                        break;
-                    }
-                    // 匹配 ForLoop
-                    case "CONTROL.ForLoop": {
-                        ForLoopNode forLoopNode = new ForLoopNode(node.getId());
-                        ParamSource<Integer> fromPin;
-                        // 查找From引脚是否有进行连接
-                        String fromMapping = findSourceParamNodeAndPin(node, "From");
-                        if (StringUtils.isBlank(fromMapping)) {
-                            Integer from = findForCurrentPinValue(node, "From", Integer.class);
-                            fromPin = new LiteralValueSource<>(from);
-                        } else {
-                            String[] split = fromMapping.split("-");
-                            fromPin = new NodeOutputSource<>(split[0], split[1]);
-                            log.debug("ForLoop节点使用NodeOutputSource");
+                        // 匹配 ForLoop
+                        case "CONTROL.ForLoop": {
+                            ForLoopNode forLoopNode = new ForLoopNode(node.getId());
+                            ParamSource<Integer> fromPin;
+                            // 查找From引脚是否有进行连接
+                            String fromMapping = findSourceParamNodeAndPin(node, "From");
+                            if (StringUtils.isBlank(fromMapping)) {
+                                Integer from = findForCurrentPinValue(node, "From", Integer.class);
+                                fromPin = new LiteralValueSource<>(from);
+                            } else {
+                                String[] split = fromMapping.split("-");
+                                fromPin = new NodeOutputSource<>(split[0], split[1]);
+                                log.debug("ForLoop节点使用NodeOutputSource");
+                            }
+                            ParamSource<Integer> toPin;
+                            // 查找To引脚是否有进行连接
+                            String toMapping = findSourceParamNodeAndPin(node, "To");
+                            if (StringUtils.isBlank(toMapping)) {
+                                Integer to = findForCurrentPinValue(node, "To", Integer.class);
+                                toPin = new LiteralValueSource<>(to);
+                            } else {
+                                String[] split = toMapping.split("-");
+                                toPin = new NodeOutputSource<>(split[0], split[1]);
+                            }
+                            forLoopNode.setRange(fromPin, toPin);
+                            forLoopNode.loopBodyExec = findForNextExecNode(node, "LoopBody");
+                            forLoopNode.completedExec = findForNextExecNode(node, "Completed");
+                            ctx.addExecNode(forLoopNode);
+                            break;
                         }
-                        ParamSource<Integer> toPin;
-                        // 查找To引脚是否有进行连接
-                        String toMapping = findSourceParamNodeAndPin(node, "To");
-                        if (StringUtils.isBlank(toMapping)) {
-                            Integer to = findForCurrentPinValue(node, "To", Integer.class);
-                            toPin = new LiteralValueSource<>(to);
-                        } else {
-                            String[] split = toMapping.split("-");
-                            toPin = new NodeOutputSource<>(split[0], split[1]);
+                        // 匹配 Delay
+                        case "CONTROL.Delay": {
+                            DelayNode delayNode = new DelayNode(node.getId());
+                            // 查找Delay(ms)引脚是否有进行连接
+                            String nodePinMapping = findSourceParamNodeAndPin(node, "Delay(ms)");
+                            if (StringUtils.isBlank(nodePinMapping)) {
+                                Long delayMillis = findForCurrentPinValue(node, "Delay(ms)", Long.class);
+                                delayNode.delayMillis = new LiteralValueSource<>(delayMillis);
+                            } else {
+                                String[] split = nodePinMapping.split("-");
+                                delayNode.delayMillis = new NodeOutputSource<>(split[0], split[1]);
+                            }
+                            delayNode.nextExec = findForNextExecNode(node, "Exec");
+                            ctx.addExecNode(delayNode);
+                            break;
                         }
-                        forLoopNode.setRange(fromPin, toPin);
-                        forLoopNode.loopBodyExec = findForNextExecNode(node, "LoopBody");
-                        forLoopNode.completedExec = findForNextExecNode(node, "Completed");
-                        ctx.addExecNode(forLoopNode);
-                        break;
-                    }
-                    // 匹配 Delay
-                    case "CONTROL.Delay": {
-                        DelayNode delayNode = new DelayNode(node.getId());
-                        // 查找Delay(ms)引脚是否有进行连接
-                        String nodePinMapping = findSourceParamNodeAndPin(node, "Delay(ms)");
-                        if (StringUtils.isBlank(nodePinMapping)) {
-                            Long delayMillis = findForCurrentPinValue(node, "Delay(ms)", Long.class);
-                            delayNode.delayMillis = new LiteralValueSource<>(delayMillis);
-                        } else {
-                            String[] split = nodePinMapping.split("-");
-                            delayNode.delayMillis = new NodeOutputSource<>(split[0], split[1]);
+                        // 匹配 Delay
+                        case "CONTROL.FileSystemListener": {
+                            DelegateNode delayNode = new DelegateNode(node.getId());
+                            delayNode.nextExec = findForNextExecNode(node, "Exec");
+                            ctx.addExecNode(delayNode);
+                            break;
                         }
-                        delayNode.nextExec = findForNextExecNode(node, "Exec");
-                        ctx.addExecNode(delayNode);
-                        break;
+                        default: {
+                            break;
+                        }
                     }
-                    default: {
-                        // 说明是FuncExecNode
-                        Method method = matchJavaMethod(node.getQualifiedName());
-                        FuncExecNode execNode = new FuncExecNode(node.getId(), method);
-                        processNodeParams(execNode, node);
+                } else if (node.getQualifiedName().startsWith("DELEGATE.")) {
+                    // 说明是事件委托节点
+                    DelegateNode delegateNode = new DelegateNode(node.getId());
+                    processNodeParams(delegateNode, node);
+                    delegateNode.nextExec = findForNextExecNode(node, "Exec");
+                    ctx.addExecNode(delegateNode);
+                } else {
+                    // 说明是FuncExecNode
+                    Method method = matchJavaMethod(node.getQualifiedName());
+                    FuncExecNode execNode = new FuncExecNode(node.getId(), method);
+                    processNodeParams(execNode, node);
 
-                        // 尝试查找下一个Exec节点
-                        execNode.nextExec = findForNextExecNode(node, "Exec");
-                        ctx.addExecNode(execNode);
-                        break;
-                    }
+                    // 尝试查找下一个Exec节点
+                    execNode.nextExec = findForNextExecNode(node, "Exec");
+                    ctx.addExecNode(execNode);
                 }
             } else {
                 // 说明是FuncPureNode
@@ -146,21 +155,8 @@ public class GraphView implements Serializable {
                 ctx.addPureNode(pureNode);
             }
         }
-        // TODO: 获取起始节点
-        String beginPlayNodeId = getBeginPlayNodeId();
-        if (StringUtils.isBlank(beginPlayNodeId)) throw new IllegalArgumentException("缺失BeginPlay节点");
-        ctx.initFirstNode(new ExecTask(beginPlayNodeId, null));
+        ctx.initStartupNode();
         return ctx;
-    }
-
-    /**
-     * @return 获取起始节点
-     */
-    private String getBeginPlayNodeId() {
-        for (GraphNode node : nodes) {
-            if (node.getQualifiedName().equals("CONTROL.BeginPlay")) return node.getId();
-        }
-        return null;
     }
 
     /**
@@ -179,16 +175,29 @@ public class GraphView implements Serializable {
                 // 这里需要根据参数类型去获取实际的实参类型
                 String qualifiedName = node.getQualifiedName();
                 FunctionDef functionDef = MetaHolder.FUNCTION_DEFINITION.get(qualifiedName);
-                if (functionDef == null) {
-                    throw new RuntimeException(qualifiedName + "的方法不存在!");
+                if (functionDef != null) {
+                    ParamDef paramDef = functionDef.getInputParamDefs()
+                            .stream().filter(def -> def.getName().equals(paramName))
+                            .findFirst()
+                            .orElseThrow(() -> new RuntimeException(qualifiedName + "的函数中参数" + paramName + "不存在!"));
+                    // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
+                    String className = paramDef.getTypeDef().getQualifiedName();
+                    paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
+                } else {
+                    // 尝试去匹配事件委托节点
+                    ControlDef controlDef = MetaHolder.CONTROL_DEFINITION.get(qualifiedName);
+                    if (controlDef != null) {
+                        ParamDef paramDef = controlDef.getInputParamDefs()
+                                .stream().filter(def -> def.getName().equals(paramName))
+                                .findFirst()
+                                .orElseThrow(() -> new RuntimeException(qualifiedName + "的委托中参数" + paramName + "不存在!"));
+                        // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
+                        String className = paramDef.getTypeDef().getQualifiedName();
+                        paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
+                    } else {
+                        throw new RuntimeException(qualifiedName + "的函数委托或不存在!");
+                    }
                 }
-                ParamDef paramDef = functionDef.getInputParamDefs()
-                        .stream().filter(def -> def.getName().equals(paramName))
-                        .findFirst()
-                        .orElseThrow(() -> new RuntimeException(qualifiedName + "的方法中参数" + paramName + "不存在!"));
-                // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
-                String className = paramDef.getTypeDef().getQualifiedName();
-                paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
             } else {
                 String[] split = paramMapping.split("-");
                 paramPin = new NodeOutputSource<>(split[0], split[1]);
@@ -322,7 +331,7 @@ public class GraphView implements Serializable {
      * @return 转换后的值，如果无法转换则返回 null
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
-    private <T> T findForCurrentPinValue(GraphNode currentNode, String inputParamName, Class<T> targetType) throws Exception {
+    public <T> T findForCurrentPinValue(GraphNode currentNode, String inputParamName, Class<T> targetType) throws Exception {
         String paramInputId = findInputParamId(currentNode, inputParamName);
         if (StringUtils.isBlank(paramInputId)) {
             return null;

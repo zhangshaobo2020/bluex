@@ -10,6 +10,8 @@ import java.io.Serializable;
 public class GraphParamPin implements Serializable {
     // 唯一ID
     private String id;
+    // 唯一ID
+    private String controlId;
     // 名称
     private String name;
     // 前端Control保存的值(一般为数字类型、布尔类型和字符串)

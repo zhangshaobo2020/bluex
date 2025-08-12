@@ -24,6 +24,13 @@ spring:
       allow_unquoted_control_chars: true
       #允许出现单引号
       allow_single_quotes: true
+  datasource:
+    url: jdbc:oracle:thin:@10.100.3.238:1521:orcl
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: sw_ori
+    password: sw
+mybatis-plus:
+  mapper-locations: classpath*:/com/zsb/model/bluex/**/*.xml
 bluex:
   enum-scan-paths:
     - com.zsb.bluex.defaults.enums

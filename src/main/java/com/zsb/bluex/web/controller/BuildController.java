@@ -17,22 +17,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/build")
 public class BuildController {
 
-    @PostMapping("/manuallyTriggeredTest")
-    public WebResult<String> graphTransferTest(@RequestBody GraphView graphView) throws Exception {
-
-        ManuallyTriggered manuallyTriggered = new ManuallyTriggered(graphView);
-        manuallyTriggered.start();
-        return WebResult.success("OK");
-    }
-
-    @PostMapping("/fileSystemListenerTest")
-    public WebResult<String> fileSystemListenerTest(@RequestBody GraphView graphView) throws Exception {
-
-        FileSystemListener fileSystemListener = new FileSystemListener(graphView);
-        fileSystemListener.start();
-        return WebResult.success("OK");
-    }
-
     @PostMapping("/autoMatchTest")
     public WebResult<String> autoMatchTest(@RequestBody GraphView graphView) throws Exception {
         List<GraphNode> graphNodes = graphView.getNodes()
@@ -45,10 +29,10 @@ public class BuildController {
         GraphNode graphNode = graphNodes.get(0);
         if ("DELEGATE.ManuallyTriggered".equals(graphNode.getQualifiedName())) {
             ManuallyTriggered manuallyTriggered = new ManuallyTriggered(graphView);
-            manuallyTriggered.start();
+            manuallyTriggered.start(true);
         } else if ("DELEGATE.FileSystemListener".equals(graphNode.getQualifiedName())) {
             FileSystemListener fileSystemListener = new FileSystemListener(graphView);
-            fileSystemListener.start();
+            fileSystemListener.start(true);
         }
         return WebResult.success("OK");
     }

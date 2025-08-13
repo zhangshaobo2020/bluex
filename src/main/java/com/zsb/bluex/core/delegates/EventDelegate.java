@@ -11,7 +11,7 @@ public abstract class EventDelegate {
         this.graphView = graphView;
     }
 
-    public abstract void start() throws Exception;
+    public abstract void start(boolean isDebug) throws Exception;
 
     public abstract void end() throws Exception;
 }

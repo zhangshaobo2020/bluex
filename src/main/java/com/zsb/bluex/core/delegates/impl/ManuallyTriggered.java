@@ -11,7 +11,7 @@ public class ManuallyTriggered extends EventDelegate {
     }
 
     @Override
-    public void start() throws Exception {
+    public void start(boolean isDebug) throws Exception {
         /* 执行开始 */
         ExecutionContext newCtx = graphView.buildExecCtx();
         newCtx.run();

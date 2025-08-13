@@ -36,7 +36,7 @@ public class FileSystemListener extends EventDelegate {
     private Thread watchThread;
 
     @Override
-    public void start() throws Exception {
+    public void start(boolean isDebug) throws Exception {
         watchService = FileSystems.getDefault().newWatchService();
         Path path = Paths.get(dir);
         path.register(
@@ -80,6 +80,9 @@ public class FileSystemListener extends EventDelegate {
                         }
                         newCtx.run();
                         /* 执行结束 */
+                        if (isDebug) {
+                            end();
+                        }
                     }
                     key.reset();
                 }

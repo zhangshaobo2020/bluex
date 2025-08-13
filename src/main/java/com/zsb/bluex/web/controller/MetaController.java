@@ -23,6 +23,10 @@ public class MetaController {
         Map<String, ControlDef> controlDef = MetaHolder.CONTROL_DEFINITION;
         // 获取Function定义
         Map<String, FunctionDef> functionDef = MetaHolder.FUNCTION_DEFINITION;
-        return WebResult.success(new MetaHolder.MetaInfo(typeDef, controlDef, functionDef));
+        // 获取Generated定义
+        Map<String, FunctionDef> generatedDef = MetaHolder.GENERATED_DEFINITION;
+        return WebResult.success(
+                new MetaHolder.MetaInfo(typeDef, controlDef, functionDef, generatedDef)
+        );
     }
 }

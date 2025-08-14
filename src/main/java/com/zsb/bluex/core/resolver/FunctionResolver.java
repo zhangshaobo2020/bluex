@@ -33,7 +33,7 @@ public class FunctionResolver {
 
             FunctionDef func = new FunctionDef();
             func.setName(method.getName());
-            func.setQualifiedName(clazz.getName() + "." + method.getName());
+            func.setQualifiedName("FUNCTION:" + clazz.getName() + ":" + method.getName());
             func.setCategory(functionLibCategory + "|" + method.getName());
             func.setDisplayName(bf.displayName());
             func.setDescription(bf.description());

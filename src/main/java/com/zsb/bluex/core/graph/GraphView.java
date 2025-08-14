@@ -37,10 +37,10 @@ public class GraphView implements Serializable {
 
         for (GraphNode node : nodes) {
             if (node.isExecutable()) {
-                if (node.getQualifiedName().startsWith("CONTROL.")) {
+                if (node.getQualifiedName().startsWith("CONTROL:")) {
                     switch (node.getQualifiedName()) {
                         // 匹配 Branch
-                        case "CONTROL.Branch": {
+                        case "CONTROL:Branch": {
                             BranchNode branchNode = new BranchNode(node.getId());
                             // 查找Cond引脚是否有进行连接
                             String nodePinMapping = findSourceParamNodeAndPin(node, "Cond");
@@ -57,7 +57,7 @@ public class GraphView implements Serializable {
                             break;
                         }
                         // 匹配 While
-                        case "CONTROL.While": {
+                        case "CONTROL:While": {
                             WhileNode whileNode = new WhileNode(node.getId());
                             // 查找Cond引脚是否有进行连接
                             String nodePinMapping = findSourceParamNodeAndPin(node, "Cond");
@@ -75,7 +75,7 @@ public class GraphView implements Serializable {
                             break;
                         }
                         // 匹配 ForLoop
-                        case "CONTROL.ForLoop": {
+                        case "CONTROL:ForLoop": {
                             ForLoopNode forLoopNode = new ForLoopNode(node.getId());
                             ParamSource<Integer> fromPin;
                             // 查找From引脚是否有进行连接
@@ -105,7 +105,7 @@ public class GraphView implements Serializable {
                             break;
                         }
                         // 匹配 Delay
-                        case "CONTROL.Delay": {
+                        case "CONTROL:Delay": {
                             DelayNode delayNode = new DelayNode(node.getId());
                             // 查找Delay(ms)引脚是否有进行连接
                             String nodePinMapping = findSourceParamNodeAndPin(node, "Delay(ms)");
@@ -121,7 +121,7 @@ public class GraphView implements Serializable {
                             break;
                         }
                         // 匹配 Delay
-                        case "CONTROL.FileSystemListener": {
+                        case "CONTROL:FileSystemListener": {
                             DelegateNode delayNode = new DelegateNode(node.getId());
                             delayNode.nextExec = findForNextExecNode(node, "Exec");
                             ctx.addExecNode(delayNode);
@@ -131,13 +131,13 @@ public class GraphView implements Serializable {
                             break;
                         }
                     }
-                } else if (node.getQualifiedName().startsWith("DELEGATE.")) {
+                } else if (node.getQualifiedName().startsWith("DELEGATE:")) {
                     // 说明是事件委托节点
                     DelegateNode delegateNode = new DelegateNode(node.getId());
                     processNodeParams(delegateNode, node);
                     delegateNode.nextExec = findForNextExecNode(node, "Exec");
                     ctx.addExecNode(delegateNode);
-                } else {
+                } else if (node.getQualifiedName().startsWith("FUNCTION:")) {
                     // 说明是FuncExecNode
                     Method method = matchJavaMethod(node.getQualifiedName());
                     FuncExecNode execNode = new FuncExecNode(node.getId(), method);
@@ -147,12 +147,16 @@ public class GraphView implements Serializable {
                     execNode.nextExec = findForNextExecNode(node, "Exec");
                     ctx.addExecNode(execNode);
                 }
+                // TODO: 实现GENERATED逻辑
             } else {
-                // 说明是FuncPureNode
-                Method method = matchJavaMethod(node.getQualifiedName());
-                FuncPureNode pureNode = new FuncPureNode(node.getId(), method);
-                processNodeParams(pureNode, node);
-                ctx.addPureNode(pureNode);
+                if (node.getQualifiedName().startsWith("FUNCTION:")) {
+                    // 说明是FuncPureNode
+                    Method method = matchJavaMethod(node.getQualifiedName());
+                    FuncPureNode pureNode = new FuncPureNode(node.getId(), method);
+                    processNodeParams(pureNode, node);
+                    ctx.addPureNode(pureNode);
+                }
+                // TODO: 实现GENERATED逻辑
             }
         }
         ctx.initStartupNode();
@@ -181,7 +185,7 @@ public class GraphView implements Serializable {
                             .findFirst()
                             .orElseThrow(() -> new RuntimeException(qualifiedName + "的函数中参数" + paramName + "不存在!"));
                     // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
-                    String className = paramDef.getTypeDef().getQualifiedName();
+                    String className = paramDef.getTypeDef().getQualifiedName().replace("TYPE:", "");
                     paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
                 } else {
                     // 尝试去匹配事件委托节点
@@ -192,7 +196,7 @@ public class GraphView implements Serializable {
                                 .findFirst()
                                 .orElseThrow(() -> new RuntimeException(qualifiedName + "的委托中参数" + paramName + "不存在!"));
                         // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
-                        String className = paramDef.getTypeDef().getQualifiedName();
+                        String className = paramDef.getTypeDef().getQualifiedName().replace("TYPE:", "");
                         paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
                     } else {
                         throw new RuntimeException(qualifiedName + "的函数委托或不存在!");
@@ -217,7 +221,8 @@ public class GraphView implements Serializable {
      * @throws Exception 可能发生的一场
      */
     private Method matchJavaMethod(String functionQualifiedName) throws Exception {
-        int lastDot = functionQualifiedName.lastIndexOf('.');
+        functionQualifiedName = functionQualifiedName.replace("FUNCTION:", "");
+        int lastDot = functionQualifiedName.lastIndexOf(':');
         String className = functionQualifiedName.substring(0, lastDot);
         String methodName = functionQualifiedName.substring(lastDot + 1);
         Class<?> clazz = Class.forName(className);

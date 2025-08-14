@@ -1,12 +1,16 @@
-package com.zsb.bluex.core.delegates.impl;
+package com.zsb.bluex.core.runtime.delegates.impl;
 
-import com.zsb.bluex.core.delegates.EventDelegate;
+import com.zsb.bluex.core.def.ControlDef;
+import com.zsb.bluex.core.def.ParamDef;
 import com.zsb.bluex.core.graph.GraphView;
+import com.zsb.bluex.core.launch.MetaHolder;
 import com.zsb.bluex.core.param.OUTPUT;
 import com.zsb.bluex.core.runtime.ExecutionContext;
+import com.zsb.bluex.core.runtime.delegates.EventDelegate;
 import com.zsb.bluex.core.runtime.node.impl.DelegateNode;
 import com.zsb.bluex.core.runtime.param.LiteralValueSource;
 import com.zsb.bluex.defaults.enums.FileOpTypeEnum;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -17,7 +21,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class FileSystemListener extends EventDelegate {
 
-    public FileSystemListener(GraphView graphView) throws Exception {
+    public FileSystemListener() {
+    }
+
+    @SneakyThrows
+    public FileSystemListener(GraphView graphView) {
         super(graphView);
         // 提取参数用作初始化
         DelegateNode startupNode = (DelegateNode) graphView.buildExecCtx().findStartupNode();
@@ -108,5 +116,39 @@ public class FileSystemListener extends EventDelegate {
         if (watchThread != null) {
             watchThread.interrupt(); // 防止阻塞在其他地方
         }
+    }
+
+    @Override
+    public ControlDef provideDefinition() {
+        ControlDef def = new ControlDef();
+        def.setName("definitionFileSystemListener");
+        def.setDisplayName("文件系统监听");
+        def.setCategory("事件委托|FileSystemListener");
+        def.setQualifiedName("DELEGATE:FileSystemListener");
+        def.setSignature("DELEGATE:FileSystemListener");
+        def.setDelegate(true);
+
+        def.getInputParamDefs().add(
+                new ParamDef(
+                        "Dir",
+                        MetaHolder.PRIMITIVE_DEFINITION.get("java.lang.String")
+                )
+        );
+
+        def.getOutputExecDefs().add(new ParamDef("Exec"));
+
+        def.getOutputParamDefs().add(
+                new ParamDef(
+                        "File",
+                        MetaHolder.PRIMITIVE_DEFINITION.get("java.io.File")
+                )
+        );
+        def.getOutputParamDefs().add(
+                new ParamDef(
+                        "OpType",
+                        MetaHolder.CLASS_DEFINITION.get("com.zsb.bluex.defaults.enums.FileOpTypeEnum")
+                )
+        );
+        return def;
     }
 }

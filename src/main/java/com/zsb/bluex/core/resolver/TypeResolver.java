@@ -1,8 +1,10 @@
 package com.zsb.bluex.core.resolver;
 
-import com.zsb.bluex.core.anno.BluexType;
+import com.zsb.bluex.core.anno.BluexClass;
 import com.zsb.bluex.core.def.TypeDef;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -19,6 +21,7 @@ public class TypeResolver {
 
     static {
         PRIMITIVE_CLASSES.add(Object.class);
+        PRIMITIVE_CLASSES.add(Class.class);
 
         PRIMITIVE_CLASSES.add(Byte.class);
         PRIMITIVE_CLASSES.add(Short.class);
@@ -36,6 +39,8 @@ public class TypeResolver {
         PRIMITIVE_CLASSES.add(LocalDateTime.class);
 
         PRIMITIVE_CLASSES.add(File.class);
+        PRIMITIVE_CLASSES.add(HttpServletRequest.class);
+        PRIMITIVE_CLASSES.add(HttpServletResponse.class);
     }
 
     public static TypeDef resolveType(Type genericType) {
@@ -52,7 +57,7 @@ public class TypeResolver {
             ParameterizedType pt = (ParameterizedType) genericType;
             Class<?> rawType = (Class<?>) pt.getRawType();
             def.setName(rawType.getSimpleName());
-            def.setQualifiedName(rawType.getName());
+            def.setQualifiedName("TYPE:" + rawType.getName());
 
             // 标记为 List 或 Map
             def.setPrimitive(false);
@@ -64,14 +69,14 @@ public class TypeResolver {
                 def.getGenerics().add(resolveType(arg));
             }
 
-            if (rawType.isAnnotationPresent(BluexType.class)) {
+            if (rawType.isAnnotationPresent(BluexClass.class)) {
                 def.setFields(resolveFields(rawType));
             }
 
         } else if (genericType instanceof Class<?>) {
             Class<?> clazz = (Class<?>) genericType;
             def.setName(clazz.getSimpleName());
-            def.setQualifiedName(clazz.getName());
+            def.setQualifiedName("TYPE:" + clazz.getName());
 
             // 处理枚举
             if (clazz.isEnum()) {
@@ -94,7 +99,7 @@ public class TypeResolver {
                 def.setList(false);
                 def.setMap(false);
 
-                if (clazz.isAnnotationPresent(BluexType.class)) {
+                if (clazz.isAnnotationPresent(BluexClass.class)) {
                     def.setFields(resolveFields(clazz));
                 }
             }

@@ -1,7 +1,11 @@
 package com.zsb.bluex.core.runtime.node.impl;
 
+import com.zsb.bluex.core.def.ControlDef;
+import com.zsb.bluex.core.def.ParamDef;
+import com.zsb.bluex.core.launch.MetaHolder;
 import com.zsb.bluex.core.runtime.ExecTask;
 import com.zsb.bluex.core.runtime.ExecutionContext;
+import com.zsb.bluex.core.runtime.node.ExecNodeDefinition;
 import com.zsb.bluex.core.runtime.node.ExecNode;
 import com.zsb.bluex.core.runtime.param.ParamSource;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDateTime;
 
 @Slf4j
-public class DelayNode extends ExecNode {
+public class DelayNode extends ExecNode implements ExecNodeDefinition {
     public String nextExec;
 
     /**
@@ -18,6 +22,9 @@ public class DelayNode extends ExecNode {
     public ParamSource<Long> delayMillis;
 
     private static void spin() {
+    }
+
+    public DelayNode() {
     }
 
     public DelayNode(String id) {
@@ -36,5 +43,26 @@ public class DelayNode extends ExecNode {
         if (nextExec != null) {
             ctx.schedule(new ExecTask(nextExec, null));
         }
+    }
+
+    @Override
+    public ControlDef provideDefinition() {
+        ControlDef def = new ControlDef();
+        def.setName("Delay");
+        def.setDisplayName("延迟");
+        def.setCategory("控制节点|Delay");
+        def.setQualifiedName("CONTROL:Delay");
+        def.setSignature("CONTROL:Delay");
+
+        def.getInputExecDefs().add(new ParamDef("Exec"));
+        def.getOutputExecDefs().add(new ParamDef("Exec"));
+
+        def.getInputParamDefs().add(
+                new ParamDef(
+                        "Delay(ms)",
+                        MetaHolder.PRIMITIVE_DEFINITION.get("java.lang.Long")
+                )
+        );
+        return def;
     }
 }

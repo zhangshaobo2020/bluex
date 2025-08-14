@@ -1,10 +1,12 @@
-package com.zsb.bluex.core.delegates;
+package com.zsb.bluex.core.runtime.delegates;
 
 import com.zsb.bluex.core.graph.GraphView;
+import com.zsb.bluex.core.runtime.node.ExecNodeDefinition;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public abstract class EventDelegate {
+public abstract class EventDelegate implements ExecNodeDefinition {
+
     public GraphView graphView;
 
     public EventDelegate(GraphView graphView) {

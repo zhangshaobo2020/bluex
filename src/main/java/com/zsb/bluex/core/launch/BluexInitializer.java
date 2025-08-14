@@ -1,7 +1,5 @@
 package com.zsb.bluex.core.launch;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONWriter;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -19,16 +17,16 @@ public class BluexInitializer implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         // 解析默认的内置Java类型
-        metaHolder.processDefaultType();
+        metaHolder.process_Primitive();
         // 扫描自定义的@BluexEnum
-        metaHolder.processBluexEnum(customPathConfig.getEnumScanPaths());
+        metaHolder.process_Bluex_Enum(customPathConfig.getEnumScanPaths());
         // 扫描自定义的@BluexType
-        metaHolder.processBluexType(customPathConfig.getTypeScanPaths());
+        metaHolder.process_Bluex_Class(customPathConfig.getTypeScanPaths());
         // 解析默认的流程控制节点
-        metaHolder.processDefaultControl();
+        metaHolder.process_Control();
         // 扫描自定义的@BluexFunctionLib
-        metaHolder.processBluexFunction(customPathConfig.getFunctionScanPaths());
+        metaHolder.process_Bluex_Function(customPathConfig.getFunctionScanPaths());
         // 解析默认的流程控制节点
-        metaHolder.processDefaultDelegate();
+        metaHolder.process_Delegate();
     }
 }

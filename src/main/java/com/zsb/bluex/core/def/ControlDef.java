@@ -32,4 +32,6 @@ public class ControlDef implements Serializable {
     private boolean executable = true;
     // 类型签名(用以确定唯一性)
     private String signature;
+    // 是否是事件委托
+    private boolean delegate = false;
 }

@@ -1,4 +1,4 @@
-package com.zsb.bluex.core.runtime.node.impl;
+package com.zsb.bluex.core.runtime.node.function;
 
 import com.zsb.bluex.core.param.OUTPUT;
 import com.zsb.bluex.core.runtime.ExecTask;
@@ -24,7 +24,7 @@ public class FuncExecNode extends ExecNode {
 
     @Override
     public void execute(ExecutionContext ctx) throws Exception {
-        ExecutionContext.prepareArgs(ctx, inputParams, outputs, method);
+        ExecutionContext.prepareArgsAndInvoke(ctx, inputParams, outputs, method);
         if (nextExec != null) {
             ctx.schedule(new ExecTask(nextExec, null));
         }

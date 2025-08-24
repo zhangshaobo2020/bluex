@@ -7,7 +7,7 @@ import com.zsb.bluex.core.launch.MetaHolder;
 import com.zsb.bluex.core.param.OUTPUT;
 import com.zsb.bluex.core.runtime.ExecutionContext;
 import com.zsb.bluex.core.runtime.delegates.EventDelegate;
-import com.zsb.bluex.core.runtime.node.impl.DelegateNode;
+import com.zsb.bluex.core.runtime.node.delegate.DelegateNode;
 import com.zsb.bluex.core.runtime.param.LiteralValueSource;
 import com.zsb.bluex.defaults.enums.FileOpTypeEnum;
 import lombok.SneakyThrows;
@@ -146,7 +146,7 @@ public class FileSystemListener extends EventDelegate {
         def.getOutputParamDefs().add(
                 new ParamDef(
                         "OpType",
-                        MetaHolder.CLASS_DEFINITION.get("com.zsb.bluex.defaults.enums.FileOpTypeEnum")
+                        MetaHolder.ENUM_DEFINITION.get("com.zsb.bluex.defaults.enums.FileOpTypeEnum")
                 )
         );
         return def;

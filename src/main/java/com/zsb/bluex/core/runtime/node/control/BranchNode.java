@@ -1,4 +1,4 @@
-package com.zsb.bluex.core.runtime.node.impl;
+package com.zsb.bluex.core.runtime.node.control;
 
 import com.zsb.bluex.core.def.ControlDef;
 import com.zsb.bluex.core.def.ParamDef;

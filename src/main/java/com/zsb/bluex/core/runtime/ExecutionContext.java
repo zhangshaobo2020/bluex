@@ -17,6 +17,8 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 public class ExecutionContext {
 
+    private final Map<String, Object> runtimeVars = new HashMap<>();
+
     private final Queue<ExecTask> taskQueue = new LinkedList<>();
 
     public void schedule(ExecTask task) throws Exception {
@@ -86,10 +88,10 @@ public class ExecutionContext {
         return null;
     }
 
-    public static void prepareArgs(ExecutionContext ctx,
-                                   Map<String, ParamSource<?>> inputParams,
-                                   Map<String, OUTPUT<?>> outputs,
-                                   Method method) throws Exception {
+    public static void prepareArgsAndInvoke(ExecutionContext ctx,
+                                            Map<String, ParamSource<?>> inputParams,
+                                            Map<String, OUTPUT<?>> outputs,
+                                            Method method) throws Exception {
         Parameter[] parameters = method.getParameters();
         Object[] args = new Object[inputParams.size() + outputs.size()];
         for (int i = 0; i < parameters.length; i++) {

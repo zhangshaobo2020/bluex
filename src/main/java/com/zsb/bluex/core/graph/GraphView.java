@@ -4,11 +4,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zsb.bluex.core.def.ControlDef;
 import com.zsb.bluex.core.def.FunctionDef;
 import com.zsb.bluex.core.def.ParamDef;
+import com.zsb.bluex.core.enums.MetaType;
 import com.zsb.bluex.core.launch.MetaHolder;
 import com.zsb.bluex.core.param.OUTPUT;
 import com.zsb.bluex.core.runtime.ExecutionContext;
 import com.zsb.bluex.core.runtime.node.BaseNode;
-import com.zsb.bluex.core.runtime.node.impl.*;
+import com.zsb.bluex.core.runtime.node.control.BranchNode;
+import com.zsb.bluex.core.runtime.node.control.DelayNode;
+import com.zsb.bluex.core.runtime.node.control.ForLoopNode;
+import com.zsb.bluex.core.runtime.node.control.WhileNode;
+import com.zsb.bluex.core.runtime.node.delegate.DelegateNode;
+import com.zsb.bluex.core.runtime.node.function.FuncExecNode;
+import com.zsb.bluex.core.runtime.node.function.FuncPureNode;
+import com.zsb.bluex.core.runtime.node.generated.ConstructorNode;
+import com.zsb.bluex.core.runtime.node.generated.GetterNode;
+import com.zsb.bluex.core.runtime.node.generated.SetterNode;
 import com.zsb.bluex.core.runtime.param.LiteralValueSource;
 import com.zsb.bluex.core.runtime.param.NodeOutputSource;
 import com.zsb.bluex.core.runtime.param.ParamSource;
@@ -120,13 +130,6 @@ public class GraphView implements Serializable {
                             ctx.addExecNode(delayNode);
                             break;
                         }
-                        // 匹配 Delay
-                        case "CONTROL:FileSystemListener": {
-                            DelegateNode delayNode = new DelegateNode(node.getId());
-                            delayNode.nextExec = findForNextExecNode(node, "Exec");
-                            ctx.addExecNode(delayNode);
-                            break;
-                        }
                         default: {
                             break;
                         }
@@ -134,33 +137,68 @@ public class GraphView implements Serializable {
                 } else if (node.getQualifiedName().startsWith("DELEGATE:")) {
                     // 说明是事件委托节点
                     DelegateNode delegateNode = new DelegateNode(node.getId());
-                    processNodeParams(delegateNode, node);
+                    processNodeParams(delegateNode, node, MetaType.DELEGATE);
                     delegateNode.nextExec = findForNextExecNode(node, "Exec");
                     ctx.addExecNode(delegateNode);
                 } else if (node.getQualifiedName().startsWith("FUNCTION:")) {
                     // 说明是FuncExecNode
                     Method method = matchJavaMethod(node.getQualifiedName());
                     FuncExecNode execNode = new FuncExecNode(node.getId(), method);
-                    processNodeParams(execNode, node);
-
+                    processNodeParams(execNode, node, MetaType.FUNCTION);
                     // 尝试查找下一个Exec节点
                     execNode.nextExec = findForNextExecNode(node, "Exec");
                     ctx.addExecNode(execNode);
+                } else if (node.getQualifiedName().startsWith("GENERATED:")) {
+                    if (node.getQualifiedName().endsWith(":SETTER")) {
+                        // 查找Name引脚是否有进行连接
+                        ParamSource<String> namePin = buildParamPin_String(node, "Name");
+                        // 查找Var引脚是否有进行连接
+                        ParamSource<String> varPin = buildParamPin_String(node, "Var");
+
+                        SetterNode setterNode = new SetterNode(node.getId(), namePin, varPin);
+                        setterNode.nextExec = findForNextExecNode(node, "Exec");
+                        ctx.addExecNode(setterNode);
+                    }
                 }
-                // TODO: 实现GENERATED逻辑
             } else {
                 if (node.getQualifiedName().startsWith("FUNCTION:")) {
                     // 说明是FuncPureNode
                     Method method = matchJavaMethod(node.getQualifiedName());
                     FuncPureNode pureNode = new FuncPureNode(node.getId(), method);
-                    processNodeParams(pureNode, node);
+                    processNodeParams(pureNode, node, MetaType.FUNCTION);
                     ctx.addPureNode(pureNode);
+                } else if (node.getQualifiedName().startsWith("GENERATED:")) {
+                    if (node.getQualifiedName().endsWith(":GETTER")) {
+                        // 查找Name引脚是否有进行连接
+                        ParamSource<String> namePin = buildParamPin_String(node, "Name");
+
+                        GetterNode getterNode = new GetterNode(node.getId(), namePin);
+                        ctx.addPureNode(getterNode);
+                    }
+                    if (node.getQualifiedName().endsWith(":CONSTRUCTOR")) {
+                        String className = node.getQualifiedName().replace("GENERATED:", "").replace(":CONSTRUCTOR", "");
+                        ConstructorNode constructorNode = new ConstructorNode(node.getId(), Class.forName(className));
+                        processNodeParams(constructorNode, node, MetaType.GENERATED);
+                        ctx.addPureNode(constructorNode);
+                    }
                 }
-                // TODO: 实现GENERATED逻辑
             }
         }
         ctx.initStartupNode();
         return ctx;
+    }
+
+    private ParamSource<String> buildParamPin_String(GraphNode node, String inputParamName) throws Exception {
+        ParamSource<String> pin;
+        String nameMapping = findSourceParamNodeAndPin(node, inputParamName);
+        if (StringUtils.isBlank(nameMapping)) {
+            String name = findForCurrentPinValue(node, inputParamName, String.class);
+            pin = new LiteralValueSource<>(name);
+        } else {
+            String[] split = nameMapping.split("-");
+            pin = new NodeOutputSource<>(split[0], split[1]);
+        }
+        return pin;
     }
 
     /**
@@ -168,7 +206,7 @@ public class GraphView implements Serializable {
      * @param node     节点信息
      * @throws Exception 可能发生的异常
      */
-    private void processNodeParams(BaseNode baseNode, GraphNode node) throws Exception {
+    private void processNodeParams(BaseNode baseNode, GraphNode node, MetaType metaType) throws Exception {
         for (GraphParamPin graphParamPin : node.getParamInputs().values()) {
             String paramName = graphParamPin.getName();
 
@@ -178,8 +216,27 @@ public class GraphView implements Serializable {
             if (StringUtils.isBlank(paramMapping)) {
                 // 这里需要根据参数类型去获取实际的实参类型
                 String qualifiedName = node.getQualifiedName();
-                FunctionDef functionDef = MetaHolder.FUNCTION_DEFINITION.get(qualifiedName);
-                if (functionDef != null) {
+                if (metaType == MetaType.FUNCTION) {
+                    FunctionDef functionDef = MetaHolder.FUNCTION_DEFINITION.get(qualifiedName);
+                    ParamDef paramDef = functionDef.getInputParamDefs()
+                            .stream().filter(def -> def.getName().equals(paramName))
+                            .findFirst()
+                            .orElseThrow(() -> new RuntimeException(qualifiedName + "的函数中参数" + paramName + "不存在!"));
+                    // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
+                    String className = paramDef.getTypeDef().getQualifiedName().replace("TYPE:", "");
+                    paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
+                } else if (metaType == MetaType.DELEGATE) {
+                    // 尝试去匹配事件委托节点
+                    ControlDef controlDef = MetaHolder.DELEGATE_DEFINITION.get(qualifiedName);
+                    ParamDef paramDef = controlDef.getInputParamDefs()
+                            .stream().filter(def -> def.getName().equals(paramName))
+                            .findFirst()
+                            .orElseThrow(() -> new RuntimeException(qualifiedName + "的委托中参数" + paramName + "不存在!"));
+                    // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
+                    String className = paramDef.getTypeDef().getQualifiedName().replace("TYPE:", "");
+                    paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
+                } else if (metaType == MetaType.GENERATED) {
+                    FunctionDef functionDef = MetaHolder.GENERATED_DEFINITION.get(qualifiedName);
                     ParamDef paramDef = functionDef.getInputParamDefs()
                             .stream().filter(def -> def.getName().equals(paramName))
                             .findFirst()
@@ -188,19 +245,7 @@ public class GraphView implements Serializable {
                     String className = paramDef.getTypeDef().getQualifiedName().replace("TYPE:", "");
                     paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
                 } else {
-                    // 尝试去匹配事件委托节点
-                    ControlDef controlDef = MetaHolder.CONTROL_DEFINITION.get(qualifiedName);
-                    if (controlDef != null) {
-                        ParamDef paramDef = controlDef.getInputParamDefs()
-                                .stream().filter(def -> def.getName().equals(paramName))
-                                .findFirst()
-                                .orElseThrow(() -> new RuntimeException(qualifiedName + "的委托中参数" + paramName + "不存在!"));
-                        // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
-                        String className = paramDef.getTypeDef().getQualifiedName().replace("TYPE:", "");
-                        paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
-                    } else {
-                        throw new RuntimeException(qualifiedName + "的函数委托或不存在!");
-                    }
+                    throw new RuntimeException(qualifiedName + "不存在!");
                 }
             } else {
                 String[] split = paramMapping.split("-");

@@ -1,4 +1,4 @@
-package com.zsb.bluex.core.runtime.node.impl;
+package com.zsb.bluex.core.runtime.node.delegate;
 
 import com.zsb.bluex.core.runtime.ExecTask;
 import com.zsb.bluex.core.runtime.ExecutionContext;

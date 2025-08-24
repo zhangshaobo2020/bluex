@@ -1,4 +1,4 @@
-package com.zsb.bluex.core.runtime.node.impl;
+package com.zsb.bluex.core.runtime.node.function;
 
 import com.zsb.bluex.core.param.OUTPUT;
 import com.zsb.bluex.core.runtime.ExecutionContext;
@@ -16,7 +16,7 @@ public class FuncPureNode extends PureNode {
 
     @Override
     public Object evaluate(String outputName, ExecutionContext ctx) throws Exception {
-        ExecutionContext.prepareArgs(ctx, inputParams, outputs, method);
+        ExecutionContext.prepareArgsAndInvoke(ctx, inputParams, outputs, method);
         OUTPUT<?> output = outputs.get(outputName);
         if (output == null) {
             String msg = String.format("未在%s节点中找到%s引脚", name, outputName);

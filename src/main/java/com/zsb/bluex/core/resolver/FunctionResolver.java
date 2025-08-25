@@ -34,8 +34,22 @@ public class FunctionResolver {
             FunctionDef func = new FunctionDef();
             func.setName(method.getName());
             func.setQualifiedName("FUNCTION:" + clazz.getName() + ":" + method.getName());
-            func.setCategory(functionLibCategory + "|" + method.getName());
-            func.setDisplayName(bf.displayName());
+
+            String functionCategory;
+            if (StringUtils.isNotBlank(bf.category())) {
+                functionCategory = bf.category();
+            } else {
+                functionCategory = method.getName();
+            }
+            func.setCategory(functionLibCategory + "|" + functionCategory);
+
+            String functionDisplayName;
+            if (StringUtils.isNotBlank(bf.displayName())) {
+                functionDisplayName = bf.displayName();
+            } else {
+                functionDisplayName = method.getName();
+            }
+            func.setDisplayName(functionDisplayName);
             func.setDescription(bf.description());
 
             func.setExecutable(bf.executable());

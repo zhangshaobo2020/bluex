@@ -8,7 +8,10 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BluexFunction {
-    // 蓝图编辑器上展示的名称
+    // 蓝图编辑器上展示的分类(以|分隔)
+    String category() default "";
+
+    // 蓝图编辑器上展示的名称(直接取函数名)
     String displayName() default "";
 
     // 蓝图编辑器上展示的详细描述

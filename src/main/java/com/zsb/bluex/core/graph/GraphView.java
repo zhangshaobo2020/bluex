@@ -16,9 +16,7 @@ import com.zsb.bluex.core.runtime.node.control.WhileNode;
 import com.zsb.bluex.core.runtime.node.delegate.DelegateNode;
 import com.zsb.bluex.core.runtime.node.function.FuncExecNode;
 import com.zsb.bluex.core.runtime.node.function.FuncPureNode;
-import com.zsb.bluex.core.runtime.node.generated.ConstructorNode;
-import com.zsb.bluex.core.runtime.node.generated.GetterNode;
-import com.zsb.bluex.core.runtime.node.generated.SetterNode;
+import com.zsb.bluex.core.runtime.node.generated.*;
 import com.zsb.bluex.core.runtime.param.LiteralValueSource;
 import com.zsb.bluex.core.runtime.param.NodeOutputSource;
 import com.zsb.bluex.core.runtime.param.ParamSource;
@@ -150,12 +148,9 @@ public class GraphView implements Serializable {
                     ctx.addExecNode(execNode);
                 } else if (node.getQualifiedName().startsWith("GENERATED:")) {
                     if (node.getQualifiedName().endsWith(":SETTER")) {
-                        // 查找Name引脚是否有进行连接
-                        ParamSource<String> namePin = buildParamPin_String(node, "Name");
-                        // 查找Var引脚是否有进行连接
-                        ParamSource<String> varPin = buildParamPin_String(node, "Var");
-
-                        SetterNode setterNode = new SetterNode(node.getId(), namePin, varPin);
+                        String className = node.getQualifiedName().replace("GENERATED:", "").replace(":SETTER", "");
+                        SetterNode setterNode = new SetterNode(node.getId(), Class.forName(className));
+                        processNodeParams(setterNode, node, MetaType.GENERATED);
                         setterNode.nextExec = findForNextExecNode(node, "Exec");
                         ctx.addExecNode(setterNode);
                     }
@@ -169,10 +164,9 @@ public class GraphView implements Serializable {
                     ctx.addPureNode(pureNode);
                 } else if (node.getQualifiedName().startsWith("GENERATED:")) {
                     if (node.getQualifiedName().endsWith(":GETTER")) {
-                        // 查找Name引脚是否有进行连接
-                        ParamSource<String> namePin = buildParamPin_String(node, "Name");
-
-                        GetterNode getterNode = new GetterNode(node.getId(), namePin);
+                        String className = node.getQualifiedName().replace("GENERATED:", "").replace(":GETTER", "");
+                        GetterNode getterNode = new GetterNode(node.getId(), Class.forName(className));
+                        processNodeParams(getterNode, node, MetaType.GENERATED);
                         ctx.addPureNode(getterNode);
                     }
                     if (node.getQualifiedName().endsWith(":CONSTRUCTOR")) {
@@ -180,6 +174,32 @@ public class GraphView implements Serializable {
                         ConstructorNode constructorNode = new ConstructorNode(node.getId(), Class.forName(className));
                         processNodeParams(constructorNode, node, MetaType.GENERATED);
                         ctx.addPureNode(constructorNode);
+                    }
+                    // JSON相关
+                    if (node.getQualifiedName().endsWith(":FROMJSON")) {
+                        String className = node.getQualifiedName().replace("GENERATED:", "").replace(":FROMJSON", "");
+                        FromJSONNode fromJSONNode = new FromJSONNode(node.getId(), Class.forName(className));
+                        processNodeParams(fromJSONNode, node, MetaType.GENERATED);
+                        ctx.addPureNode(fromJSONNode);
+                    }
+                    if (node.getQualifiedName().endsWith(":TOJSON")) {
+                        String className = node.getQualifiedName().replace("GENERATED:", "").replace(":TOJSON", "");
+                        ToJSONNode toJSONNode = new ToJSONNode(node.getId(), Class.forName(className));
+                        processNodeParams(toJSONNode, node, MetaType.GENERATED);
+                        ctx.addPureNode(toJSONNode);
+                    }
+                    // XML相关
+                    if (node.getQualifiedName().endsWith(":FROMXML")) {
+                        String className = node.getQualifiedName().replace("GENERATED:", "").replace(":FROMXML", "");
+                        FromXMLNode fromXMLNode = new FromXMLNode(node.getId(), Class.forName(className));
+                        processNodeParams(fromXMLNode, node, MetaType.GENERATED);
+                        ctx.addPureNode(fromXMLNode);
+                    }
+                    if (node.getQualifiedName().endsWith(":TOXML")) {
+                        String className = node.getQualifiedName().replace("GENERATED:", "").replace(":TOXML", "");
+                        ToXMLNode toXMLNode = new ToXMLNode(node.getId(), Class.forName(className));
+                        processNodeParams(toXMLNode, node, MetaType.GENERATED);
+                        ctx.addPureNode(toXMLNode);
                     }
                 }
             }
@@ -221,7 +241,7 @@ public class GraphView implements Serializable {
                     ParamDef paramDef = functionDef.getInputParamDefs()
                             .stream().filter(def -> def.getName().equals(paramName))
                             .findFirst()
-                            .orElseThrow(() -> new RuntimeException(qualifiedName + "的函数中参数" + paramName + "不存在!"));
+                            .orElseThrow(() -> new RuntimeException(qualifiedName + "中参数" + paramName + "不存在!"));
                     // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
                     String className = paramDef.getTypeDef().getQualifiedName().replace("TYPE:", "");
                     paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
@@ -231,7 +251,7 @@ public class GraphView implements Serializable {
                     ParamDef paramDef = controlDef.getInputParamDefs()
                             .stream().filter(def -> def.getName().equals(paramName))
                             .findFirst()
-                            .orElseThrow(() -> new RuntimeException(qualifiedName + "的委托中参数" + paramName + "不存在!"));
+                            .orElseThrow(() -> new RuntimeException(qualifiedName + "中参数" + paramName + "不存在!"));
                     // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
                     String className = paramDef.getTypeDef().getQualifiedName().replace("TYPE:", "");
                     paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
@@ -240,7 +260,7 @@ public class GraphView implements Serializable {
                     ParamDef paramDef = functionDef.getInputParamDefs()
                             .stream().filter(def -> def.getName().equals(paramName))
                             .findFirst()
-                            .orElseThrow(() -> new RuntimeException(qualifiedName + "的函数中参数" + paramName + "不存在!"));
+                            .orElseThrow(() -> new RuntimeException(qualifiedName + "中参数" + paramName + "不存在!"));
                     // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
                     String className = paramDef.getTypeDef().getQualifiedName().replace("TYPE:", "");
                     paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));

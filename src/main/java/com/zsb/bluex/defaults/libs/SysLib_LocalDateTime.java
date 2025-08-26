@@ -9,19 +9,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-@BluexFunctionLib(category = "时间|LocalDateTime")
-public class LocalDateTimeLib {
+@BluexFunctionLib(category = "Java常见类型|时间|LocalDateTime")
+public class SysLib_LocalDateTime {
 
     private static final String DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    @BluexFunction(displayName = "当前时间", executable = false)
+    @BluexFunction(category = "当前时间", executable = false)
     public static void Now(
             OUTPUT<LocalDateTime> Out
     ) {
         Out.value = LocalDateTime.now();
     }
 
-    @BluexFunction(displayName = "创建时间", executable = false)
+    @BluexFunction(category = "创建时间", executable = false)
     public static void CreateLocalDateTime(
             INPUT<Integer> Year,
             INPUT<Integer> Month, // 1-12
@@ -41,7 +41,7 @@ public class LocalDateTimeLib {
         );
     }
 
-    @BluexFunction(displayName = "时间加年数", executable = false)
+    @BluexFunction(category = "运算|时间加年数", executable = false)
     public static void AddYears(
             INPUT<LocalDateTime> Time,
             INPUT<Long> Years,
@@ -50,7 +50,7 @@ public class LocalDateTimeLib {
         Out.value = Time.value.plusYears(Years.value);
     }
 
-    @BluexFunction(displayName = "时间加月数", executable = false)
+    @BluexFunction(category = "运算|时间加月数", executable = false)
     public static void AddMonths(
             INPUT<LocalDateTime> Time,
             INPUT<Long> Months,
@@ -59,7 +59,7 @@ public class LocalDateTimeLib {
         Out.value = Time.value.plusMonths(Months.value);
     }
 
-    @BluexFunction(displayName = "时间加天数", executable = false)
+    @BluexFunction(category = "运算|时间加天数", executable = false)
     public static void AddDays(
             INPUT<LocalDateTime> Time,
             INPUT<Long> Days,
@@ -68,7 +68,7 @@ public class LocalDateTimeLib {
         Out.value = Time.value.plusDays(Days.value);
     }
 
-    @BluexFunction(displayName = "时间加小时数", executable = false)
+    @BluexFunction(category = "运算|时间加小时数", executable = false)
     public static void AddHours(
             INPUT<LocalDateTime> Time,
             INPUT<Long> Hours,
@@ -77,7 +77,7 @@ public class LocalDateTimeLib {
         Out.value = Time.value.plusHours(Hours.value);
     }
 
-    @BluexFunction(displayName = "时间加分钟数", executable = false)
+    @BluexFunction(category = "运算|时间加分钟数", executable = false)
     public static void AddMinutes(
             INPUT<LocalDateTime> Time,
             INPUT<Long> Minutes,
@@ -86,7 +86,7 @@ public class LocalDateTimeLib {
         Out.value = Time.value.plusMinutes(Minutes.value);
     }
 
-    @BluexFunction(displayName = "时间加秒数", executable = false)
+    @BluexFunction(category = "运算|时间加秒数", executable = false)
     public static void AddSeconds(
             INPUT<LocalDateTime> Time,
             INPUT<Long> Seconds,
@@ -95,7 +95,7 @@ public class LocalDateTimeLib {
         Out.value = Time.value.plusSeconds(Seconds.value);
     }
 
-    @BluexFunction(displayName = "时间差(天)", executable = false)
+    @BluexFunction(category = "运算|时间差(天)", executable = false)
     public static void DiffDays(
             INPUT<LocalDateTime> Time1,
             INPUT<LocalDateTime> Time2,
@@ -104,7 +104,7 @@ public class LocalDateTimeLib {
         Out.value = ChronoUnit.DAYS.between(Time2.value, Time1.value);
     }
 
-    @BluexFunction(displayName = "时间差(毫秒)", executable = false)
+    @BluexFunction(category = "运算|时间差(毫秒)", executable = false)
     public static void DiffMillis(
             INPUT<LocalDateTime> Time1,
             INPUT<LocalDateTime> Time2,
@@ -113,7 +113,7 @@ public class LocalDateTimeLib {
         Out.value = ChronoUnit.MILLIS.between(Time2.value, Time1.value);
     }
 
-    @BluexFunction(displayName = "时间格式化为字符串", executable = false)
+    @BluexFunction(category = "类型转换|时间格式化为字符串", executable = false)
     public static void FormatLocalDateTime(
             INPUT<LocalDateTime> Time,
             INPUT<String> Pattern,
@@ -124,7 +124,7 @@ public class LocalDateTimeLib {
         Out.value = Time.value.format(formatter);
     }
 
-    @BluexFunction(displayName = "字符串解析为时间", executable = false)
+    @BluexFunction(category = "类型转换|字符串解析为时间", executable = false)
     public static void ParseLocalDateTime(
             INPUT<String> TimeStr,
             INPUT<String> Pattern,
@@ -135,7 +135,7 @@ public class LocalDateTimeLib {
         Out.value = LocalDateTime.parse(TimeStr.value, formatter);
     }
 
-    @BluexFunction(displayName = "时间等于", executable = false)
+    @BluexFunction(category = "比较|时间等于", executable = false)
     public static void EqualLocalDateTime(
             INPUT<LocalDateTime> Time1,
             INPUT<LocalDateTime> Time2,
@@ -144,7 +144,7 @@ public class LocalDateTimeLib {
         Ret.value = Time1.value.isEqual(Time2.value);
     }
 
-    @BluexFunction(displayName = "时间早于", executable = false)
+    @BluexFunction(category = "比较|时间早于", executable = false)
     public static void BeforeLocalDateTime(
             INPUT<LocalDateTime> Time1,
             INPUT<LocalDateTime> Time2,
@@ -153,7 +153,7 @@ public class LocalDateTimeLib {
         Ret.value = Time1.value.isBefore(Time2.value);
     }
 
-    @BluexFunction(displayName = "时间晚于", executable = false)
+    @BluexFunction(category = "比较|时间晚于", executable = false)
     public static void AfterLocalDateTime(
             INPUT<LocalDateTime> Time1,
             INPUT<LocalDateTime> Time2,

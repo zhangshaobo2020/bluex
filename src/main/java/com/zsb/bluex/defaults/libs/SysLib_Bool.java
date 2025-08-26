@@ -5,7 +5,7 @@ import com.zsb.bluex.core.anno.BluexFunctionLib;
 import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.param.OUTPUT;
 
-@BluexFunctionLib(category = "基本类型|Bool")
+@BluexFunctionLib(category = "Java基本类型|Bool")
 public class SysLib_Bool {
 
     @BluexFunction(category = "运算|Bool与 (AND)", executable = false)
@@ -43,7 +43,7 @@ public class SysLib_Bool {
         Ret.value = A.value ^ B.value;
     }
 
-    @BluexFunction(category = "运算|Bool相等 (Equals)", executable = false)
+    @BluexFunction(category = "比较|Bool相等 (Equals)", executable = false)
     public static void Equals(
             INPUT<Boolean> A,
             INPUT<Boolean> B,
@@ -51,8 +51,6 @@ public class SysLib_Bool {
     ) {
         Ret.value = A.value.equals(B.value);
     }
-
-    // 布尔转换相关
 
     @BluexFunction(category = "类型转换|Bool转Int", executable = false)
     public static void BoolToInteger(
@@ -118,7 +116,6 @@ public class SysLib_Bool {
         Out.value = String.valueOf(In.value);
     }
 
-    // 反向转换，字符串转Bool（常见用法）
     @BluexFunction(category = "类型转换|String转Bool", executable = false)
     public static void StringToBool(
             INPUT<String> In,

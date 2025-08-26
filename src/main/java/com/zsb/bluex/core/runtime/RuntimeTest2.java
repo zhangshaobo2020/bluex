@@ -4,7 +4,7 @@ import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.runtime.node.control.DelayNode;
 import com.zsb.bluex.core.runtime.node.function.FuncExecNode;
 import com.zsb.bluex.core.runtime.param.LiteralValueSource;
-import com.zsb.bluex.defaults.libs.ObjectLib;
+import com.zsb.bluex.defaults.libs.SysLib_Object;
 
 import java.lang.reflect.Method;
 
@@ -12,7 +12,7 @@ public class RuntimeTest2 {
     public static void main(String[] args) throws Exception {
         ExecutionContext ctx = new ExecutionContext();
 
-        Method method1 = ObjectLib.class.getMethod("Print", INPUT.class);
+        Method method1 = SysLib_Object.class.getMethod("Print", INPUT.class);
         FuncExecNode funcExecNode = new FuncExecNode("0001", method1);
         funcExecNode.setInputParam("Obj", new LiteralValueSource<>("Hello"));
         funcExecNode.nextExec = "0002";

@@ -5,10 +5,10 @@ import com.zsb.bluex.core.anno.BluexFunctionLib;
 import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.param.OUTPUT;
 
-@BluexFunctionLib(category = "数字|Long")
-public class LongLib {
+@BluexFunctionLib(category = "Java基本类型|Long")
+public class SysLib_Long {
 
-    @BluexFunction(displayName = "Long加法", executable = false)
+    @BluexFunction(category = "运算|Long相加", executable = false)
     public static void AddLong(
             INPUT<Long> Num1,
             INPUT<Long> Num2,
@@ -17,7 +17,7 @@ public class LongLib {
         Ret.value = Num1.value + Num2.value;
     }
 
-    @BluexFunction(displayName = "Long减法", executable = false)
+    @BluexFunction(category = "运算|Long相减", executable = false)
     public static void SubtractLong(
             INPUT<Long> Num1,
             INPUT<Long> Num2,
@@ -26,7 +26,7 @@ public class LongLib {
         Ret.value = Num1.value - Num2.value;
     }
 
-    @BluexFunction(displayName = "Long乘法", executable = false)
+    @BluexFunction(category = "运算|Long相乘", executable = false)
     public static void MultiplyLong(
             INPUT<Long> Num1,
             INPUT<Long> Num2,
@@ -35,7 +35,7 @@ public class LongLib {
         Ret.value = Num1.value * Num2.value;
     }
 
-    @BluexFunction(displayName = "Long除法", executable = false)
+    @BluexFunction(category = "运算|Long相除", executable = false)
     public static void DivideLong(
             INPUT<Long> Num1,
             INPUT<Long> Num2,
@@ -47,7 +47,7 @@ public class LongLib {
         Ret.value = Num1.value / Num2.value;
     }
 
-    @BluexFunction(displayName = "Long取余", executable = false)
+    @BluexFunction(category = "运算|Long取余", executable = false)
     public static void ModuloLong(
             INPUT<Long> Num1,
             INPUT<Long> Num2,
@@ -59,7 +59,7 @@ public class LongLib {
         Ret.value = Num1.value % Num2.value;
     }
 
-    @BluexFunction(displayName = "Long绝对值", executable = false)
+    @BluexFunction(category = "运算|Long绝对值", executable = false)
     public static void AbsLong(
             INPUT<Long> Num,
             OUTPUT<Long> Ret
@@ -67,7 +67,7 @@ public class LongLib {
         Ret.value = Math.abs(Num.value);
     }
 
-    @BluexFunction(displayName = "Long最大值", executable = false)
+    @BluexFunction(category = "运算|Long最大值", executable = false)
     public static void MaxLong(
             INPUT<Long> Num1,
             INPUT<Long> Num2,
@@ -76,7 +76,7 @@ public class LongLib {
         Max.value = Math.max(Num1.value, Num2.value);
     }
 
-    @BluexFunction(displayName = "Long最小值", executable = false)
+    @BluexFunction(category = "运算|Long最小值", executable = false)
     public static void MinLong(
             INPUT<Long> Num1,
             INPUT<Long> Num2,
@@ -85,7 +85,7 @@ public class LongLib {
         Min.value = Math.min(Num1.value, Num2.value);
     }
 
-    @BluexFunction(displayName = "Long幂运算", executable = false)
+    @BluexFunction(category = "运算|Long幂运算", executable = false)
     public static void PowLong(
             INPUT<Long> Base,
             INPUT<Long> Exp,
@@ -94,7 +94,7 @@ public class LongLib {
         Ret.value = (long) Math.pow(Base.value, Exp.value);
     }
 
-    @BluexFunction(displayName = "Long平方根", executable = false)
+    @BluexFunction(category = "运算|Long平方根", executable = false)
     public static void SqrtLong(
             INPUT<Long> Num,
             OUTPUT<Long> Ret
@@ -105,7 +105,7 @@ public class LongLib {
         Ret.value = (long) Math.sqrt(Num.value);
     }
 
-    @BluexFunction(displayName = "Long取负", executable = false)
+    @BluexFunction(category = "运算|Long取负", executable = false)
     public static void NegateLong(
             INPUT<Long> Num,
             OUTPUT<Long> Ret
@@ -115,7 +115,7 @@ public class LongLib {
 
     // 类型转换
 
-    @BluexFunction(displayName = "Long转Int", executable = false)
+    @BluexFunction(category = "类型转换|Long转Int", executable = false)
     public static void LongToInteger(
             INPUT<Long> In,
             OUTPUT<Integer> Out
@@ -123,7 +123,7 @@ public class LongLib {
         Out.value = In.value.intValue();
     }
 
-    @BluexFunction(displayName = "Long转Float", executable = false)
+    @BluexFunction(category = "类型转换|Long转Float", executable = false)
     public static void LongToFloat(
             INPUT<Long> In,
             OUTPUT<Float> Out
@@ -131,7 +131,7 @@ public class LongLib {
         Out.value = In.value.floatValue();
     }
 
-    @BluexFunction(displayName = "Long转Double", executable = false)
+    @BluexFunction(category = "类型转换|Long转Double", executable = false)
     public static void LongToDouble(
             INPUT<Long> In,
             OUTPUT<Double> Out
@@ -139,7 +139,7 @@ public class LongLib {
         Out.value = In.value.doubleValue();
     }
 
-    @BluexFunction(displayName = "Long转Short", executable = false)
+    @BluexFunction(category = "类型转换|Long转Short", executable = false)
     public static void LongToShort(
             INPUT<Long> In,
             OUTPUT<Short> Out
@@ -147,7 +147,7 @@ public class LongLib {
         Out.value = In.value.shortValue();
     }
 
-    @BluexFunction(displayName = "Long转Byte", executable = false)
+    @BluexFunction(category = "类型转换|Long转Byte", executable = false)
     public static void LongToByte(
             INPUT<Long> In,
             OUTPUT<Byte> Out
@@ -155,7 +155,7 @@ public class LongLib {
         Out.value = In.value.byteValue();
     }
 
-    @BluexFunction(displayName = "Long转Bool", executable = false)
+    @BluexFunction(category = "类型转换|Long转Bool", executable = false)
     public static void LongToBoolean(
             INPUT<Long> In,
             OUTPUT<Boolean> Out
@@ -163,7 +163,7 @@ public class LongLib {
         Out.value = In.value != 0L;
     }
 
-    @BluexFunction(displayName = "Long转Char", executable = false)
+    @BluexFunction(category = "类型转换|Long转Char", executable = false)
     public static void LongToChar(
             INPUT<Long> In,
             OUTPUT<Character> Out
@@ -171,7 +171,7 @@ public class LongLib {
         Out.value = (char) In.value.intValue();
     }
 
-    @BluexFunction(displayName = "Long转String", executable = false)
+    @BluexFunction(category = "类型转换|Long转String", executable = false)
     public static void LongToString(
             INPUT<Long> In,
             OUTPUT<String> Out
@@ -179,7 +179,7 @@ public class LongLib {
         Out.value = String.valueOf(In.value);
     }
 
-    @BluexFunction(displayName = "Long等于", executable = false)
+    @BluexFunction(category = "比较|Long等于", executable = false)
     public static void Equal(
             INPUT<Long> Num1,
             INPUT<Long> Num2,
@@ -188,7 +188,7 @@ public class LongLib {
         Ret.value = Num1.value.equals(Num2.value);
     }
 
-    @BluexFunction(displayName = "Long不等于", executable = false)
+    @BluexFunction(category = "比较|Long不等于", executable = false)
     public static void NotEqual(
             INPUT<Long> Num1,
             INPUT<Long> Num2,
@@ -197,7 +197,7 @@ public class LongLib {
         Ret.value = !Num1.value.equals(Num2.value);
     }
 
-    @BluexFunction(displayName = "Long大于", executable = false)
+    @BluexFunction(category = "比较|Long大于", executable = false)
     public static void GreaterThan(
             INPUT<Long> Num1,
             INPUT<Long> Num2,
@@ -206,7 +206,7 @@ public class LongLib {
         Ret.value = Num1.value > Num2.value;
     }
 
-    @BluexFunction(displayName = "Long大于等于", executable = false)
+    @BluexFunction(category = "比较|Long大于等于", executable = false)
     public static void GreaterEqualThan(
             INPUT<Long> Num1,
             INPUT<Long> Num2,
@@ -215,7 +215,7 @@ public class LongLib {
         Ret.value = Num1.value >= Num2.value;
     }
 
-    @BluexFunction(displayName = "Long小于", executable = false)
+    @BluexFunction(category = "比较|Long小于", executable = false)
     public static void LessThan(
             INPUT<Long> Num1,
             INPUT<Long> Num2,
@@ -224,7 +224,7 @@ public class LongLib {
         Ret.value = Num1.value < Num2.value;
     }
 
-    @BluexFunction(displayName = "Long小于等于", executable = false)
+    @BluexFunction(category = "比较|Long小于等于", executable = false)
     public static void LessEqualThan(
             INPUT<Long> Num1,
             INPUT<Long> Num2,

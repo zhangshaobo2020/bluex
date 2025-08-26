@@ -5,10 +5,10 @@ import com.zsb.bluex.core.anno.BluexFunctionLib;
 import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.param.OUTPUT;
 
-@BluexFunctionLib(category = "数字|Float")
-public class FloatLib {
+@BluexFunctionLib(category = "Java基本类型|Float")
+public class SysLib_Float {
 
-    @BluexFunction(displayName = "Float加法", executable = false)
+    @BluexFunction(category = "运算|Float相加", executable = false)
     public static void AddFloat(
             INPUT<Float> Num1,
             INPUT<Float> Num2,
@@ -17,7 +17,7 @@ public class FloatLib {
         Ret.value = Num1.value + Num2.value;
     }
 
-    @BluexFunction(displayName = "Float减法", executable = false)
+    @BluexFunction(category = "运算|Float相减", executable = false)
     public static void SubtractFloat(
             INPUT<Float> Num1,
             INPUT<Float> Num2,
@@ -26,7 +26,7 @@ public class FloatLib {
         Ret.value = Num1.value - Num2.value;
     }
 
-    @BluexFunction(displayName = "Float乘法", executable = false)
+    @BluexFunction(category = "运算|Float相乘", executable = false)
     public static void MultiplyFloat(
             INPUT<Float> Num1,
             INPUT<Float> Num2,
@@ -35,7 +35,7 @@ public class FloatLib {
         Ret.value = Num1.value * Num2.value;
     }
 
-    @BluexFunction(displayName = "Float除法", executable = false)
+    @BluexFunction(category = "运算|Float相除", executable = false)
     public static void DivideFloat(
             INPUT<Float> Num1,
             INPUT<Float> Num2,
@@ -47,7 +47,7 @@ public class FloatLib {
         Ret.value = Num1.value / Num2.value;
     }
 
-    @BluexFunction(displayName = "Float取余", executable = false)
+    @BluexFunction(category = "运算|Float取余", executable = false)
     public static void ModuloFloat(
             INPUT<Float> Num1,
             INPUT<Float> Num2,
@@ -59,7 +59,7 @@ public class FloatLib {
         Ret.value = Num1.value % Num2.value;
     }
 
-    @BluexFunction(displayName = "Float绝对值", executable = false)
+    @BluexFunction(category = "运算|Float绝对值", executable = false)
     public static void AbsFloat(
             INPUT<Float> Num,
             OUTPUT<Float> Ret
@@ -67,7 +67,7 @@ public class FloatLib {
         Ret.value = Math.abs(Num.value);
     }
 
-    @BluexFunction(displayName = "Float最大值", executable = false)
+    @BluexFunction(category = "运算|Float最大值", executable = false)
     public static void MaxFloat(
             INPUT<Float> Num1,
             INPUT<Float> Num2,
@@ -76,7 +76,7 @@ public class FloatLib {
         Max.value = Math.max(Num1.value, Num2.value);
     }
 
-    @BluexFunction(displayName = "Float最小值", executable = false)
+    @BluexFunction(category = "运算|Float最小值", executable = false)
     public static void MinFloat(
             INPUT<Float> Num1,
             INPUT<Float> Num2,
@@ -85,7 +85,7 @@ public class FloatLib {
         Min.value = Math.min(Num1.value, Num2.value);
     }
 
-    @BluexFunction(displayName = "Float幂运算", executable = false)
+    @BluexFunction(category = "运算|Float幂运算", executable = false)
     public static void PowFloat(
             INPUT<Float> Base,
             INPUT<Float> Exp,
@@ -94,7 +94,7 @@ public class FloatLib {
         Ret.value = (float) Math.pow(Base.value, Exp.value);
     }
 
-    @BluexFunction(displayName = "Float平方根", executable = false)
+    @BluexFunction(category = "运算|Float平方根", executable = false)
     public static void SqrtFloat(
             INPUT<Float> Num,
             OUTPUT<Float> Ret
@@ -105,7 +105,7 @@ public class FloatLib {
         Ret.value = (float) Math.sqrt(Num.value);
     }
 
-    @BluexFunction(displayName = "Float取负", executable = false)
+    @BluexFunction(category = "运算|Float取负", executable = false)
     public static void NegateFloat(
             INPUT<Float> Num,
             OUTPUT<Float> Ret
@@ -115,7 +115,7 @@ public class FloatLib {
 
     // 类型转换
 
-    @BluexFunction(displayName = "Float转Int", executable = false)
+    @BluexFunction(category = "类型转换|Float转Int", executable = false)
     public static void FloatToInteger(
             INPUT<Float> In,
             OUTPUT<Integer> Out
@@ -123,7 +123,7 @@ public class FloatLib {
         Out.value = In.value.intValue();
     }
 
-    @BluexFunction(displayName = "Float转Double", executable = false)
+    @BluexFunction(category = "类型转换|Float转Double", executable = false)
     public static void FloatToDouble(
             INPUT<Float> In,
             OUTPUT<Double> Out
@@ -131,7 +131,7 @@ public class FloatLib {
         Out.value = In.value.doubleValue();
     }
 
-    @BluexFunction(displayName = "Float转Long", executable = false)
+    @BluexFunction(category = "类型转换|Float转Long", executable = false)
     public static void FloatToLong(
             INPUT<Float> In,
             OUTPUT<Long> Out
@@ -139,7 +139,7 @@ public class FloatLib {
         Out.value = In.value.longValue();
     }
 
-    @BluexFunction(displayName = "Float转Short", executable = false)
+    @BluexFunction(category = "类型转换|Float转Short", executable = false)
     public static void FloatToShort(
             INPUT<Float> In,
             OUTPUT<Short> Out
@@ -147,7 +147,7 @@ public class FloatLib {
         Out.value = In.value.shortValue();
     }
 
-    @BluexFunction(displayName = "Float转Byte", executable = false)
+    @BluexFunction(category = "类型转换|Float转Byte", executable = false)
     public static void FloatToByte(
             INPUT<Float> In,
             OUTPUT<Byte> Out
@@ -155,7 +155,7 @@ public class FloatLib {
         Out.value = In.value.byteValue();
     }
 
-    @BluexFunction(displayName = "Float转Bool", executable = false)
+    @BluexFunction(category = "类型转换|Float转Bool", executable = false)
     public static void FloatToBoolean(
             INPUT<Float> In,
             OUTPUT<Boolean> Out
@@ -163,7 +163,7 @@ public class FloatLib {
         Out.value = In.value != 0.0f;
     }
 
-    @BluexFunction(displayName = "Float转Char", executable = false)
+    @BluexFunction(category = "类型转换|Float转Char", executable = false)
     public static void FloatToChar(
             INPUT<Float> In,
             OUTPUT<Character> Out
@@ -171,7 +171,7 @@ public class FloatLib {
         Out.value = (char) In.value.intValue();
     }
 
-    @BluexFunction(displayName = "Float转String", executable = false)
+    @BluexFunction(category = "类型转换|Float转String", executable = false)
     public static void FloatToString(
             INPUT<Float> In,
             OUTPUT<String> Out
@@ -179,7 +179,7 @@ public class FloatLib {
         Out.value = String.valueOf(In.value);
     }
 
-    @BluexFunction(displayName = "Float等于", executable = false)
+    @BluexFunction(category = "比较|Float等于", executable = false)
     public static void Equal(
             INPUT<Float> Num1,
             INPUT<Float> Num2,
@@ -188,7 +188,7 @@ public class FloatLib {
         Ret.value = Num1.value.equals(Num2.value);
     }
 
-    @BluexFunction(displayName = "Float不等于", executable = false)
+    @BluexFunction(category = "比较|Float不等于", executable = false)
     public static void NotEqual(
             INPUT<Float> Num1,
             INPUT<Float> Num2,
@@ -197,7 +197,7 @@ public class FloatLib {
         Ret.value = !Num1.value.equals(Num2.value);
     }
 
-    @BluexFunction(displayName = "Float大于", executable = false)
+    @BluexFunction(category = "比较|Float大于", executable = false)
     public static void GreaterThan(
             INPUT<Float> Num1,
             INPUT<Float> Num2,
@@ -206,7 +206,7 @@ public class FloatLib {
         Ret.value = Num1.value > Num2.value;
     }
 
-    @BluexFunction(displayName = "Float大于等于", executable = false)
+    @BluexFunction(category = "比较|Float大于等于", executable = false)
     public static void GreaterEqualThan(
             INPUT<Float> Num1,
             INPUT<Float> Num2,
@@ -215,7 +215,7 @@ public class FloatLib {
         Ret.value = Num1.value >= Num2.value;
     }
 
-    @BluexFunction(displayName = "Float小于", executable = false)
+    @BluexFunction(category = "比较|Float小于", executable = false)
     public static void LessThan(
             INPUT<Float> Num1,
             INPUT<Float> Num2,
@@ -224,7 +224,7 @@ public class FloatLib {
         Ret.value = Num1.value < Num2.value;
     }
 
-    @BluexFunction(displayName = "Float小于等于", executable = false)
+    @BluexFunction(category = "比较|Float小于等于", executable = false)
     public static void LessEqualThan(
             INPUT<Float> Num1,
             INPUT<Float> Num2,

@@ -11,17 +11,17 @@ import java.util.Collections;
 import java.util.List;
 
 @Slf4j
-@BluexFunctionLib(category = "字符(串)|String")
-public class StringLib {
+@BluexFunctionLib(category = "Java常见类型|String")
+public class SysLib_String {
 
-    @BluexFunction(displayName = "打印到控制台")
+    @BluexFunction(category = "打印到控制台")
     public static void Print(
             INPUT<String> Str
     ) {
         log.info(Str.value);
     }
 
-    @BluexFunction(displayName = "字符串连接", executable = false)
+    @BluexFunction(category = "操作|字符串连接", executable = false)
     public static void Concat(
             INPUT<String> Str1,
             INPUT<String> Str2,
@@ -30,7 +30,7 @@ public class StringLib {
         Out.value = (Str1.value == null ? "" : Str1.value) + (Str2.value == null ? "" : Str2.value);
     }
 
-    @BluexFunction(displayName = "字符串长度", executable = false)
+    @BluexFunction(category = "其他|字符串长度", executable = false)
     public static void Length(
             INPUT<String> Str,
             OUTPUT<Integer> Out
@@ -38,7 +38,7 @@ public class StringLib {
         Out.value = Str.value == null ? 0 : Str.value.length();
     }
 
-    @BluexFunction(displayName = "字符串是否包含", executable = false)
+    @BluexFunction(category = "查找|字符串是否包含", executable = false)
     public static void Contains(
             INPUT<String> Str,
             INPUT<String> SubStr,
@@ -51,7 +51,7 @@ public class StringLib {
         }
     }
 
-    @BluexFunction(displayName = "字符串索引查找", executable = false)
+    @BluexFunction(category = "查找|字符串索引查找", executable = false)
     public static void IndexOf(
             INPUT<String> Str,
             INPUT<String> SubStr,
@@ -64,7 +64,7 @@ public class StringLib {
         }
     }
 
-    @BluexFunction(displayName = "字符串最后索引查找", executable = false)
+    @BluexFunction(category = "查找|字符串最后索引查找", executable = false)
     public static void LastIndexOf(
             INPUT<String> Str,
             INPUT<String> SubStr,
@@ -77,7 +77,7 @@ public class StringLib {
         }
     }
 
-    @BluexFunction(displayName = "字符串切割 (根据分隔符)", executable = false)
+    @BluexFunction(category = "操作|字符串分割", executable = false)
     public static void Split(
             INPUT<String> Str,
             INPUT<String> Delimiter,
@@ -90,7 +90,7 @@ public class StringLib {
         }
     }
 
-    @BluexFunction(displayName = "字符串转大写", executable = false)
+    @BluexFunction(category = "操作|字符串转大写", executable = false)
     public static void ToUpper(
             INPUT<String> Str,
             OUTPUT<String> Out
@@ -98,7 +98,7 @@ public class StringLib {
         Out.value = Str.value == null ? null : Str.value.toUpperCase();
     }
 
-    @BluexFunction(displayName = "字符串转小写", executable = false)
+    @BluexFunction(category = "操作|字符串转小写", executable = false)
     public static void ToLower(
             INPUT<String> Str,
             OUTPUT<String> Out
@@ -106,7 +106,7 @@ public class StringLib {
         Out.value = Str.value == null ? null : Str.value.toLowerCase();
     }
 
-    @BluexFunction(displayName = "字符串替换", executable = false)
+    @BluexFunction(category = "操作|字符串替换", executable = false)
     public static void Replace(
             INPUT<String> Str,
             INPUT<String> Target,
@@ -120,7 +120,7 @@ public class StringLib {
         }
     }
 
-    @BluexFunction(displayName = "字符串裁剪（去除两端空白）", executable = false)
+    @BluexFunction(category = "操作|字符串裁剪", executable = false)
     public static void Trim(
             INPUT<String> Str,
             OUTPUT<String> Out
@@ -128,7 +128,7 @@ public class StringLib {
         Out.value = Str.value == null ? null : Str.value.trim();
     }
 
-    @BluexFunction(displayName = "字符串子串(起始索引)", executable = false)
+    @BluexFunction(category = "查找|字符串子串(起始索引)", executable = false)
     public static void SubstringFrom(
             INPUT<String> Str,
             INPUT<Integer> StartIndex,
@@ -144,7 +144,7 @@ public class StringLib {
         }
     }
 
-    @BluexFunction(displayName = "字符串子串(起始索引和长度)", executable = false)
+    @BluexFunction(category = "查找|字符串子串(起始索引和长度)", executable = false)
     public static void SubstringLength(
             INPUT<String> Str,
             INPUT<Integer> StartIndex,
@@ -164,7 +164,7 @@ public class StringLib {
         }
     }
 
-    @BluexFunction(displayName = "字符串是否为空", executable = false)
+    @BluexFunction(category = "其他|字符串是否为空", executable = false)
     public static void IsEmpty(
             INPUT<String> Str,
             OUTPUT<Boolean> Out
@@ -172,7 +172,7 @@ public class StringLib {
         Out.value = (Str.value == null || Str.value.isEmpty());
     }
 
-    @BluexFunction(displayName = "字符串是否为空或空白", executable = false)
+    @BluexFunction(category = "其他|字符串是否为空或空白", executable = false)
     public static void IsBlank(
             INPUT<String> Str,
             OUTPUT<Boolean> Out
@@ -180,7 +180,7 @@ public class StringLib {
         Out.value = (Str.value == null || Str.value.trim().isEmpty());
     }
 
-    @BluexFunction(displayName = "字符串转整数", executable = false)
+    @BluexFunction(category = "类型转换|String转Int", executable = false)
     public static void StringToInteger(
             INPUT<String> Str,
             OUTPUT<Integer> Out
@@ -192,7 +192,7 @@ public class StringLib {
         }
     }
 
-    @BluexFunction(displayName = "字符串转布尔", executable = false)
+    @BluexFunction(category = "类型转换|String转Bool", executable = false)
     public static void StringToBoolean(
             INPUT<String> Str,
             OUTPUT<Boolean> Out
@@ -205,7 +205,7 @@ public class StringLib {
         Out.value = s.equals("true") || s.equals("1") || s.equals("yes") || s.equals("on");
     }
 
-    @BluexFunction(displayName = "字符串转浮点数(Double)", executable = false)
+    @BluexFunction(category = "类型转换|String转Double", executable = false)
     public static void StringToDouble(
             INPUT<String> Str,
             OUTPUT<Double> Out
@@ -217,7 +217,7 @@ public class StringLib {
         }
     }
 
-    @BluexFunction(displayName = "字符串转浮点数(Float)", executable = false)
+    @BluexFunction(category = "类型转换|String转Float", executable = false)
     public static void StringToFloat(
             INPUT<String> Str,
             OUTPUT<Float> Out
@@ -229,7 +229,7 @@ public class StringLib {
         }
     }
 
-    @BluexFunction(displayName = "字符串转长整数(Long)", executable = false)
+    @BluexFunction(category = "类型转换|String转Long", executable = false)
     public static void StringToLong(
             INPUT<String> Str,
             OUTPUT<Long> Out
@@ -241,7 +241,7 @@ public class StringLib {
         }
     }
 
-    @BluexFunction(displayName = "字符串转字符(Char,取首字符)", executable = false)
+    @BluexFunction(category = "类型转换|String转Char", executable = false)
     public static void StringToChar(
             INPUT<String> Str,
             OUTPUT<Character> Out
@@ -253,7 +253,7 @@ public class StringLib {
         }
     }
 
-    @BluexFunction(displayName = "字符串重复", executable = false)
+    @BluexFunction(category = "操作|字符串重复", executable = false)
     public static void Repeat(
             INPUT<String> Str,
             INPUT<Integer> Count,

@@ -5,10 +5,10 @@ import com.zsb.bluex.core.anno.BluexFunctionLib;
 import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.param.OUTPUT;
 
-@BluexFunctionLib(category = "数字|Byte")
-public class ByteLib {
+@BluexFunctionLib(category = "Java基本类型|Byte")
+public class SysLib_Byte {
 
-    @BluexFunction(displayName = "Byte加法", executable = false)
+    @BluexFunction(category = "运算|Byte相加", executable = false)
     public static void AddByte(
             INPUT<Byte> Num1,
             INPUT<Byte> Num2,
@@ -17,7 +17,7 @@ public class ByteLib {
         Ret.value = (byte) (Num1.value + Num2.value);
     }
 
-    @BluexFunction(displayName = "Byte减法", executable = false)
+    @BluexFunction(category = "运算|Byte相减", executable = false)
     public static void SubtractByte(
             INPUT<Byte> Num1,
             INPUT<Byte> Num2,
@@ -26,7 +26,7 @@ public class ByteLib {
         Ret.value = (byte) (Num1.value - Num2.value);
     }
 
-    @BluexFunction(displayName = "Byte乘法", executable = false)
+    @BluexFunction(category = "运算|Byte相乘", executable = false)
     public static void MultiplyByte(
             INPUT<Byte> Num1,
             INPUT<Byte> Num2,
@@ -35,7 +35,7 @@ public class ByteLib {
         Ret.value = (byte) (Num1.value * Num2.value);
     }
 
-    @BluexFunction(displayName = "Byte除法", executable = false)
+    @BluexFunction(category = "运算|Byte相除", executable = false)
     public static void DivideByte(
             INPUT<Byte> Num1,
             INPUT<Byte> Num2,
@@ -47,7 +47,7 @@ public class ByteLib {
         Ret.value = (byte) (Num1.value / Num2.value);
     }
 
-    @BluexFunction(displayName = "Byte取余", executable = false)
+    @BluexFunction(category = "运算|Byte取余", executable = false)
     public static void ModuloByte(
             INPUT<Byte> Num1,
             INPUT<Byte> Num2,
@@ -59,7 +59,7 @@ public class ByteLib {
         Ret.value = (byte) (Num1.value % Num2.value);
     }
 
-    @BluexFunction(displayName = "Byte绝对值", executable = false)
+    @BluexFunction(category = "运算|Byte绝对值", executable = false)
     public static void AbsByte(
             INPUT<Byte> Num,
             OUTPUT<Byte> Ret
@@ -67,7 +67,7 @@ public class ByteLib {
         Ret.value = (byte) Math.abs(Num.value);
     }
 
-    @BluexFunction(displayName = "Byte最大值", executable = false)
+    @BluexFunction(category = "运算|Byte最大值", executable = false)
     public static void MaxByte(
             INPUT<Byte> Num1,
             INPUT<Byte> Num2,
@@ -76,7 +76,7 @@ public class ByteLib {
         Max.value = (byte) Math.max(Num1.value, Num2.value);
     }
 
-    @BluexFunction(displayName = "Byte最小值", executable = false)
+    @BluexFunction(category = "运算|Byte最小值", executable = false)
     public static void MinByte(
             INPUT<Byte> Num1,
             INPUT<Byte> Num2,
@@ -85,7 +85,7 @@ public class ByteLib {
         Min.value = (byte) Math.min(Num1.value, Num2.value);
     }
 
-    @BluexFunction(displayName = "Byte幂运算", executable = false)
+    @BluexFunction(category = "运算|Byte幂运算", executable = false)
     public static void PowByte(
             INPUT<Byte> Base,
             INPUT<Byte> Exp,
@@ -94,7 +94,7 @@ public class ByteLib {
         Ret.value = (byte) Math.pow(Base.value, Exp.value);
     }
 
-    @BluexFunction(displayName = "Byte平方根", executable = false)
+    @BluexFunction(category = "运算|Byte平方根", executable = false)
     public static void SqrtByte(
             INPUT<Byte> Num,
             OUTPUT<Byte> Ret
@@ -105,7 +105,7 @@ public class ByteLib {
         Ret.value = (byte) Math.sqrt(Num.value);
     }
 
-    @BluexFunction(displayName = "Byte取负", executable = false)
+    @BluexFunction(category = "运算|Byte取负", executable = false)
     public static void NegateByte(
             INPUT<Byte> Num,
             OUTPUT<Byte> Ret
@@ -115,7 +115,7 @@ public class ByteLib {
 
     // 类型转换
 
-    @BluexFunction(displayName = "Byte转Int", executable = false)
+    @BluexFunction(category = "类型转换|Byte转Int", executable = false)
     public static void ByteToInteger(
             INPUT<Byte> In,
             OUTPUT<Integer> Out
@@ -123,7 +123,7 @@ public class ByteLib {
         Out.value = In.value.intValue();
     }
 
-    @BluexFunction(displayName = "Byte转Float", executable = false)
+    @BluexFunction(category = "类型转换|Byte转Float", executable = false)
     public static void ByteToFloat(
             INPUT<Byte> In,
             OUTPUT<Float> Out
@@ -131,7 +131,7 @@ public class ByteLib {
         Out.value = In.value.floatValue();
     }
 
-    @BluexFunction(displayName = "Byte转Double", executable = false)
+    @BluexFunction(category = "类型转换|Byte转Double", executable = false)
     public static void ByteToDouble(
             INPUT<Byte> In,
             OUTPUT<Double> Out
@@ -139,7 +139,7 @@ public class ByteLib {
         Out.value = In.value.doubleValue();
     }
 
-    @BluexFunction(displayName = "Byte转Long", executable = false)
+    @BluexFunction(category = "类型转换|Byte转Long", executable = false)
     public static void ByteToLong(
             INPUT<Byte> In,
             OUTPUT<Long> Out
@@ -147,7 +147,7 @@ public class ByteLib {
         Out.value = In.value.longValue();
     }
 
-    @BluexFunction(displayName = "Byte转Short", executable = false)
+    @BluexFunction(category = "类型转换|Byte转Short", executable = false)
     public static void ByteToShort(
             INPUT<Byte> In,
             OUTPUT<Short> Out
@@ -155,7 +155,7 @@ public class ByteLib {
         Out.value = In.value.shortValue();
     }
 
-    @BluexFunction(displayName = "Byte转Bool", executable = false)
+    @BluexFunction(category = "类型转换|Byte转Bool", executable = false)
     public static void ByteToBoolean(
             INPUT<Byte> In,
             OUTPUT<Boolean> Out
@@ -163,7 +163,7 @@ public class ByteLib {
         Out.value = In.value != 0;
     }
 
-    @BluexFunction(displayName = "Byte转Char", executable = false)
+    @BluexFunction(category = "类型转换|Byte转Char", executable = false)
     public static void ByteToChar(
             INPUT<Byte> In,
             OUTPUT<Character> Out
@@ -171,7 +171,7 @@ public class ByteLib {
         Out.value = (char) In.value.intValue();
     }
 
-    @BluexFunction(displayName = "Byte转String", executable = false)
+    @BluexFunction(category = "类型转换|Byte转String", executable = false)
     public static void ByteToString(
             INPUT<Byte> In,
             OUTPUT<String> Out

@@ -7,8 +7,8 @@ import com.zsb.bluex.core.runtime.node.function.FuncExecNode;
 import com.zsb.bluex.core.runtime.node.function.FuncPureNode;
 import com.zsb.bluex.core.runtime.param.LiteralValueSource;
 import com.zsb.bluex.core.runtime.param.NodeOutputSource;
-import com.zsb.bluex.defaults.libs.ObjectLib;
-import com.zsb.bluex.defaults.libs.RandomLib;
+import com.zsb.bluex.defaults.libs.SysLib_Object;
+import com.zsb.bluex.defaults.libs.SysLib_Random;
 
 import java.lang.reflect.Method;
 
@@ -21,12 +21,12 @@ public class RuntimeTest {
         forLoopNode.loopBodyExec = "0002";
         ctx.addExecNode(forLoopNode);
 
-        Method method1 = ObjectLib.class.getMethod("Print", INPUT.class);
+        Method method1 = SysLib_Object.class.getMethod("Print", INPUT.class);
         FuncExecNode funcExecNode = new FuncExecNode("0002", method1);
         funcExecNode.setInputParam("Obj", new NodeOutputSource<>("0003", "Ret"));
         ctx.addExecNode(funcExecNode);
 
-        Method method2 = RandomLib.class.getMethod("RandomIntRange", INPUT.class, INPUT.class, OUTPUT.class);
+        Method method2 = SysLib_Random.class.getMethod("RandomIntRange", INPUT.class, INPUT.class, OUTPUT.class);
         FuncPureNode funcPureNode = new FuncPureNode("0003", method2);
         funcPureNode.setInputParam("Min", new LiteralValueSource<>(0));
         funcPureNode.setInputParam("Max", new LiteralValueSource<>(10));

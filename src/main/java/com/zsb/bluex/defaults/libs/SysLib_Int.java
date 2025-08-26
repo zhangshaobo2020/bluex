@@ -5,10 +5,10 @@ import com.zsb.bluex.core.anno.BluexFunctionLib;
 import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.param.OUTPUT;
 
-@BluexFunctionLib(category = "数字|Int")
-public class IntLib {
+@BluexFunctionLib(category = "Java基本类型|Int")
+public class SysLib_Int {
 
-    @BluexFunction(displayName = "Int加法", executable = false)
+    @BluexFunction(category = "运算|Int相加", executable = false)
     public static void AddInteger(
             INPUT<Integer> Num1,
             INPUT<Integer> Num2,
@@ -17,7 +17,7 @@ public class IntLib {
         Ret.value = Num1.value + Num2.value;
     }
 
-    @BluexFunction(displayName = "Int减法", executable = false)
+    @BluexFunction(category = "运算|Int相加", executable = false)
     public static void SubtractInteger(
             INPUT<Integer> Num1,
             INPUT<Integer> Num2,
@@ -26,7 +26,7 @@ public class IntLib {
         Ret.value = Num1.value - Num2.value;
     }
 
-    @BluexFunction(displayName = "Int乘法", executable = false)
+    @BluexFunction(category = "运算|Int相乘", executable = false)
     public static void MultiplyInteger(
             INPUT<Integer> Num1,
             INPUT<Integer> Num2,
@@ -35,7 +35,7 @@ public class IntLib {
         Ret.value = Num1.value * Num2.value;
     }
 
-    @BluexFunction(displayName = "Int除法", executable = false)
+    @BluexFunction(category = "运算|Int相除", executable = false)
     public static void DivideInteger(
             INPUT<Integer> Num1,
             INPUT<Integer> Num2,
@@ -47,7 +47,7 @@ public class IntLib {
         Ret.value = Num1.value / Num2.value;
     }
 
-    @BluexFunction(displayName = "Int取余", executable = false)
+    @BluexFunction(category = "运算|Int取余", executable = false)
     public static void ModuloInteger(
             INPUT<Integer> Num1,
             INPUT<Integer> Num2,
@@ -59,7 +59,7 @@ public class IntLib {
         Ret.value = Num1.value % Num2.value;
     }
 
-    @BluexFunction(displayName = "Int绝对值", executable = false)
+    @BluexFunction(category = "运算|Int绝对值", executable = false)
     public static void AbsInteger(
             INPUT<Integer> Num,
             OUTPUT<Integer> Ret
@@ -67,7 +67,7 @@ public class IntLib {
         Ret.value = Math.abs(Num.value);
     }
 
-    @BluexFunction(displayName = "Int最大值", executable = false)
+    @BluexFunction(category = "运算|Int最大值", executable = false)
     public static void MaxInteger(
             INPUT<Integer> Num1,
             INPUT<Integer> Num2,
@@ -76,7 +76,7 @@ public class IntLib {
         Max.value = Math.max(Num1.value, Num2.value);
     }
 
-    @BluexFunction(displayName = "Int最小值", executable = false)
+    @BluexFunction(category = "运算|Int最小值", executable = false)
     public static void MinInteger(
             INPUT<Integer> Num1,
             INPUT<Integer> Num2,
@@ -85,7 +85,7 @@ public class IntLib {
         Min.value = Math.min(Num1.value, Num2.value);
     }
 
-    @BluexFunction(displayName = "Int幂运算", executable = false)
+    @BluexFunction(category = "运算|Int幂运算", executable = false)
     public static void PowInteger(
             INPUT<Integer> Base,
             INPUT<Integer> Exp,
@@ -94,7 +94,7 @@ public class IntLib {
         Ret.value = (int) Math.pow(Base.value, Exp.value);
     }
 
-    @BluexFunction(displayName = "Int平方根", executable = false)
+    @BluexFunction(category = "运算|Int平方根", executable = false)
     public static void SqrtInteger(
             INPUT<Integer> Num,
             OUTPUT<Integer> Ret
@@ -105,7 +105,7 @@ public class IntLib {
         Ret.value = (int) Math.sqrt(Num.value);
     }
 
-    @BluexFunction(displayName = "Int取负", executable = false)
+    @BluexFunction(category = "运算|Int取负", executable = false)
     public static void NegateInteger(
             INPUT<Integer> Num,
             OUTPUT<Integer> Ret
@@ -113,7 +113,7 @@ public class IntLib {
         Ret.value = -Num.value;
     }
 
-    @BluexFunction(displayName = "Int转Float", executable = false)
+    @BluexFunction(category = "类型转换|Int转Float", executable = false)
     public static void IntegerToFloat(
             INPUT<Integer> In,
             OUTPUT<Float> Out
@@ -121,7 +121,7 @@ public class IntLib {
         Out.value = In.value.floatValue();
     }
 
-    @BluexFunction(displayName = "Int转Double", executable = false)
+    @BluexFunction(category = "类型转换|Int转Double", executable = false)
     public static void IntegerToDouble(
             INPUT<Integer> In,
             OUTPUT<Double> Out
@@ -129,7 +129,7 @@ public class IntLib {
         Out.value = In.value.doubleValue();
     }
 
-    @BluexFunction(displayName = "Int转Long", executable = false)
+    @BluexFunction(category = "类型转换|Int转Long", executable = false)
     public static void IntegerToLong(
             INPUT<Integer> In,
             OUTPUT<Long> Out
@@ -137,7 +137,7 @@ public class IntLib {
         Out.value = In.value.longValue();
     }
 
-    @BluexFunction(displayName = "Int转Short", executable = false)
+    @BluexFunction(category = "类型转换|Int转Short", executable = false)
     public static void IntegerToShort(
             INPUT<Integer> In,
             OUTPUT<Short> Out
@@ -145,7 +145,7 @@ public class IntLib {
         Out.value = In.value.shortValue();
     }
 
-    @BluexFunction(displayName = "Int转Byte", executable = false)
+    @BluexFunction(category = "类型转换|Int转Byte", executable = false)
     public static void IntegerToByte(
             INPUT<Integer> In,
             OUTPUT<Byte> Out
@@ -153,7 +153,7 @@ public class IntLib {
         Out.value = In.value.byteValue();
     }
 
-    @BluexFunction(displayName = "Int转Bool", executable = false)
+    @BluexFunction(category = "类型转换|Int转Bool", executable = false)
     public static void IntegerToBoolean(
             INPUT<Integer> In,
             OUTPUT<Boolean> Out
@@ -161,7 +161,7 @@ public class IntLib {
         Out.value = In.value != 0;
     }
 
-    @BluexFunction(displayName = "Int转Char", executable = false)
+    @BluexFunction(category = "类型转换|Int转Char", executable = false)
     public static void IntegerToChar(
             INPUT<Integer> In,
             OUTPUT<Character> Out
@@ -169,7 +169,7 @@ public class IntLib {
         Out.value = (char) In.value.intValue();
     }
 
-    @BluexFunction(displayName = "Int转String", executable = false)
+    @BluexFunction(category = "类型转换|Int转String", executable = false)
     public static void IntegerToString(
             INPUT<Integer> In,
             OUTPUT<String> Out
@@ -177,7 +177,7 @@ public class IntLib {
         Out.value = String.valueOf(In.value);
     }
 
-    @BluexFunction(displayName = "Int等于", executable = false)
+    @BluexFunction(category = "比较|Int等于", executable = false)
     public static void Equal(
             INPUT<Integer> Num1,
             INPUT<Integer> Num2,
@@ -186,7 +186,7 @@ public class IntLib {
         Ret.value = Num1.value.equals(Num2.value);
     }
 
-    @BluexFunction(displayName = "Int不等于", executable = false)
+    @BluexFunction(category = "比较|Int不等于", executable = false)
     public static void NotEqual(
             INPUT<Integer> Num1,
             INPUT<Integer> Num2,
@@ -195,7 +195,7 @@ public class IntLib {
         Ret.value = !Num1.value.equals(Num2.value);
     }
 
-    @BluexFunction(displayName = "Int大于", executable = false)
+    @BluexFunction(category = "比较|Int大于", executable = false)
     public static void GreaterThan(
             INPUT<Integer> Num1,
             INPUT<Integer> Num2,
@@ -204,7 +204,7 @@ public class IntLib {
         Ret.value = Num1.value > Num2.value;
     }
 
-    @BluexFunction(displayName = "Int大于等于", executable = false)
+    @BluexFunction(category = "比较|Int大于等于", executable = false)
     public static void GreaterEqualThan(
             INPUT<Integer> Num1,
             INPUT<Integer> Num2,
@@ -213,7 +213,7 @@ public class IntLib {
         Ret.value = Num1.value >= Num2.value;
     }
 
-    @BluexFunction(displayName = "Int小于", executable = false)
+    @BluexFunction(category = "比较|Int小于", executable = false)
     public static void LessThan(
             INPUT<Integer> Num1,
             INPUT<Integer> Num2,
@@ -222,7 +222,7 @@ public class IntLib {
         Ret.value = Num1.value < Num2.value;
     }
 
-    @BluexFunction(displayName = "Int小于等于", executable = false)
+    @BluexFunction(category = "比较|Int小于等于", executable = false)
     public static void LessEqualThan(
             INPUT<Integer> Num1,
             INPUT<Integer> Num2,

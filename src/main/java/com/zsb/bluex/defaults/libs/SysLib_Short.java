@@ -5,10 +5,10 @@ import com.zsb.bluex.core.anno.BluexFunctionLib;
 import com.zsb.bluex.core.param.INPUT;
 import com.zsb.bluex.core.param.OUTPUT;
 
-@BluexFunctionLib(category = "数字|Short")
-public class ShortLib {
+@BluexFunctionLib(category = "Java基本类型|Short")
+public class SysLib_Short {
 
-    @BluexFunction(displayName = "Short加法", executable = false)
+    @BluexFunction(category = "运算|Short相加", executable = false)
     public static void AddShort(
             INPUT<Short> Num1,
             INPUT<Short> Num2,
@@ -17,7 +17,7 @@ public class ShortLib {
         Ret.value = (short) (Num1.value + Num2.value);
     }
 
-    @BluexFunction(displayName = "Short减法", executable = false)
+    @BluexFunction(category = "运算|Short相减", executable = false)
     public static void SubtractShort(
             INPUT<Short> Num1,
             INPUT<Short> Num2,
@@ -26,7 +26,7 @@ public class ShortLib {
         Ret.value = (short) (Num1.value - Num2.value);
     }
 
-    @BluexFunction(displayName = "Short乘法", executable = false)
+    @BluexFunction(category = "运算|Short相乘", executable = false)
     public static void MultiplyShort(
             INPUT<Short> Num1,
             INPUT<Short> Num2,
@@ -35,7 +35,7 @@ public class ShortLib {
         Ret.value = (short) (Num1.value * Num2.value);
     }
 
-    @BluexFunction(displayName = "Short除法", executable = false)
+    @BluexFunction(category = "运算|Short相除", executable = false)
     public static void DivideShort(
             INPUT<Short> Num1,
             INPUT<Short> Num2,
@@ -47,7 +47,7 @@ public class ShortLib {
         Ret.value = (short) (Num1.value / Num2.value);
     }
 
-    @BluexFunction(displayName = "Short取余", executable = false)
+    @BluexFunction(category = "运算|Short取余", executable = false)
     public static void ModuloShort(
             INPUT<Short> Num1,
             INPUT<Short> Num2,
@@ -59,7 +59,7 @@ public class ShortLib {
         Ret.value = (short) (Num1.value % Num2.value);
     }
 
-    @BluexFunction(displayName = "Short绝对值", executable = false)
+    @BluexFunction(category = "运算|Short绝对值", executable = false)
     public static void AbsShort(
             INPUT<Short> Num,
             OUTPUT<Short> Ret
@@ -67,7 +67,7 @@ public class ShortLib {
         Ret.value = (short) Math.abs(Num.value);
     }
 
-    @BluexFunction(displayName = "Short最大值", executable = false)
+    @BluexFunction(category = "运算|Short最大值", executable = false)
     public static void MaxShort(
             INPUT<Short> Num1,
             INPUT<Short> Num2,
@@ -76,7 +76,7 @@ public class ShortLib {
         Max.value = (short) Math.max(Num1.value, Num2.value);
     }
 
-    @BluexFunction(displayName = "Short最小值", executable = false)
+    @BluexFunction(category = "运算|Short最小值", executable = false)
     public static void MinShort(
             INPUT<Short> Num1,
             INPUT<Short> Num2,
@@ -85,7 +85,7 @@ public class ShortLib {
         Min.value = (short) Math.min(Num1.value, Num2.value);
     }
 
-    @BluexFunction(displayName = "Short幂运算", executable = false)
+    @BluexFunction(category = "运算|Short幂运算", executable = false)
     public static void PowShort(
             INPUT<Short> Base,
             INPUT<Short> Exp,
@@ -94,7 +94,7 @@ public class ShortLib {
         Ret.value = (short) Math.pow(Base.value, Exp.value);
     }
 
-    @BluexFunction(displayName = "Short平方根", executable = false)
+    @BluexFunction(category = "运算|Short平方根", executable = false)
     public static void SqrtShort(
             INPUT<Short> Num,
             OUTPUT<Short> Ret
@@ -105,7 +105,7 @@ public class ShortLib {
         Ret.value = (short) Math.sqrt(Num.value);
     }
 
-    @BluexFunction(displayName = "Short取负", executable = false)
+    @BluexFunction(category = "运算|Short取负", executable = false)
     public static void NegateShort(
             INPUT<Short> Num,
             OUTPUT<Short> Ret
@@ -115,7 +115,7 @@ public class ShortLib {
 
     // 类型转换
 
-    @BluexFunction(displayName = "Short转Int", executable = false)
+    @BluexFunction(category = "类型转换|Short转Int", executable = false)
     public static void ShortToInteger(
             INPUT<Short> In,
             OUTPUT<Integer> Out
@@ -123,7 +123,7 @@ public class ShortLib {
         Out.value = In.value.intValue();
     }
 
-    @BluexFunction(displayName = "Short转Float", executable = false)
+    @BluexFunction(category = "类型转换|Short转Float", executable = false)
     public static void ShortToFloat(
             INPUT<Short> In,
             OUTPUT<Float> Out
@@ -131,7 +131,7 @@ public class ShortLib {
         Out.value = In.value.floatValue();
     }
 
-    @BluexFunction(displayName = "Short转Double", executable = false)
+    @BluexFunction(category = "类型转换|Short转Double", executable = false)
     public static void ShortToDouble(
             INPUT<Short> In,
             OUTPUT<Double> Out
@@ -139,7 +139,7 @@ public class ShortLib {
         Out.value = In.value.doubleValue();
     }
 
-    @BluexFunction(displayName = "Short转Long", executable = false)
+    @BluexFunction(category = "类型转换|Short转Long", executable = false)
     public static void ShortToLong(
             INPUT<Short> In,
             OUTPUT<Long> Out
@@ -147,7 +147,7 @@ public class ShortLib {
         Out.value = In.value.longValue();
     }
 
-    @BluexFunction(displayName = "Short转Byte", executable = false)
+    @BluexFunction(category = "类型转换|Short转Byte", executable = false)
     public static void ShortToByte(
             INPUT<Short> In,
             OUTPUT<Byte> Out
@@ -155,7 +155,7 @@ public class ShortLib {
         Out.value = In.value.byteValue();
     }
 
-    @BluexFunction(displayName = "Short转Bool", executable = false)
+    @BluexFunction(category = "类型转换|Short转Bool", executable = false)
     public static void ShortToBoolean(
             INPUT<Short> In,
             OUTPUT<Boolean> Out
@@ -163,7 +163,7 @@ public class ShortLib {
         Out.value = In.value != 0;
     }
 
-    @BluexFunction(displayName = "Short转Char", executable = false)
+    @BluexFunction(category = "类型转换|Short转Char", executable = false)
     public static void ShortToChar(
             INPUT<Short> In,
             OUTPUT<Character> Out
@@ -171,7 +171,7 @@ public class ShortLib {
         Out.value = (char) In.value.intValue();
     }
 
-    @BluexFunction(displayName = "Short转String", executable = false)
+    @BluexFunction(category = "类型转换|Short转String", executable = false)
     public static void ShortToString(
             INPUT<Short> In,
             OUTPUT<String> Out
@@ -179,7 +179,7 @@ public class ShortLib {
         Out.value = String.valueOf(In.value);
     }
 
-    @BluexFunction(displayName = "Short等于", executable = false)
+    @BluexFunction(category = "比较|Short等于", executable = false)
     public static void Equal(
             INPUT<Short> Num1,
             INPUT<Short> Num2,
@@ -188,7 +188,7 @@ public class ShortLib {
         Ret.value = Num1.value.equals(Num2.value);
     }
 
-    @BluexFunction(displayName = "Short不等于", executable = false)
+    @BluexFunction(category = "比较|Short不等于", executable = false)
     public static void NotEqual(
             INPUT<Short> Num1,
             INPUT<Short> Num2,
@@ -197,7 +197,7 @@ public class ShortLib {
         Ret.value = !Num1.value.equals(Num2.value);
     }
 
-    @BluexFunction(displayName = "Short大于", executable = false)
+    @BluexFunction(category = "比较|Short大于", executable = false)
     public static void GreaterThan(
             INPUT<Short> Num1,
             INPUT<Short> Num2,
@@ -206,7 +206,7 @@ public class ShortLib {
         Ret.value = Num1.value > Num2.value;
     }
 
-    @BluexFunction(displayName = "Short大于等于", executable = false)
+    @BluexFunction(category = "比较|Short大于等于", executable = false)
     public static void GreaterEqualThan(
             INPUT<Short> Num1,
             INPUT<Short> Num2,
@@ -215,7 +215,7 @@ public class ShortLib {
         Ret.value = Num1.value >= Num2.value;
     }
 
-    @BluexFunction(displayName = "Short小于", executable = false)
+    @BluexFunction(category = "比较|Short小于", executable = false)
     public static void LessThan(
             INPUT<Short> Num1,
             INPUT<Short> Num2,
@@ -224,7 +224,7 @@ public class ShortLib {
         Ret.value = Num1.value < Num2.value;
     }
 
-    @BluexFunction(displayName = "Short小于等于", executable = false)
+    @BluexFunction(category = "比较|Short小于等于", executable = false)
     public static void LessEqualThan(
             INPUT<Short> Num1,
             INPUT<Short> Num2,

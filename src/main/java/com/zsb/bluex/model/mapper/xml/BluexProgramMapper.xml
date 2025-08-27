@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zsb.bluex.model.mapper.BluexTaskMapper">
+<mapper namespace="com.zsb.bluex.model.mapper.BluexProgramMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.zsb.bluex.model.entity.BluexTask">
-        <id column="TASK_NO" property="taskNo" />
-        <result column="TASK_NAME" property="taskName" />
-        <result column="TASK_DESC" property="taskDesc" />
+    <resultMap id="BaseResultMap" type="com.zsb.bluex.model.entity.BluexProgram">
+        <id column="PROGRAM_NO" property="programNo" />
+        <result column="PROGRAM_NAME" property="programName" />
+        <result column="PROGRAM_DESC" property="programDesc" />
         <result column="CREATE_TIME" property="createTime" />
         <result column="UPDATE_TIME" property="updateTime" />
         <result column="JSON_CONTENT" property="jsonContent" />

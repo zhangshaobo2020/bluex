@@ -9,32 +9,32 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 任务信息（总览）, 查询对象
+ * 可视化程序表, 查询对象
  * </p>
  *
- * @author dev3
- * @since 2025-08-12
+ * @author ${author}
+ * @since 2025-08-27
  */
-@TableName("BLUEX_TASK")
-public class BluexTaskSearch implements Serializable {
+@TableName("BLUEX_PROGRAM")
+public class BluexProgramSearch implements Serializable {
 
     /**
-     * 任务编号
+     * 程序编号
      */
-    @TableField("TASK_NO")
-    private String taskNo;
+    @TableField("PROGRAM_NO")
+    private String programNo;
 
     /**
-     * 任务名称
+     * 程序名称
      */
-    @TableField("TASK_NAME")
-    private String taskName;
+    @TableField("PROGRAM_NAME")
+    private String programName;
 
     /**
-     * 任务描述
+     * 程序描述
      */
-    @TableField("TASK_DESC")
-    private String taskDesc;
+    @TableField("PROGRAM_DESC")
+    private String programDesc;
 
     /**
      * 创建时间
@@ -78,45 +78,45 @@ public class BluexTaskSearch implements Serializable {
 
 
     /**
-     * 获取: 任务编号
+     * 获取: 程序编号
      */
-    public String getTaskNo() {
-        return taskNo;
+    public String getProgramNo() {
+        return programNo;
     }
 
     /**
-     * 设置: 任务编号
+     * 设置: 程序编号
      */
-    public void setTaskNo(String taskNo) {
-        this.taskNo = taskNo;
+    public void setProgramNo(String programNo) {
+        this.programNo = programNo;
     }
 
     /**
-     * 获取: 任务名称
+     * 获取: 程序名称
      */
-    public String getTaskName() {
-        return taskName;
+    public String getProgramName() {
+        return programName;
     }
 
     /**
-     * 设置: 任务名称
+     * 设置: 程序名称
      */
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public void setProgramName(String programName) {
+        this.programName = programName;
     }
 
     /**
-     * 获取: 任务描述
+     * 获取: 程序描述
      */
-    public String getTaskDesc() {
-        return taskDesc;
+    public String getProgramDesc() {
+        return programDesc;
     }
 
     /**
-     * 设置: 任务描述
+     * 设置: 程序描述
      */
-    public void setTaskDesc(String taskDesc) {
-        this.taskDesc = taskDesc;
+    public void setProgramDesc(String programDesc) {
+        this.programDesc = programDesc;
     }
 
     /**

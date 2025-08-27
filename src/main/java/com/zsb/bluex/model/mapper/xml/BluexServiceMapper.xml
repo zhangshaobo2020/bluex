@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsb.bluex.model.mapper.BluexServiceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zsb.bluex.model.entity.BluexService">
+        <id column="SERVICE_NO" property="serviceNo" />
+        <result column="SERVICE_NAME" property="serviceName" />
+        <result column="SERVICE_DESC" property="serviceDesc" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="SERVICE_TYPE" property="serviceType" />
+        <result column="SERVICE_PARAM1" property="serviceParam1" />
+        <result column="SERVICE_PARAM2" property="serviceParam2" />
+        <result column="SERVICE_PARAM3" property="serviceParam3" />
+        <result column="SERVICE_PARAM4" property="serviceParam4" />
+        <result column="SERVICE_PARAM5" property="serviceParam5" />
+        <result column="SERVICE_PARAM6" property="serviceParam6" />
+        <result column="SERVICE_PARAM7" property="serviceParam7" />
+        <result column="SERVICE_PARAM8" property="serviceParam8" />
+        <result column="SERVICE_PARAM9" property="serviceParam9" />
+        <result column="SERVICE_PARAM10" property="serviceParam10" />
+    </resultMap>
+
+</mapper>

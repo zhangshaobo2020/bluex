@@ -9,31 +9,31 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 任务信息（总览）
+ * 可视化程序表
  * </p>
  *
- * @author dev3
- * @since 2025-08-12
+ * @author ${author}
+ * @since 2025-08-27
  */
-@TableName("BLUEX_TASK")
-public class BluexTask extends Model<BluexTask> {
+@TableName("BLUEX_PROGRAM")
+public class BluexProgram extends Model<BluexProgram> {
 
     /**
     * 所有字段名
     */
     public static class Columns {
         /**
-        * 任务编号
+        * 程序编号
         */
-        public static final String taskNo = "TASK_NO";
+        public static final String programNo = "PROGRAM_NO";
         /**
-        * 任务名称
+        * 程序名称
         */
-        public static final String taskName = "TASK_NAME";
+        public static final String programName = "PROGRAM_NAME";
         /**
-        * 任务描述
+        * 程序描述
         */
-        public static final String taskDesc = "TASK_DESC";
+        public static final String programDesc = "PROGRAM_DESC";
         /**
         * 创建时间
         */
@@ -49,22 +49,22 @@ public class BluexTask extends Model<BluexTask> {
     }
 
     /**
-     * 任务编号
+     * 程序编号
      */
-    @TableId("TASK_NO")
-    private String taskNo;
+    @TableId("PROGRAM_NO")
+    private String programNo;
 
     /**
-     * 任务名称
+     * 程序名称
      */
-    @TableField("TASK_NAME")
-    private String taskName;
+    @TableField("PROGRAM_NAME")
+    private String programName;
 
     /**
-     * 任务描述
+     * 程序描述
      */
-    @TableField("TASK_DESC")
-    private String taskDesc;
+    @TableField("PROGRAM_DESC")
+    private String programDesc;
 
     /**
      * 创建时间
@@ -85,28 +85,28 @@ public class BluexTask extends Model<BluexTask> {
     private String jsonContent;
 
 
-    public String getTaskNo() {
-        return taskNo;
+    public String getProgramNo() {
+        return programNo;
     }
 
-    public void setTaskNo(String taskNo) {
-        this.taskNo = taskNo;
+    public void setProgramNo(String programNo) {
+        this.programNo = programNo;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public String getProgramName() {
+        return programName;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public void setProgramName(String programName) {
+        this.programName = programName;
     }
 
-    public String getTaskDesc() {
-        return taskDesc;
+    public String getProgramDesc() {
+        return programDesc;
     }
 
-    public void setTaskDesc(String taskDesc) {
-        this.taskDesc = taskDesc;
+    public void setProgramDesc(String programDesc) {
+        this.programDesc = programDesc;
     }
 
     public LocalDateTime getCreateTime() {
@@ -135,15 +135,15 @@ public class BluexTask extends Model<BluexTask> {
 
     @Override
     public Serializable pkVal() {
-        return this.taskNo;
+        return this.programNo;
     }
 
     @Override
     public String toString() {
-        return "BluexTask{" +
-        "taskNo=" + taskNo +
-        ", taskName=" + taskName +
-        ", taskDesc=" + taskDesc +
+        return "BluexProgram{" +
+        "programNo=" + programNo +
+        ", programName=" + programName +
+        ", programDesc=" + programDesc +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +
         ", jsonContent=" + jsonContent +

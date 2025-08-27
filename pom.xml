@@ -111,6 +111,18 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>explorer</groupId>
+                <artifactId>explorer-boot-generator-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.oracle.database.jdbc</groupId>
+                        <artifactId>ojdbc8</artifactId>
+                        <version>12.2.0.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
 

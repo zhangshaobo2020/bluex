@@ -9,7 +9,7 @@ import com.zsb.bluex.core.runtime.ExecutionContext;
 import com.zsb.bluex.core.runtime.delegates.EventDelegate;
 import com.zsb.bluex.core.runtime.node.delegate.DelegateNode;
 import com.zsb.bluex.core.runtime.param.LiteralValueSource;
-import com.zsb.bluex.defaults.enums.FileOpTypeEnum;
+import com.zsb.bluex.defaults.enums.FileOpType;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -80,11 +80,11 @@ public class FileSystemListener extends EventDelegate {
                         delegateNode.setOutput("File", new OUTPUT<>(file));
                         // 设置文件操作类型
                         if ("ENTRY_CREATE".equals(event.kind().name())) {
-                            delegateNode.setOutput("OpType", new OUTPUT<>(FileOpTypeEnum.CREATE));
+                            delegateNode.setOutput("OpType", new OUTPUT<>(FileOpType.CREATE));
                         } else if ("ENTRY_MODIFY".equals(event.kind().name())) {
-                            delegateNode.setOutput("OpType", new OUTPUT<>(FileOpTypeEnum.MODIFY));
+                            delegateNode.setOutput("OpType", new OUTPUT<>(FileOpType.MODIFY));
                         } else if ("ENTRY_DELETE".equals(event.kind().name())) {
-                            delegateNode.setOutput("OpType", new OUTPUT<>(FileOpTypeEnum.DELETE));
+                            delegateNode.setOutput("OpType", new OUTPUT<>(FileOpType.DELETE));
                         }
                         newCtx.run();
                         /* 执行结束 */

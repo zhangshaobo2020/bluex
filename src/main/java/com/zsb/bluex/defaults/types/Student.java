@@ -1,7 +1,7 @@
 package com.zsb.bluex.defaults.types;
 
 import com.zsb.bluex.core.anno.BluexClass;
-import com.zsb.bluex.defaults.enums.DayEnum;
+import com.zsb.bluex.defaults.enums.Day;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,5 +16,5 @@ public class Student implements Serializable {
     private String name;
     private Integer age;
     private List<String> hobbies = new ArrayList<>();
-    private DayEnum day;
+    private Day day;
 }

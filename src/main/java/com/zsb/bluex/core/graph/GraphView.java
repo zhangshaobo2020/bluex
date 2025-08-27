@@ -201,6 +201,19 @@ public class GraphView implements Serializable {
                         processNodeParams(toXMLNode, node, MetaType.GENERATED);
                         ctx.addPureNode(toXMLNode);
                     }
+                    // Enum相关
+                    if (node.getQualifiedName().startsWith("GENERATED:FROMENUM:")) {
+                        String className = node.getQualifiedName().replace("GENERATED:FROMENUM:", "");
+                        FromEnumNode fromEnumNode = new FromEnumNode(node.getId(), Class.forName(className));
+                        processNodeParams(fromEnumNode, node, MetaType.GENERATED);
+                        ctx.addPureNode(fromEnumNode);
+                    }
+                    if (node.getQualifiedName().startsWith("GENERATED:TOENUM:")) {
+                        String className = node.getQualifiedName().replace("GENERATED:TOENUM:", "");
+                        ToEnumNode toEnumNode = new ToEnumNode(node.getId(), Class.forName(className));
+                        processNodeParams(toEnumNode, node, MetaType.GENERATED);
+                        ctx.addPureNode(toEnumNode);
+                    }
                 }
             }
         }

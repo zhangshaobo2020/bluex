@@ -17,7 +17,7 @@ strategy:
     entityColumnConstant: true
     include:
         - BLUEX_PROGRAM
-        - BLUEX_SERVICE
+        - BLUEX_JOB
 
 packageInfo:
     parent: com.zsb.bluex.model

@@ -9,32 +9,32 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 可视化程序表, 查询对象
+ * 执行任务表, 查询对象
  * </p>
  *
  * @author ${author}
  * @since 2025-08-28
  */
-@TableName("BLUEX_PROGRAM")
-public class BluexProgramSearch implements Serializable {
+@TableName("BLUEX_JOB")
+public class BluexJobSearch implements Serializable {
 
     /**
-     * 程序编号
+     * 任务编号
      */
-    @TableField("PROGRAM_NO")
-    private String programNo;
+    @TableField("JOB_NO")
+    private String jobNo;
 
     /**
-     * 程序名称
+     * 任务名称
      */
-    @TableField("PROGRAM_NAME")
-    private String programName;
+    @TableField("JOB_NAME")
+    private String jobName;
 
     /**
-     * 程序描述
+     * 任务描述
      */
-    @TableField("PROGRAM_DESC")
-    private String programDesc;
+    @TableField("JOB_DESC")
+    private String jobDesc;
 
     /**
      * 创建时间
@@ -71,52 +71,76 @@ public class BluexProgramSearch implements Serializable {
     @TableField("UPDATE_TIME")
     private LocalDateTime updateTimeEnd;
     /**
-     * JSON内容
+     * 任务类型
      */
-    @TableField("JSON_CONTENT")
-    private String jsonContent;
+    @TableField("JOB_TYPE")
+    private String jobType;
+
+    /**
+     * CRON表达式
+     */
+    @TableField("CRON_EXPRESSION")
+    private String cronExpression;
+
+    /**
+     * 文件系统监听路径
+     */
+    @TableField("FILE_PATH")
+    private String filePath;
+
+    /**
+     * HTTP请求方式
+     */
+    @TableField("HTTP_METHOD")
+    private String httpMethod;
+
+    /**
+     * HTTP的URL映射
+     */
+    @TableField("HTTP_URL_MAPPING")
+    private String httpUrlMapping;
 
 
     /**
-     * 获取: 程序编号
+     * 获取: 任务编号
      */
-    public String getProgramNo() {
-        return programNo;
+    public String getJobNo() {
+        return jobNo;
     }
 
     /**
-     * 设置: 程序编号
+     * 设置: 任务编号
      */
-    public void setProgramNo(String programNo) {
-        this.programNo = programNo;
+    public void setJobNo(String jobNo) {
+        this.jobNo = jobNo;
     }
 
     /**
-     * 获取: 程序名称
+     * 获取: 任务名称
      */
-    public String getProgramName() {
-        return programName;
+    public String getJobName() {
+        return jobName;
     }
 
     /**
-     * 设置: 程序名称
+     * 设置: 任务名称
      */
-    public void setProgramName(String programName) {
-        this.programName = programName;
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
     }
 
     /**
-     * 获取: 程序描述
+     * 获取: 任务描述
      */
-    public String getProgramDesc() {
-        return programDesc;
+    public String getJobDesc() {
+        return jobDesc;
     }
 
     /**
-     * 设置: 程序描述
+     * 设置: 任务描述
      */
-    public void setProgramDesc(String programDesc) {
-        this.programDesc = programDesc;
+    public void setJobDesc(String jobDesc) {
+        this.jobDesc = jobDesc;
     }
 
     /**
@@ -202,17 +226,73 @@ public class BluexProgramSearch implements Serializable {
         this.updateTimeEnd = updateTime;
         }
     /**
-     * 获取: JSON内容
+     * 获取: 任务类型
      */
-    public String getJsonContent() {
-        return jsonContent;
+    public String getJobType() {
+        return jobType;
     }
 
     /**
-     * 设置: JSON内容
+     * 设置: 任务类型
      */
-    public void setJsonContent(String jsonContent) {
-        this.jsonContent = jsonContent;
+    public void setJobType(String jobType) {
+        this.jobType = jobType;
+    }
+
+    /**
+     * 获取: CRON表达式
+     */
+    public String getCronExpression() {
+        return cronExpression;
+    }
+
+    /**
+     * 设置: CRON表达式
+     */
+    public void setCronExpression(String cronExpression) {
+        this.cronExpression = cronExpression;
+    }
+
+    /**
+     * 获取: 文件系统监听路径
+     */
+    public String getFilePath() {
+        return filePath;
+    }
+
+    /**
+     * 设置: 文件系统监听路径
+     */
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    /**
+     * 获取: HTTP请求方式
+     */
+    public String getHttpMethod() {
+        return httpMethod;
+    }
+
+    /**
+     * 设置: HTTP请求方式
+     */
+    public void setHttpMethod(String httpMethod) {
+        this.httpMethod = httpMethod;
+    }
+
+    /**
+     * 获取: HTTP的URL映射
+     */
+    public String getHttpUrlMapping() {
+        return httpUrlMapping;
+    }
+
+    /**
+     * 设置: HTTP的URL映射
+     */
+    public void setHttpUrlMapping(String httpUrlMapping) {
+        this.httpUrlMapping = httpUrlMapping;
     }
 
 }

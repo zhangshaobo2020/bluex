@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author ${author}
- * @since 2025-08-27
+ * @since 2025-08-28
  */
 @TableName("BLUEX_PROGRAM")
 public class BluexProgram extends Model<BluexProgram> {

@@ -31,7 +31,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Data
@@ -50,15 +52,7 @@ public class GraphView implements Serializable {
                         // 匹配 Branch
                         case "CONTROL:Branch": {
                             BranchNode branchNode = new BranchNode(node.getId());
-                            // 查找Cond引脚是否有进行连接
-                            String nodePinMapping = findSourceParamNodeAndPin(node, "Cond");
-                            if (StringUtils.isBlank(nodePinMapping)) {
-                                Boolean cond = findForCurrentPinValue(node, "Cond", Boolean.class);
-                                branchNode.condition = new LiteralValueSource<>(cond);
-                            } else {
-                                String[] split = nodePinMapping.split("-");
-                                branchNode.condition = new NodeOutputSource<>(split[0], split[1]);
-                            }
+                            processNodeParams(branchNode, node, MetaType.CONTROL);
                             branchNode.trueExec = findForNextExecNode(node, "True");
                             branchNode.falseExec = findForNextExecNode(node, "False");
                             ctx.addExecNode(branchNode);
@@ -67,16 +61,7 @@ public class GraphView implements Serializable {
                         // 匹配 While
                         case "CONTROL:While": {
                             WhileNode whileNode = new WhileNode(node.getId());
-                            // 查找Cond引脚是否有进行连接
-                            String nodePinMapping = findSourceParamNodeAndPin(node, "Cond");
-                            if (StringUtils.isBlank(nodePinMapping)) {
-                                Boolean cond = findForCurrentPinValue(node, "Cond", Boolean.class);
-                                whileNode.condition = new LiteralValueSource<>(cond);
-                            } else {
-                                String[] split = nodePinMapping.split("-");
-                                whileNode.condition = new NodeOutputSource<>(split[0], split[1]);
-                                log.debug("While节点使用NodeOutputSource");
-                            }
+                            processNodeParams(whileNode, node, MetaType.CONTROL);
                             whileNode.loopBodyExec = findForNextExecNode(node, "LoopBody");
                             whileNode.completedExec = findForNextExecNode(node, "Completed");
                             ctx.addExecNode(whileNode);
@@ -85,28 +70,7 @@ public class GraphView implements Serializable {
                         // 匹配 ForLoop
                         case "CONTROL:ForLoop": {
                             ForLoopNode forLoopNode = new ForLoopNode(node.getId());
-                            ParamSource<Integer> fromPin;
-                            // 查找From引脚是否有进行连接
-                            String fromMapping = findSourceParamNodeAndPin(node, "From");
-                            if (StringUtils.isBlank(fromMapping)) {
-                                Integer from = findForCurrentPinValue(node, "From", Integer.class);
-                                fromPin = new LiteralValueSource<>(from);
-                            } else {
-                                String[] split = fromMapping.split("-");
-                                fromPin = new NodeOutputSource<>(split[0], split[1]);
-                                log.debug("ForLoop节点使用NodeOutputSource");
-                            }
-                            ParamSource<Integer> toPin;
-                            // 查找To引脚是否有进行连接
-                            String toMapping = findSourceParamNodeAndPin(node, "To");
-                            if (StringUtils.isBlank(toMapping)) {
-                                Integer to = findForCurrentPinValue(node, "To", Integer.class);
-                                toPin = new LiteralValueSource<>(to);
-                            } else {
-                                String[] split = toMapping.split("-");
-                                toPin = new NodeOutputSource<>(split[0], split[1]);
-                            }
-                            forLoopNode.setRange(fromPin, toPin);
+                            processNodeParams(forLoopNode, node, MetaType.CONTROL);
                             forLoopNode.loopBodyExec = findForNextExecNode(node, "LoopBody");
                             forLoopNode.completedExec = findForNextExecNode(node, "Completed");
                             ctx.addExecNode(forLoopNode);
@@ -115,20 +79,28 @@ public class GraphView implements Serializable {
                         // 匹配 Delay
                         case "CONTROL:Delay": {
                             DelayNode delayNode = new DelayNode(node.getId());
-                            // 查找Delay(ms)引脚是否有进行连接
-                            String nodePinMapping = findSourceParamNodeAndPin(node, "Delay(ms)");
-                            if (StringUtils.isBlank(nodePinMapping)) {
-                                Long delayMillis = findForCurrentPinValue(node, "Delay(ms)", Long.class);
-                                delayNode.delayMillis = new LiteralValueSource<>(delayMillis);
-                            } else {
-                                String[] split = nodePinMapping.split("-");
-                                delayNode.delayMillis = new NodeOutputSource<>(split[0], split[1]);
-                            }
+                            processNodeParams(delayNode, node, MetaType.CONTROL);
                             delayNode.nextExec = findForNextExecNode(node, "Exec");
                             ctx.addExecNode(delayNode);
                             break;
                         }
                         default: {
+                            // 进到这里，说明匹配上了CONTROL:ENUMSWITCH:
+                            if (node.getQualifiedName().startsWith("CONTROL:ENUMSWITCH:")) {
+                                String className = node.getQualifiedName().replace("CONTROL:ENUMSWITCH:", "");
+                                Class<?> clazz = Class.forName(className);
+                                // 根据所有枚举值查找下一个引脚
+                                Map<String, String> execMapping = new HashMap<>();
+                                Object[] enumConstants = clazz.getEnumConstants();
+                                if (enumConstants != null) {
+                                    for (Object enumConst : enumConstants) {
+                                        execMapping.put(enumConst.toString(), findForNextExecNode(node, enumConst.toString()));
+                                    }
+                                }
+                                EnumSwitchNode enumSwitchNode = new EnumSwitchNode(node.getId(), clazz, execMapping);
+                                processNodeParams(enumSwitchNode, node, MetaType.CONTROL);
+                                ctx.addExecNode(enumSwitchNode);
+                            }
                             break;
                         }
                     }
@@ -221,19 +193,6 @@ public class GraphView implements Serializable {
         return ctx;
     }
 
-    private ParamSource<String> buildParamPin_String(GraphNode node, String inputParamName) throws Exception {
-        ParamSource<String> pin;
-        String nameMapping = findSourceParamNodeAndPin(node, inputParamName);
-        if (StringUtils.isBlank(nameMapping)) {
-            String name = findForCurrentPinValue(node, inputParamName, String.class);
-            pin = new LiteralValueSource<>(name);
-        } else {
-            String[] split = nameMapping.split("-");
-            pin = new NodeOutputSource<>(split[0], split[1]);
-        }
-        return pin;
-    }
-
     /**
      * @param baseNode 实际节点
      * @param node     节点信息
@@ -274,6 +233,15 @@ public class GraphView implements Serializable {
                             .stream().filter(def -> def.getName().equals(paramName))
                             .findFirst()
                             .orElseThrow(() -> new RuntimeException("GENERATED[" + qualifiedName + "]中参数" + paramName + "不存在!"));
+                    // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
+                    String className = paramDef.getTypeDef().getQualifiedName().replace("TYPE:", "");
+                    paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
+                } else if (metaType == MetaType.CONTROL) {
+                    ControlDef controlDef = MetaHolder.CONTROL_DEFINITION.get(qualifiedName);
+                    ParamDef paramDef = controlDef.getInputParamDefs()
+                            .stream().filter(def -> def.getName().equals(paramName))
+                            .findFirst()
+                            .orElseThrow(() -> new RuntimeException("CONTROL[" + qualifiedName + "]中参数" + paramName + "不存在!"));
                     // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
                     String className = paramDef.getTypeDef().getQualifiedName().replace("TYPE:", "");
                     paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));

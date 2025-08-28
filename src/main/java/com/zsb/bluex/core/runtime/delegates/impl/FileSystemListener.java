@@ -146,7 +146,7 @@ public class FileSystemListener extends EventDelegate {
         def.getOutputParamDefs().add(
                 new ParamDef(
                         "OpType",
-                        MetaHolder.ENUM_DEFINITION.get("com.zsb.bluex.defaults.enums.FileOpTypeEnum")
+                        MetaHolder.ENUM_DEFINITION.get("com.zsb.bluex.defaults.enums.FileOpType")
                 )
         );
         return def;

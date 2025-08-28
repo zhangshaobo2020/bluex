@@ -5,12 +5,12 @@ import com.zsb.bluex.core.def.ParamDef;
 import com.zsb.bluex.core.launch.MetaHolder;
 import com.zsb.bluex.core.runtime.ExecTask;
 import com.zsb.bluex.core.runtime.ExecutionContext;
-import com.zsb.bluex.core.runtime.node.ExecNodeDefinition;
 import com.zsb.bluex.core.runtime.node.ExecNode;
-import com.zsb.bluex.core.runtime.param.ParamSource;
+import com.zsb.bluex.core.runtime.node.ExecNodeDefinition;
 
 public class WhileNode extends ExecNode implements ExecNodeDefinition {
-    public ParamSource<Boolean> condition;
+
+    private final static String PARAM_PIN_COND = "Cond";
     public String loopBodyExec;
     public String completedExec;
 
@@ -23,7 +23,8 @@ public class WhileNode extends ExecNode implements ExecNodeDefinition {
 
     @Override
     public void execute(ExecutionContext ctx) throws Exception {
-        if (Boolean.TRUE.equals(condition.getValue(ctx))) {
+        Boolean condition = (Boolean) inputParams.get(PARAM_PIN_COND).getValue(ctx);
+        if (condition) {
             if (loopBodyExec != null) {
                 ctx.schedule(new ExecTask(loopBodyExec, null));
             }
@@ -50,7 +51,7 @@ public class WhileNode extends ExecNode implements ExecNodeDefinition {
 
         def.getInputParamDefs().add(
                 new ParamDef(
-                        "Cond",
+                        PARAM_PIN_COND,
                         MetaHolder.PRIMITIVE_DEFINITION.get("java.lang.Boolean")
                 )
         );

@@ -5,8 +5,8 @@ import com.zsb.bluex.core.def.ParamDef;
 import com.zsb.bluex.core.launch.MetaHolder;
 import com.zsb.bluex.core.runtime.ExecTask;
 import com.zsb.bluex.core.runtime.ExecutionContext;
-import com.zsb.bluex.core.runtime.node.ExecNodeDefinition;
 import com.zsb.bluex.core.runtime.node.ExecNode;
+import com.zsb.bluex.core.runtime.node.ExecNodeDefinition;
 import com.zsb.bluex.core.runtime.param.ParamSource;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,12 +14,9 @@ import java.time.LocalDateTime;
 
 @Slf4j
 public class DelayNode extends ExecNode implements ExecNodeDefinition {
-    public String nextExec;
 
-    /**
-     * 延迟时间（毫秒）
-     */
-    public ParamSource<Long> delayMillis;
+    private final static String PARAM_PIN_DELAY = "Delay";
+    public String nextExec;
 
     private static void spin() {
     }
@@ -34,8 +31,9 @@ public class DelayNode extends ExecNode implements ExecNodeDefinition {
     @Override
     public void execute(ExecutionContext ctx) throws Exception {
         log.debug("[DelayNode] 延迟开始 {}", LocalDateTime.now());
+        Long delayMillis = (Long) inputParams.get(PARAM_PIN_DELAY).getValue(ctx);
         long start = System.currentTimeMillis();
-        while (System.currentTimeMillis() - start < delayMillis.getValue(ctx)) {
+        while (System.currentTimeMillis() - start < delayMillis) {
             spin();
         }
 //        Thread.sleep(delayMillis.getValue(ctx));
@@ -59,7 +57,7 @@ public class DelayNode extends ExecNode implements ExecNodeDefinition {
 
         def.getInputParamDefs().add(
                 new ParamDef(
-                        "Delay(ms)",
+                        PARAM_PIN_DELAY,
                         MetaHolder.PRIMITIVE_DEFINITION.get("java.lang.Long")
                 )
         );

@@ -6,14 +6,14 @@ import com.zsb.bluex.core.launch.MetaHolder;
 import com.zsb.bluex.core.param.OUTPUT;
 import com.zsb.bluex.core.runtime.ExecTask;
 import com.zsb.bluex.core.runtime.ExecutionContext;
-import com.zsb.bluex.core.runtime.node.ExecNodeDefinition;
 import com.zsb.bluex.core.runtime.node.ExecNode;
-import com.zsb.bluex.core.runtime.param.ParamSource;
-import lombok.SneakyThrows;
+import com.zsb.bluex.core.runtime.node.ExecNodeDefinition;
 
 public class ForLoopNode extends ExecNode implements ExecNodeDefinition {
-    public ParamSource<Integer> from;
-    public ParamSource<Integer> to;
+
+    private final static String PARAM_PIN_FROM = "From";
+    private final static String PARAM_PIN_TO = "To";
+    private final static String PARAM_PIN_INDEX = "Index";
     public String loopBodyExec;
     public String completedExec;
     public int currentIndex;
@@ -28,12 +28,6 @@ public class ForLoopNode extends ExecNode implements ExecNodeDefinition {
         super(id, "ForLoopNode");
     }
 
-    @SneakyThrows
-    public void setRange(ParamSource<Integer> from, ParamSource<Integer> to) {
-        this.from = from;
-        this.to = to;
-    }
-
     @Override
     public OUTPUT<?> getOutputParam(String outputParamName) {
         if (INDEX.equals(outputParamName)) {
@@ -46,10 +40,10 @@ public class ForLoopNode extends ExecNode implements ExecNodeDefinition {
     @Override
     public void execute(ExecutionContext ctx) throws Exception {
         if (!started) {
-            currentIndex = from.getValue(ctx);
+            currentIndex = (Integer) inputParams.get(PARAM_PIN_FROM).getValue(ctx);
             started = true;
         }
-        if (currentIndex < to.getValue(ctx)) {
+        if (currentIndex < (Integer) inputParams.get(PARAM_PIN_TO).getValue(ctx)) {
             currentIndex++;
             if (loopBodyExec != null) {
                 ctx.schedule(new ExecTask(loopBodyExec, null));
@@ -77,19 +71,19 @@ public class ForLoopNode extends ExecNode implements ExecNodeDefinition {
 
         def.getInputParamDefs().add(
                 new ParamDef(
-                        "From",
+                        PARAM_PIN_FROM,
                         MetaHolder.PRIMITIVE_DEFINITION.get("java.lang.Integer")
                 )
         );
         def.getInputParamDefs().add(
                 new ParamDef(
-                        "To",
+                        PARAM_PIN_TO,
                         MetaHolder.PRIMITIVE_DEFINITION.get("java.lang.Integer")
                 )
         );
         def.getOutputParamDefs().add(
                 new ParamDef(
-                        "Index",
+                        PARAM_PIN_INDEX,
                         MetaHolder.PRIMITIVE_DEFINITION.get("java.lang.Integer")
                 )
         );

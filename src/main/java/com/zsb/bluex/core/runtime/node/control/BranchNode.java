@@ -5,13 +5,12 @@ import com.zsb.bluex.core.def.ParamDef;
 import com.zsb.bluex.core.launch.MetaHolder;
 import com.zsb.bluex.core.runtime.ExecTask;
 import com.zsb.bluex.core.runtime.ExecutionContext;
-import com.zsb.bluex.core.runtime.node.ExecNodeDefinition;
 import com.zsb.bluex.core.runtime.node.ExecNode;
-import com.zsb.bluex.core.runtime.param.ParamSource;
+import com.zsb.bluex.core.runtime.node.ExecNodeDefinition;
 
 public class BranchNode extends ExecNode implements ExecNodeDefinition {
 
-    public ParamSource<Boolean> condition;
+    private final static String PARAM_PIN_COND = "Cond";
     public String trueExec;
     public String falseExec;
 
@@ -24,7 +23,7 @@ public class BranchNode extends ExecNode implements ExecNodeDefinition {
 
     @Override
     public void execute(ExecutionContext ctx) throws Exception {
-        boolean cond = condition.getValue(ctx);
+        Boolean cond = (Boolean) inputParams.get(PARAM_PIN_COND).getValue(ctx);
         if (cond) {
             if (trueExec != null) {
                 ctx.schedule(new ExecTask(trueExec, null));
@@ -51,7 +50,7 @@ public class BranchNode extends ExecNode implements ExecNodeDefinition {
 
         def.getInputParamDefs().add(
                 new ParamDef(
-                        "Cond",
+                        PARAM_PIN_COND,
                         MetaHolder.PRIMITIVE_DEFINITION.get("java.lang.Boolean")
                 )
         );

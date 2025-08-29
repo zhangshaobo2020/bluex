@@ -3,11 +3,11 @@ package com.zsb.bluex.web.controller;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zsb.bluex.model.entity.BluexProgram;
-import com.zsb.bluex.model.entity.BluexProgramSearch;
-import com.zsb.bluex.model.service.BluexProgramService;
-import com.zsb.bluex.utils.CommonUtil;
-import com.zsb.bluex.utils.MybatisPlusUtils;
+import com.zsb.bluex.core.model.entity.BluexProgram;
+import com.zsb.bluex.core.model.entity.BluexProgramSearch;
+import com.zsb.bluex.core.model.service.BluexProgramService;
+import com.zsb.bluex.core.utils.CommonUtil;
+import com.zsb.bluex.core.utils.MybatisPlusUtils;
 import com.zsb.bluex.web.Pagination;
 import com.zsb.bluex.web.WebResult;
 import com.zsb.bluex.web.mapping.TaskGraph;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/program")
@@ -63,5 +64,12 @@ public class ProgramController {
     public WebResult<String> programDelete(@RequestParam String programNo) {
         bluexProgramService.removeById(programNo);
         return WebResult.success("OK");
+    }
+
+    @GetMapping("/programDropdown")
+    public WebResult<List<BluexProgram>> programDropdown() {
+        QueryWrapper<BluexProgram> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select(BluexProgram.Columns.programNo, BluexProgram.Columns.programName);
+        return WebResult.success(bluexProgramService.list(queryWrapper));
     }
 }

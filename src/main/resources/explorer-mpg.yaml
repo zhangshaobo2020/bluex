@@ -1,26 +1,27 @@
 global:
-    author:
-    outputDir: ./src/main/java
-    fileOverride: true
-    activeRecord: true
-    baseResultMap: true
+  author:
+  outputDir: ./src/main/java
+  fileOverride: true
+  activeRecord: true
+  baseResultMap: true
 
 dataSource:
-    url: jdbc:oracle:thin:@10.100.3.238:1521:orcl
-    driverName: oracle.jdbc.OracleDriver
-    username: sw_ori
-    password: sw
+  url: jdbc:oracle:thin:@10.100.3.238:1521:orcl
+  driverName: oracle.jdbc.OracleDriver
+  username: sw_ori
+  password: sw
 
 strategy:
-    naming: underline_to_camel
-    entitySerialVersionUID: false
-    entityColumnConstant: true
-    include:
-        - BLUEX_PROGRAM
-        - BLUEX_JOB
+  naming: underline_to_camel
+  entitySerialVersionUID: false
+  entityColumnConstant: true
+  include:
+    #        - BLUEX_PROGRAM
+    #        - BLUEX_JOB
+    - PRODUCTS
 
 packageInfo:
-    parent: com.zsb.bluex.model
+  parent: com.zsb.bluex.model
 
 template:
-    controller:
+  controller:

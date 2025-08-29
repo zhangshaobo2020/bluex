@@ -30,11 +30,12 @@ spring:
     username: sw_ori
     password: sw
 mybatis-plus:
-  mapper-locations: classpath*:/com/zsb/model/bluex/**/*.xml
+  mapper-locations: classpath*:/com/zsb/bluex/**/*.xml
 bluex:
   enum-scan-paths:
     - com.zsb.bluex.defaults.enums
-  type-scan-paths:
+  class-scan-paths:
     - com.zsb.bluex.defaults.types
+    - com.zsb.bluex.model.entity
   function-scan-paths:
     - com.zsb.bluex.defaults.libs

@@ -1,8 +1,8 @@
-package com.zsb.bluex.model.service.impl;
+package com.zsb.bluex.core.model.service.impl;
 
-import com.zsb.bluex.model.entity.BluexJob;
-import com.zsb.bluex.model.mapper.BluexJobMapper;
-import com.zsb.bluex.model.service.BluexJobService;
+import com.zsb.bluex.core.model.entity.BluexJob;
+import com.zsb.bluex.core.model.mapper.BluexJobMapper;
+import com.zsb.bluex.core.model.service.BluexJobService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author ${author}
- * @since 2025-08-28
+ * @since 2025-08-29
  */
 @Service
 public class BluexJobServiceImpl extends ServiceImpl<BluexJobMapper, BluexJob> implements BluexJobService {

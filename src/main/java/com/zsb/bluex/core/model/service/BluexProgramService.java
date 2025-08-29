@@ -1,6 +1,6 @@
-package com.zsb.bluex.model.service;
+package com.zsb.bluex.core.model.service;
 
-import com.zsb.bluex.model.entity.BluexProgram;
+import com.zsb.bluex.core.model.entity.BluexProgram;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

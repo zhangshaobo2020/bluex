@@ -1,4 +1,4 @@
-package com.zsb.bluex.utils;
+package com.zsb.bluex.core.utils;
 
 import java.util.UUID;
 

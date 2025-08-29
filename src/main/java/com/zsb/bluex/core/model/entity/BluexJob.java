@@ -1,4 +1,4 @@
-package com.zsb.bluex.model.entity;
+package com.zsb.bluex.core.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
@@ -9,19 +9,73 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 执行任务表, 查询对象
+ * 执行任务表
  * </p>
  *
  * @author ${author}
- * @since 2025-08-28
+ * @since 2025-08-29
  */
 @TableName("BLUEX_JOB")
-public class BluexJobSearch implements Serializable {
+public class BluexJob extends Model<BluexJob> {
+
+    /**
+    * 所有字段名
+    */
+    public static class Columns {
+        /**
+        * 任务编号
+        */
+        public static final String jobNo = "JOB_NO";
+        /**
+        * 任务名称
+        */
+        public static final String jobName = "JOB_NAME";
+        /**
+        * 任务描述
+        */
+        public static final String jobDesc = "JOB_DESC";
+        /**
+        * 创建时间
+        */
+        public static final String createTime = "CREATE_TIME";
+        /**
+        * 更新时间
+        */
+        public static final String updateTime = "UPDATE_TIME";
+        /**
+        * 任务类型
+        */
+        public static final String jobType = "JOB_TYPE";
+        /**
+        * CRON表达式
+        */
+        public static final String cronExpression = "CRON_EXPRESSION";
+        /**
+        * 文件系统监听路径
+        */
+        public static final String filePath = "FILE_PATH";
+        /**
+        * HTTP请求方式
+        */
+        public static final String httpMethod = "HTTP_METHOD";
+        /**
+        * HTTP的URL映射
+        */
+        public static final String httpUrlMapping = "HTTP_URL_MAPPING";
+        /**
+        * 绑定的程序编号
+        */
+        public static final String programNo = "PROGRAM_NO";
+        /**
+        * 运行状态
+        */
+        public static final String rowState = "ROW_STATE";
+    }
 
     /**
      * 任务编号
      */
-    @TableField("JOB_NO")
+    @TableId("JOB_NO")
     private String jobNo;
 
     /**
@@ -43,33 +97,11 @@ public class BluexJobSearch implements Serializable {
     private LocalDateTime createTime;
 
     /**
-     * 创建时间 - 开始
-     */
-    @TableField("CREATE_TIME")
-    private LocalDateTime createTimeStart;
-
-    /**
-     * 创建时间 - 结束
-     */
-    @TableField("CREATE_TIME")
-    private LocalDateTime createTimeEnd;
-    /**
      * 更新时间
      */
     @TableField("UPDATE_TIME")
     private LocalDateTime updateTime;
 
-    /**
-     * 更新时间 - 开始
-     */
-    @TableField("UPDATE_TIME")
-    private LocalDateTime updateTimeStart;
-
-    /**
-     * 更新时间 - 结束
-     */
-    @TableField("UPDATE_TIME")
-    private LocalDateTime updateTimeEnd;
     /**
      * 任务类型
      */
@@ -100,199 +132,135 @@ public class BluexJobSearch implements Serializable {
     @TableField("HTTP_URL_MAPPING")
     private String httpUrlMapping;
 
+    /**
+     * 绑定的程序编号
+     */
+    @TableField("PROGRAM_NO")
+    private String programNo;
 
     /**
-     * 获取: 任务编号
+     * 运行状态
      */
+    @TableField("ROW_STATE")
+    private String rowState;
+
+
     public String getJobNo() {
         return jobNo;
     }
 
-    /**
-     * 设置: 任务编号
-     */
     public void setJobNo(String jobNo) {
         this.jobNo = jobNo;
     }
 
-    /**
-     * 获取: 任务名称
-     */
     public String getJobName() {
         return jobName;
     }
 
-    /**
-     * 设置: 任务名称
-     */
     public void setJobName(String jobName) {
         this.jobName = jobName;
     }
 
-    /**
-     * 获取: 任务描述
-     */
     public String getJobDesc() {
         return jobDesc;
     }
 
-    /**
-     * 设置: 任务描述
-     */
     public void setJobDesc(String jobDesc) {
         this.jobDesc = jobDesc;
     }
 
-    /**
-     * 获取: 创建时间
-     */
     public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    /**
-     * 设置: 创建时间
-     */
     public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
-    /**
-     * 获取: 创建时间 - 开始
-     */
-    public LocalDateTime getCreateTimeStart() {
-        return createTimeStart;
-    }
-
-    /**
-     * 设置: 创建时间 - 开始
-     */
-    public void setCreateTimeStart(LocalDateTime createTime) {
-        this.createTimeStart = createTime;
-    }
-
-    /**
-     * 获取: 创建时间 - 结束
-     */
-    public LocalDateTime getCreateTimeEnd() {
-        return createTimeEnd;
-    }
-
-    /**
-     * 设置: 创建时间 - 结束
-     */
-    public void setCreateTimeEnd(LocalDateTime createTime) {
-        this.createTimeEnd = createTime;
-        }
-    /**
-     * 获取: 更新时间
-     */
     public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    /**
-     * 设置: 更新时间
-     */
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 
-    /**
-     * 获取: 更新时间 - 开始
-     */
-    public LocalDateTime getUpdateTimeStart() {
-        return updateTimeStart;
-    }
-
-    /**
-     * 设置: 更新时间 - 开始
-     */
-    public void setUpdateTimeStart(LocalDateTime updateTime) {
-        this.updateTimeStart = updateTime;
-    }
-
-    /**
-     * 获取: 更新时间 - 结束
-     */
-    public LocalDateTime getUpdateTimeEnd() {
-        return updateTimeEnd;
-    }
-
-    /**
-     * 设置: 更新时间 - 结束
-     */
-    public void setUpdateTimeEnd(LocalDateTime updateTime) {
-        this.updateTimeEnd = updateTime;
-        }
-    /**
-     * 获取: 任务类型
-     */
     public String getJobType() {
         return jobType;
     }
 
-    /**
-     * 设置: 任务类型
-     */
     public void setJobType(String jobType) {
         this.jobType = jobType;
     }
 
-    /**
-     * 获取: CRON表达式
-     */
     public String getCronExpression() {
         return cronExpression;
     }
 
-    /**
-     * 设置: CRON表达式
-     */
     public void setCronExpression(String cronExpression) {
         this.cronExpression = cronExpression;
     }
 
-    /**
-     * 获取: 文件系统监听路径
-     */
     public String getFilePath() {
         return filePath;
     }
 
-    /**
-     * 设置: 文件系统监听路径
-     */
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
 
-    /**
-     * 获取: HTTP请求方式
-     */
     public String getHttpMethod() {
         return httpMethod;
     }
 
-    /**
-     * 设置: HTTP请求方式
-     */
     public void setHttpMethod(String httpMethod) {
         this.httpMethod = httpMethod;
     }
 
-    /**
-     * 获取: HTTP的URL映射
-     */
     public String getHttpUrlMapping() {
         return httpUrlMapping;
     }
 
-    /**
-     * 设置: HTTP的URL映射
-     */
     public void setHttpUrlMapping(String httpUrlMapping) {
         this.httpUrlMapping = httpUrlMapping;
     }
 
+    public String getProgramNo() {
+        return programNo;
+    }
+
+    public void setProgramNo(String programNo) {
+        this.programNo = programNo;
+    }
+
+    public String getRowState() {
+        return rowState;
+    }
+
+    public void setRowState(String rowState) {
+        this.rowState = rowState;
+    }
+
+    @Override
+    public Serializable pkVal() {
+        return this.jobNo;
+    }
+
+    @Override
+    public String toString() {
+        return "BluexJob{" +
+        "jobNo=" + jobNo +
+        ", jobName=" + jobName +
+        ", jobDesc=" + jobDesc +
+        ", createTime=" + createTime +
+        ", updateTime=" + updateTime +
+        ", jobType=" + jobType +
+        ", cronExpression=" + cronExpression +
+        ", filePath=" + filePath +
+        ", httpMethod=" + httpMethod +
+        ", httpUrlMapping=" + httpUrlMapping +
+        ", programNo=" + programNo +
+        ", rowState=" + rowState +
+        "}";
+    }
 }

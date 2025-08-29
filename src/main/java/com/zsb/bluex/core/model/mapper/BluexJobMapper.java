@@ -1,6 +1,6 @@
-package com.zsb.bluex.model.mapper;
+package com.zsb.bluex.core.model.mapper;
 
-import com.zsb.bluex.model.entity.BluexJob;
+import com.zsb.bluex.core.model.entity.BluexJob;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author ${author}
- * @since 2025-08-28
+ * @since 2025-08-29
  */
 public interface BluexJobMapper extends BaseMapper<BluexJob> {
 

@@ -1,7 +1,7 @@
 package com.zsb.bluex.web.mapping;
 
 import com.zsb.bluex.core.graph.GraphView;
-import com.zsb.bluex.model.entity.BluexProgram;
+import com.zsb.bluex.core.model.entity.BluexProgram;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

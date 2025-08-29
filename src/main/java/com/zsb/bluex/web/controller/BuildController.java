@@ -1,9 +1,9 @@
 package com.zsb.bluex.web.controller;
 
-import com.zsb.bluex.core.runtime.delegates.impl.FileSystemListener;
-import com.zsb.bluex.core.runtime.delegates.impl.ManuallyTriggered;
 import com.zsb.bluex.core.graph.GraphNode;
 import com.zsb.bluex.core.graph.GraphView;
+import com.zsb.bluex.core.job.delegates.SingleTriggerJob;
+import com.zsb.bluex.model.entity.Products;
 import com.zsb.bluex.web.WebResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,12 +27,11 @@ public class BuildController {
             throw new RuntimeException("事件委托节点数量有且只能有一个！");
         }
         GraphNode graphNode = graphNodes.get(0);
-        if ("DELEGATE:ManuallyTriggered".equals(graphNode.getQualifiedName())) {
-            ManuallyTriggered manuallyTriggered = new ManuallyTriggered(graphView);
-            manuallyTriggered.start(true);
-        } else if ("DELEGATE:FileSystemListener".equals(graphNode.getQualifiedName())) {
-            FileSystemListener fileSystemListener = new FileSystemListener(graphView);
-            fileSystemListener.start(true);
+        if ("DELEGATE:SingleTriggerJob".equals(graphNode.getQualifiedName())) {
+            SingleTriggerJob singleTriggerJob = new SingleTriggerJob(graphView);
+            singleTriggerJob.start();
+        } else {
+            throw new RuntimeException("只支持\"单次触发\"的事件委托");
         }
         return WebResult.success("OK");
     }

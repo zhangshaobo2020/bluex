@@ -1,8 +1,8 @@
-package com.zsb.bluex.model.service.impl;
+package com.zsb.bluex.core.model.service.impl;
 
-import com.zsb.bluex.model.entity.BluexProgram;
-import com.zsb.bluex.model.mapper.BluexProgramMapper;
-import com.zsb.bluex.model.service.BluexProgramService;
+import com.zsb.bluex.core.model.entity.BluexProgram;
+import com.zsb.bluex.core.model.mapper.BluexProgramMapper;
+import com.zsb.bluex.core.model.service.BluexProgramService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

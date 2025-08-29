@@ -1,6 +1,6 @@
-package com.zsb.bluex.model.mapper;
+package com.zsb.bluex.core.model.mapper;
 
-import com.zsb.bluex.model.entity.BluexProgram;
+import com.zsb.bluex.core.model.entity.BluexProgram;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

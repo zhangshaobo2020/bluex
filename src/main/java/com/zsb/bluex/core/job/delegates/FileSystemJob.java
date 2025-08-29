@@ -1,4 +1,4 @@
-package com.zsb.bluex.core.runtime.delegates.impl;
+package com.zsb.bluex.core.job.delegates;
 
 import com.zsb.bluex.core.def.ControlDef;
 import com.zsb.bluex.core.def.ParamDef;
@@ -6,11 +6,9 @@ import com.zsb.bluex.core.graph.GraphView;
 import com.zsb.bluex.core.launch.MetaHolder;
 import com.zsb.bluex.core.param.OUTPUT;
 import com.zsb.bluex.core.runtime.ExecutionContext;
-import com.zsb.bluex.core.runtime.delegates.EventDelegate;
 import com.zsb.bluex.core.runtime.node.delegate.DelegateNode;
-import com.zsb.bluex.core.runtime.param.LiteralValueSource;
 import com.zsb.bluex.defaults.enums.FileOpType;
-import lombok.SneakyThrows;
+import com.zsb.bluex.core.job.EventDelegate;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -19,22 +17,17 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
-public class FileSystemListener extends EventDelegate {
+public class FileSystemJob extends EventDelegate {
 
-    public FileSystemListener() {
+    public FileSystemJob() {
     }
 
-    @SneakyThrows
-    public FileSystemListener(GraphView graphView) {
+    public FileSystemJob(GraphView graphView, String filePath) {
         super(graphView);
-        // 提取参数用作初始化
-        DelegateNode startupNode = (DelegateNode) graphView.buildExecCtx().findStartupNode();
-        // TODO: 暂时先写死，后续改为动态获取
-        LiteralValueSource<?> dirLiteral = (LiteralValueSource<?>) startupNode.getInputParam("Dir");
-        dir = (String) dirLiteral.getValue();
+        this.filePath = filePath;
     }
 
-    public String dir;
+    public String filePath;
 
     private final Map<Path, Long> lastHandled = new ConcurrentHashMap<>();
     private final long DEBOUNCE_MS = 500;
@@ -44,9 +37,9 @@ public class FileSystemListener extends EventDelegate {
     private Thread watchThread;
 
     @Override
-    public void start(boolean isDebug) throws Exception {
+    public void start() throws Exception {
         watchService = FileSystems.getDefault().newWatchService();
-        Path path = Paths.get(dir);
+        Path path = Paths.get(filePath);
         path.register(
                 watchService,
                 StandardWatchEventKinds.ENTRY_CREATE,
@@ -87,19 +80,15 @@ public class FileSystemListener extends EventDelegate {
                             delegateNode.setOutput("OpType", new OUTPUT<>(FileOpType.DELETE));
                         }
                         newCtx.run();
-                        /* 执行结束 */
-                        if (isDebug) {
-                            end();
-                        }
                     }
                     key.reset();
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             } catch (Exception e) {
-                log.error("FileSystemListener异常", e);
+                log.error("FileSystemJob异常", e);
             }
-        }, "FileSystemListener-Thread");
+        }, "FileSystemJob-Thread");
         watchThread.start();
     }
 
@@ -121,19 +110,12 @@ public class FileSystemListener extends EventDelegate {
     @Override
     public ControlDef provideDefinition() {
         ControlDef def = new ControlDef();
-        def.setName("definitionFileSystemListener");
+        def.setName("FileSystemJob");
         def.setDisplayName("文件系统监听");
-        def.setCategory("事件委托|FileSystemListener");
-        def.setQualifiedName("DELEGATE:FileSystemListener");
-        def.setSignature("DELEGATE:FileSystemListener");
+        def.setCategory("事件委托|FileSystemJob");
+        def.setQualifiedName("DELEGATE:FileSystemJob");
+        def.setSignature("DELEGATE:FileSystemJob");
         def.setDelegate(true);
-
-        def.getInputParamDefs().add(
-                new ParamDef(
-                        "Dir",
-                        MetaHolder.PRIMITIVE_DEFINITION.get("java.lang.String")
-                )
-        );
 
         def.getOutputExecDefs().add(new ParamDef("Exec"));
 

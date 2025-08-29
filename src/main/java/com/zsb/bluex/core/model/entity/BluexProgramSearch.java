@@ -1,4 +1,4 @@
-package com.zsb.bluex.model.entity;
+package com.zsb.bluex.core.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zsb.bluex.model.mapper.BluexJobMapper">
+<mapper namespace="com.zsb.bluex.core.model.mapper.BluexJobMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.zsb.bluex.model.entity.BluexJob">
+    <resultMap id="BaseResultMap" type="com.zsb.bluex.core.model.entity.BluexJob">
         <id column="JOB_NO" property="jobNo" />
         <result column="JOB_NAME" property="jobName" />
         <result column="JOB_DESC" property="jobDesc" />
@@ -14,6 +14,8 @@
         <result column="FILE_PATH" property="filePath" />
         <result column="HTTP_METHOD" property="httpMethod" />
         <result column="HTTP_URL_MAPPING" property="httpUrlMapping" />
+        <result column="PROGRAM_NO" property="programNo" />
+        <result column="ROW_STATE" property="rowState" />
     </resultMap>
 
 </mapper>

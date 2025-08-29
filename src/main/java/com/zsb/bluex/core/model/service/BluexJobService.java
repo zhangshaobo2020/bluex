@@ -1,6 +1,6 @@
-package com.zsb.bluex.model.service;
+package com.zsb.bluex.core.model.service;
 
-import com.zsb.bluex.model.entity.BluexJob;
+import com.zsb.bluex.core.model.entity.BluexJob;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author ${author}
- * @since 2025-08-28
+ * @since 2025-08-29
  */
 public interface BluexJobService extends IService<BluexJob> {
 

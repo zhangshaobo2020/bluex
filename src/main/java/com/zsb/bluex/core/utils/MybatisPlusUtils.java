@@ -1,4 +1,4 @@
-package com.zsb.bluex.utils;
+package com.zsb.bluex.core.utils;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

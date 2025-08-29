@@ -1,4 +1,4 @@
-package com.zsb.bluex.model;
+package com.zsb.bluex.core.model;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;

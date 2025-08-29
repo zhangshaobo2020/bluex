@@ -17,6 +17,7 @@ import com.zsb.bluex.core.runtime.node.delegate.DelegateNode;
 import com.zsb.bluex.core.runtime.node.function.FuncExecNode;
 import com.zsb.bluex.core.runtime.node.function.FuncPureNode;
 import com.zsb.bluex.core.runtime.node.generated.*;
+import com.zsb.bluex.core.runtime.node.generated.database.MybatisPlusSelectByIdNode;
 import com.zsb.bluex.core.runtime.param.LiteralValueSource;
 import com.zsb.bluex.core.runtime.param.NodeOutputSource;
 import com.zsb.bluex.core.runtime.param.ParamSource;
@@ -185,6 +186,13 @@ public class GraphView implements Serializable {
                         ToEnumNode toEnumNode = new ToEnumNode(node.getId(), Class.forName(className));
                         processNodeParams(toEnumNode, node, MetaType.GENERATED);
                         ctx.addPureNode(toEnumNode);
+                    }
+                    // 数据库相关
+                    if (node.getQualifiedName().startsWith("GENERATED:MYBATISPLUSSELECTBYID:")) {
+                        String className = node.getQualifiedName().replace("GENERATED:MYBATISPLUSSELECTBYID:", "");
+                        MybatisPlusSelectByIdNode selectByIdNode = new MybatisPlusSelectByIdNode(node.getId(), Class.forName(className));
+                        processNodeParams(selectByIdNode, node, MetaType.GENERATED);
+                        ctx.addPureNode(selectByIdNode);
                     }
                 }
             }

@@ -2,12 +2,12 @@ package com.zsb.bluex.web.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zsb.bluex.job.JobRegistry;
-import com.zsb.bluex.model.entity.BluexJob;
-import com.zsb.bluex.model.entity.BluexJobSearch;
-import com.zsb.bluex.model.service.BluexJobService;
-import com.zsb.bluex.utils.CommonUtil;
-import com.zsb.bluex.utils.MybatisPlusUtils;
+import com.zsb.bluex.core.job.JobRegistry;
+import com.zsb.bluex.core.model.entity.BluexJob;
+import com.zsb.bluex.core.model.entity.BluexJobSearch;
+import com.zsb.bluex.core.model.service.BluexJobService;
+import com.zsb.bluex.core.utils.CommonUtil;
+import com.zsb.bluex.core.utils.MybatisPlusUtils;
 import com.zsb.bluex.web.Pagination;
 import com.zsb.bluex.web.WebResult;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +32,10 @@ public class JobController {
         Pagination<BluexJob> pagination = new Pagination<>(request);
         QueryWrapper<BluexJob> queryWrapper = MybatisPlusUtils.getQueryWrapper(search);
         Page<BluexJob> page = bluexJobService.page(pagination.generate(), queryWrapper);
+        for (BluexJob record : page.getRecords()) {
+            boolean activated = jobRegistry.activatedJobs.containsKey(record.getJobNo());
+            record.setRowState(activated ? "Y" : "N");
+        }
         return WebResult.success(pagination.transfer(page));
     }
 
@@ -64,14 +68,14 @@ public class JobController {
         return WebResult.success("OK");
     }
 
-    @PostMapping("/registerJob")
-    public WebResult<String> registerJob(@RequestParam String jobNo) {
-        jobRegistry.registerJob(bluexJobService.getById(jobNo));
+    @PostMapping("/jobRegister")
+    public WebResult<String> jobRegister(@RequestParam String jobNo) throws Exception {
+        jobRegistry.registerJob(jobNo);
         return WebResult.success("OK");
     }
 
-    @PostMapping("/unregisterJob")
-    public WebResult<String> unregisterJob(@RequestParam String jobNo) {
+    @PostMapping("/jobUnregister")
+    public WebResult<String> jobUnregister(@RequestParam String jobNo) throws Exception {
         jobRegistry.unregisterJob(jobNo);
         return WebResult.success("OK");
     }

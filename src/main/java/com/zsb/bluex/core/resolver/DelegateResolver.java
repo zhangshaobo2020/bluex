@@ -1,10 +1,7 @@
 package com.zsb.bluex.core.resolver;
 
 import com.zsb.bluex.core.def.ControlDef;
-import com.zsb.bluex.core.job.delegates.CronJob;
-import com.zsb.bluex.core.job.delegates.FileSystemJob;
-import com.zsb.bluex.core.job.delegates.HttpJob;
-import com.zsb.bluex.core.job.delegates.SingleTriggerJob;
+import com.zsb.bluex.core.job.delegate.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +18,8 @@ public class DelegateResolver {
         map.put("DELEGATE:FileSystemJob", new FileSystemJob().provideDefinition());
         // HttpJob节点
         map.put("DELEGATE:HttpJob", new HttpJob().provideDefinition());
+        // WebSocketJob节点
+        map.put("DELEGATE:WebSocketJob", new WebSocketJob().provideDefinition());
         return map;
     }
 }

@@ -2,7 +2,10 @@ package com.zsb.bluex.core.resolver;
 
 import com.zsb.bluex.core.anno.BluexClass;
 import com.zsb.bluex.core.def.TypeDef;
+import org.springframework.web.socket.WebSocketMessage;
+import org.springframework.web.socket.WebSocketSession;
 
+import javax.jms.Message;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -41,6 +44,11 @@ public class TypeResolver {
         PRIMITIVE_CLASSES.add(File.class);
         PRIMITIVE_CLASSES.add(HttpServletRequest.class);
         PRIMITIVE_CLASSES.add(HttpServletResponse.class);
+
+        PRIMITIVE_CLASSES.add(WebSocketSession.class);
+        PRIMITIVE_CLASSES.add(WebSocketMessage.class);
+
+        PRIMITIVE_CLASSES.add(Message.class);
     }
 
     public static TypeDef resolveType(Type genericType) {

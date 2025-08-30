@@ -1,4 +1,4 @@
-package com.zsb.bluex.core.job.delegates;
+package com.zsb.bluex.core.job.delegate;
 
 import com.zsb.bluex.core.def.ControlDef;
 import com.zsb.bluex.core.def.ParamDef;

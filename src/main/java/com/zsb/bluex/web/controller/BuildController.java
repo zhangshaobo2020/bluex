@@ -2,8 +2,7 @@ package com.zsb.bluex.web.controller;
 
 import com.zsb.bluex.core.graph.GraphNode;
 import com.zsb.bluex.core.graph.GraphView;
-import com.zsb.bluex.core.job.delegates.SingleTriggerJob;
-import com.zsb.bluex.model.entity.Products;
+import com.zsb.bluex.core.job.delegate.SingleTriggerJob;
 import com.zsb.bluex.web.WebResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

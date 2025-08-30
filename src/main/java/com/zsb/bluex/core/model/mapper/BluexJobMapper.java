@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author ${author}
- * @since 2025-08-29
+ * @since 2025-08-30
  */
 public interface BluexJobMapper extends BaseMapper<BluexJob> {
 

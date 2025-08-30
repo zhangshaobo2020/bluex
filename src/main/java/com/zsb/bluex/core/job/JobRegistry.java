@@ -3,9 +3,8 @@ package com.zsb.bluex.core.job;
 import com.alibaba.fastjson2.JSON;
 import com.zsb.bluex.core.graph.GraphNode;
 import com.zsb.bluex.core.graph.GraphView;
-import com.zsb.bluex.core.job.delegate.CronJob;
-import com.zsb.bluex.core.job.delegate.FileSystemJob;
-import com.zsb.bluex.core.job.delegate.HttpJob;
+import com.zsb.bluex.core.job.config.DynamicWebSocketHandlerMapping;
+import com.zsb.bluex.core.job.delegate.*;
 import com.zsb.bluex.core.model.entity.BluexJob;
 import com.zsb.bluex.core.model.entity.BluexProgram;
 import com.zsb.bluex.core.model.service.BluexJobService;
@@ -30,6 +29,8 @@ public class JobRegistry implements InitializingBean {
 
     @Resource
     private RequestMappingHandlerMapping requestMappingHandlerMapping;
+    @Resource
+    private DynamicWebSocketHandlerMapping dynamicWebSocketHandlerMapping;
 
     @Resource
     private BluexProgramService bluexProgramService;
@@ -103,8 +104,44 @@ public class JobRegistry implements InitializingBean {
                 }
                 break;
             }
+            case "WebSocketJob": {
+                if ("DELEGATE:WebSocketJob".equals(delegateNode.getQualifiedName())) {
+                    WebSocketJob webSocketJob = new WebSocketJob(
+                            graphView,
+                            dynamicWebSocketHandlerMapping,
+                            job.getWsEndpoint()
+                    );
+                    webSocketJob.start();
+                    activatedJobs.put(job.getJobNo(), webSocketJob);
+                } else {
+                    throw new RuntimeException("WebSocketJob的事件委托入口不存在");
+                }
+                break;
+            }
+            case "MQJob": {
+                if ("DELEGATE:MQJob".equals(delegateNode.getQualifiedName())) {
+                    MQJob mqJob = new MQJob(
+                            graphView,
+                            job.getMqDriverName(),
+                            job.getMqUri(),
+                            job.getMqUsername(),
+                            job.getMqPassword(),
+                            job.getMqDestinationName(),
+                            job.getMqPubSubDomain(),
+                            job.getMqQueueManager(),
+                            job.getMqChannel(),
+                            job.getMqConnectionNameList(),
+                            job.getMqCcsId()
+                    );
+                    mqJob.start();
+                    activatedJobs.put(job.getJobNo(), mqJob);
+                } else {
+                    throw new RuntimeException("MQJob的事件委托入口不存在");
+                }
+                break;
+            }
             default:
-                log.error("未知任务类型: {}", job.getJobType());
+                throw new RuntimeException("未知任务类型:" + job.getJobType());
         }
         log.info("任务 [{}] 已注册", jobNo);
     }

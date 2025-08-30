@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author ${author}
- * @since 2025-08-29
+ * @since 2025-08-30
  */
 public interface BluexJobService extends IService<BluexJob> {
 

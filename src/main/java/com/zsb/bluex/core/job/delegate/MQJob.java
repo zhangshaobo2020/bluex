@@ -1,5 +1,6 @@
 package com.zsb.bluex.core.job.delegate;
 
+import com.ibm.msg.client.wmq.WMQConstants;
 import com.zsb.bluex.core.def.ControlDef;
 import com.zsb.bluex.core.def.ParamDef;
 import com.zsb.bluex.core.graph.GraphView;
@@ -15,56 +16,73 @@ import org.springframework.jms.listener.SessionAwareMessageListener;
 import javax.jms.ConnectionFactory;
 import javax.jms.Message;
 import javax.jms.Session;
-import java.util.Map;
 
 @Slf4j
 public class MQJob extends EventDelegate {
 
-    private final String driver;          // 驱动类型: activemq / ibmmq / rabbitmq
-    private final String brokerUrl;       // 地址，例如 tcp://127.0.0.1:61616
-    private final String username;
-    private final String password;
-    private final String destinationName; // 队列/Topic 名称
-    private final boolean pubSubDomain;   // true=Topic, false=Queue
-    private final Map<String, Object> extraProps; // IBM MQ 特有参数等
+    private String mqDriverName;
+    private String mqUri;
+    private String mqUsername;
+    private String mqPassword;
+    private String destinationName;
+    private String pubSubDomain;
+    private String mqQueueManager;
+    private String mqChannel;
+    private String mqConnectionNameList;
+    private String mqCcsId;
 
     private DefaultMessageListenerContainer container;
 
+    public MQJob() {
+    }
+
     public MQJob(GraphView graphView,
-                 String driver,
-                 String brokerUrl,
-                 String username,
-                 String password,
+                 String mqDriverName,
+                 String mqUri,
+                 String mqUsername,
+                 String mqPassword,
                  String destinationName,
-                 boolean pubSubDomain,
-                 Map<String, Object> extraProps) {
+                 String pubSubDomain,
+                 String mqQueueManager,
+                 String mqChannel,
+                 String mqConnectionNameList,
+                 String mqCcsId) {
         super(graphView);
-        this.driver = driver;
-        this.brokerUrl = brokerUrl;
-        this.username = username;
-        this.password = password;
+        this.mqDriverName = mqDriverName;
+        this.mqUri = mqUri;
+        this.mqUsername = mqUsername;
+        this.mqPassword = mqPassword;
         this.destinationName = destinationName;
         this.pubSubDomain = pubSubDomain;
-        this.extraProps = extraProps;
+        this.mqQueueManager = mqQueueManager;
+        this.mqChannel = mqChannel;
+        this.mqConnectionNameList = mqConnectionNameList;
+        this.mqCcsId = mqCcsId;
     }
 
     @Override
     public void start() throws Exception {
         try {
             ConnectionFactory connectionFactory = createConnectionFactory(
-                    driver, brokerUrl, username, password, extraProps
+                    mqDriverName,
+                    mqUri,
+                    mqUsername,
+                    mqPassword,
+                    mqQueueManager,
+                    mqChannel,
+                    mqConnectionNameList,
+                    mqCcsId
             );
 
             container = new DefaultMessageListenerContainer();
             container.setConnectionFactory(connectionFactory);
             container.setDestinationName(destinationName);
-            container.setPubSubDomain(pubSubDomain);
+            container.setPubSubDomain("Y".equals(pubSubDomain));
             container.setMessageListener(new MQJobListener(this));
             container.afterPropertiesSet();
             container.start();
 
-            log.info("启动 MQJob: driver={} url={} dest={} topic={} -> {}",
-                    driver, brokerUrl, destinationName, pubSubDomain, this);
+            log.info("启动 MQJob: driver={} url={} dest={}", mqDriverName, mqUri, destinationName);
         } catch (Exception e) {
             log.error("MQJob 启动失败", e);
             throw e;
@@ -100,7 +118,7 @@ public class MQJob extends EventDelegate {
         def.getOutputParamDefs().add(
                 new ParamDef(
                         "Message",
-                        MetaHolder.PRIMITIVE_DEFINITION.get("javax.jms.Message")
+                        MetaHolder.PRIMITIVE_DEFINITION.get("java.lang.String")
                 )
         );
         return def;
@@ -119,9 +137,38 @@ public class MQJob extends EventDelegate {
         @Override
         public void onMessage(Message message, Session session) {
             try {
+                // 转为String
+                String payload;
+                if (message instanceof javax.jms.TextMessage) {
+                    payload = ((javax.jms.TextMessage) message).getText();
+                } else if (message instanceof javax.jms.BytesMessage) {
+                    javax.jms.BytesMessage bytesMsg = (javax.jms.BytesMessage) message;
+                    byte[] data = new byte[(int) bytesMsg.getBodyLength()];
+                    bytesMsg.readBytes(data);
+                    payload = new String(data, java.nio.charset.StandardCharsets.UTF_8);
+                } else if (message instanceof javax.jms.ObjectMessage) {
+                    Object obj = ((javax.jms.ObjectMessage) message).getObject();
+                    payload = (obj != null ? obj.toString() : null);
+                } else if (message instanceof javax.jms.MapMessage) {
+                    javax.jms.MapMessage mapMsg = (javax.jms.MapMessage) message;
+                    java.util.Enumeration<?> keys = mapMsg.getMapNames();
+                    StringBuilder sb = new StringBuilder("{");
+                    while (keys.hasMoreElements()) {
+                        String key = keys.nextElement().toString();
+                        Object val = mapMsg.getObject(key);
+                        sb.append(key).append("=").append(val).append(", ");
+                    }
+                    if (sb.length() > 1) sb.setLength(sb.length() - 2);
+                    sb.append("}");
+                    payload = sb.toString();
+                } else {
+                    // 默认处理：直接调用 toString()
+                    payload = message.toString();
+                }
+
                 ExecutionContext newCtx = job.graphView.buildExecCtx();
                 DelegateNode delegateNode = (DelegateNode) newCtx.findStartupNode();
-                delegateNode.setOutput("Message", new OUTPUT<>(message));
+                delegateNode.setOutput("Message", new OUTPUT<>(payload));
 
                 newCtx.run();
             } catch (Exception e) {
@@ -133,56 +180,45 @@ public class MQJob extends EventDelegate {
     /**
      * 根据不同 MQ 动态创建 ConnectionFactory
      */
-    private ConnectionFactory createConnectionFactory(String driver, String url,
-                                                      String user, String pass,
-                                                      Map<String, Object> extra) {
+    private ConnectionFactory createConnectionFactory(String mqDriverName, String mqUri,
+                                                      String mqUsername, String mqPassword,
+                                                      String mqQueueManager, String mqChannel,
+                                                      String mqConnectionNameList, String mqCcsId) {
         try {
-            switch (driver.toLowerCase()) {
+            switch (mqDriverName.toLowerCase()) {
                 case "activemq": {
                     Class<?> clazz = Class.forName("org.apache.activemq.ActiveMQConnectionFactory");
                     return (ConnectionFactory) clazz
                             .getConstructor(String.class, String.class, String.class)
-                            .newInstance(user, pass, url);
+                            .newInstance(mqUsername, mqPassword, mqUri);
                 }
                 case "ibmmq": {
                     // IBM MQ
                     Class<?> clazz = Class.forName("com.ibm.mq.jms.MQConnectionFactory");
                     Object factory = clazz.newInstance();
 
-                    if (extra != null) {
-                        if (extra.containsKey("queueManager")) {
-                            clazz.getMethod("setQueueManager", String.class)
-                                    .invoke(factory, extra.get("queueManager"));
-                        }
-                        if (extra.containsKey("channel")) {
-                            clazz.getMethod("setChannel", String.class)
-                                    .invoke(factory, extra.get("channel"));
-                        }
-                        if (extra.containsKey("connectionNameList")) {
-                            clazz.getMethod("setConnectionNameList", String.class)
-                                    .invoke(factory, extra.get("connectionNameList")); // host(port)
-                        }
-                        if (extra.containsKey("transportType")) {
-                            clazz.getMethod("setTransportType", int.class)
-                                    .invoke(factory, extra.get("transportType"));
-                        }
-                    }
+                    clazz.getMethod("setQueueManager", String.class).invoke(factory, mqQueueManager);
+                    clazz.getMethod("setChannel", String.class).invoke(factory, mqChannel);
+                    clazz.getMethod("setConnectionNameList", String.class).invoke(factory, mqConnectionNameList); // host(port)
+                    clazz.getMethod("setCCSID", int.class).invoke(factory, Integer.valueOf(mqCcsId)); // 字符集
+                    // 设置transportType
+                    clazz.getMethod("setTransportType", int.class).invoke(factory, WMQConstants.WMQ_CM_CLIENT);
                     return (ConnectionFactory) factory;
                 }
                 case "rabbitmq": {
                     // RabbitMQ JMS Wrapper
                     Class<?> clazz = Class.forName("com.rabbitmq.jms.admin.RMQConnectionFactory");
                     Object factory = clazz.newInstance();
-                    clazz.getMethod("setUri", String.class).invoke(factory, url);
-                    clazz.getMethod("setUsername", String.class).invoke(factory, user);
-                    clazz.getMethod("setPassword", String.class).invoke(factory, pass);
+                    clazz.getMethod("setUri", String.class).invoke(factory, mqUri);
+                    clazz.getMethod("setUsername", String.class).invoke(factory, mqUsername);
+                    clazz.getMethod("setPassword", String.class).invoke(factory, mqPassword);
                     return (ConnectionFactory) factory;
                 }
                 default:
-                    throw new IllegalArgumentException("不支持的 MQ 驱动: " + driver);
+                    throw new IllegalArgumentException("不支持的 MQ 驱动: " + mqDriverName);
             }
         } catch (Exception e) {
-            throw new RuntimeException("创建 ConnectionFactory 失败, driver=" + driver, e);
+            throw new RuntimeException("创建 ConnectionFactory 失败, driver=" + mqDriverName, e);
         }
     }
 }

@@ -15,6 +15,9 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 @Slf4j
 public class WebSocketJob extends EventDelegate {
 
@@ -73,13 +76,14 @@ public class WebSocketJob extends EventDelegate {
         def.getOutputParamDefs().add(
                 new ParamDef(
                         "Message",
-                        MetaHolder.PRIMITIVE_DEFINITION.get("org.springframework.web.socket.WebSocketMessage")
+                        MetaHolder.PRIMITIVE_DEFINITION.get("java.lang.String")
                 )
         );
         return def;
     }
 
     public static class WebSocketJobHandler extends AbstractWebSocketHandler {
+        private final Set<WebSocketSession> sessions = ConcurrentHashMap.newKeySet();
         private final WebSocketJob job;
 
         public WebSocketJobHandler(WebSocketJob job) {
@@ -87,12 +91,18 @@ public class WebSocketJob extends EventDelegate {
         }
 
         @Override
+        public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+            sessions.add(session);
+        }
+
+        @Override
         public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) {
             try {
+                String payload = message.getPayload().toString();
                 ExecutionContext newCtx = job.graphView.buildExecCtx();
                 DelegateNode delegateNode = (DelegateNode) newCtx.findStartupNode();
                 delegateNode.setOutput("Session", new OUTPUT<>(session));
-                delegateNode.setOutput("Message", new OUTPUT<>(message));
+                delegateNode.setOutput("Message", new OUTPUT<>(payload));
 
                 newCtx.run();
             } catch (Exception e) {
@@ -102,6 +112,21 @@ public class WebSocketJob extends EventDelegate {
                 } catch (Exception ignored) {
                 }
             }
+        }
+
+        @Override
+        public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
+            sessions.remove(session);
+        }
+
+        public void closeAllSessions() {
+            for (WebSocketSession session : sessions) {
+                try {
+                    session.close(CloseStatus.NORMAL);
+                } catch (Exception ignored) {
+                }
+            }
+            sessions.clear();
         }
     }
 }

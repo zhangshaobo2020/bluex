@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author ${author}
- * @since 2025-08-29
+ * @since 2025-08-30
  */
 @TableName("BLUEX_JOB")
 public class BluexJobSearch implements Serializable {
@@ -23,6 +23,12 @@ public class BluexJobSearch implements Serializable {
      */
     @TableField("JOB_NO")
     private String jobNo;
+
+    /**
+     * 状态
+     */
+    @TableField("ROW_STATE")
+    private String rowState;
 
     /**
      * 任务名称
@@ -77,6 +83,12 @@ public class BluexJobSearch implements Serializable {
     private String jobType;
 
     /**
+     * 绑定的程序编号
+     */
+    @TableField("PROGRAM_NO")
+    private String programNo;
+
+    /**
      * CRON表达式
      */
     @TableField("CRON_EXPRESSION")
@@ -101,16 +113,70 @@ public class BluexJobSearch implements Serializable {
     private String httpUrlMapping;
 
     /**
-     * 绑定的程序编号
+     * WebSocket的Endpoint
      */
-    @TableField("PROGRAM_NO")
-    private String programNo;
+    @TableField("WS_ENDPOINT")
+    private String wsEndpoint;
 
     /**
-     * 运行状态
+     * MQ类型
      */
-    @TableField("ROW_STATE")
-    private String rowState;
+    @TableField("MQ_DRIVER_NAME")
+    private String mqDriverName;
+
+    /**
+     * MQ地址
+     */
+    @TableField("MQ_URI")
+    private String mqUri;
+
+    /**
+     * MQ登录用户名
+     */
+    @TableField("MQ_USERNAME")
+    private String mqUsername;
+
+    /**
+     * MQ登录密码
+     */
+    @TableField("MQ_PASSWORD")
+    private String mqPassword;
+
+    /**
+     * MQ队列或Topic名称
+     */
+    @TableField("MQ_DESTINATION_NAME")
+    private String mqDestinationName;
+
+    /**
+     * MQ模式：发布/订阅、点对点
+     */
+    @TableField("MQ_PUB_SUB_DOMAIN")
+    private String mqPubSubDomain;
+
+    /**
+     * MQ队列管理器名称
+     */
+    @TableField("MQ_QUEUE_MANAGER")
+    private String mqQueueManager;
+
+    /**
+     * MQ通信通道名称
+     */
+    @TableField("MQ_CHANNEL")
+    private String mqChannel;
+
+    /**
+     * MQ主机和端口列表
+     */
+    @TableField("MQ_CONNECTION_NAME_LIST")
+    private String mqConnectionNameList;
+
+    /**
+     * MQ消息编码类型
+     */
+    @TableField("MQ_CCS_ID")
+    private String mqCcsId;
 
 
     /**
@@ -125,6 +191,20 @@ public class BluexJobSearch implements Serializable {
      */
     public void setJobNo(String jobNo) {
         this.jobNo = jobNo;
+    }
+
+    /**
+     * 获取: 状态
+     */
+    public String getRowState() {
+        return rowState;
+    }
+
+    /**
+     * 设置: 状态
+     */
+    public void setRowState(String rowState) {
+        this.rowState = rowState;
     }
 
     /**
@@ -252,6 +332,20 @@ public class BluexJobSearch implements Serializable {
     }
 
     /**
+     * 获取: 绑定的程序编号
+     */
+    public String getProgramNo() {
+        return programNo;
+    }
+
+    /**
+     * 设置: 绑定的程序编号
+     */
+    public void setProgramNo(String programNo) {
+        this.programNo = programNo;
+    }
+
+    /**
      * 获取: CRON表达式
      */
     public String getCronExpression() {
@@ -308,31 +402,157 @@ public class BluexJobSearch implements Serializable {
     }
 
     /**
-     * 获取: 绑定的程序编号
+     * 获取: WebSocket的Endpoint
      */
-    public String getProgramNo() {
-        return programNo;
+    public String getWsEndpoint() {
+        return wsEndpoint;
     }
 
     /**
-     * 设置: 绑定的程序编号
+     * 设置: WebSocket的Endpoint
      */
-    public void setProgramNo(String programNo) {
-        this.programNo = programNo;
+    public void setWsEndpoint(String wsEndpoint) {
+        this.wsEndpoint = wsEndpoint;
     }
 
     /**
-     * 获取: 运行状态
+     * 获取: MQ类型
      */
-    public String getRowState() {
-        return rowState;
+    public String getMqDriverName() {
+        return mqDriverName;
     }
 
     /**
-     * 设置: 运行状态
+     * 设置: MQ类型
      */
-    public void setRowState(String rowState) {
-        this.rowState = rowState;
+    public void setMqDriverName(String mqDriverName) {
+        this.mqDriverName = mqDriverName;
+    }
+
+    /**
+     * 获取: MQ地址
+     */
+    public String getMqUri() {
+        return mqUri;
+    }
+
+    /**
+     * 设置: MQ地址
+     */
+    public void setMqUri(String mqUri) {
+        this.mqUri = mqUri;
+    }
+
+    /**
+     * 获取: MQ登录用户名
+     */
+    public String getMqUsername() {
+        return mqUsername;
+    }
+
+    /**
+     * 设置: MQ登录用户名
+     */
+    public void setMqUsername(String mqUsername) {
+        this.mqUsername = mqUsername;
+    }
+
+    /**
+     * 获取: MQ登录密码
+     */
+    public String getMqPassword() {
+        return mqPassword;
+    }
+
+    /**
+     * 设置: MQ登录密码
+     */
+    public void setMqPassword(String mqPassword) {
+        this.mqPassword = mqPassword;
+    }
+
+    /**
+     * 获取: MQ队列或Topic名称
+     */
+    public String getMqDestinationName() {
+        return mqDestinationName;
+    }
+
+    /**
+     * 设置: MQ队列或Topic名称
+     */
+    public void setMqDestinationName(String mqDestinationName) {
+        this.mqDestinationName = mqDestinationName;
+    }
+
+    /**
+     * 获取: MQ模式：发布/订阅、点对点
+     */
+    public String getMqPubSubDomain() {
+        return mqPubSubDomain;
+    }
+
+    /**
+     * 设置: MQ模式：发布/订阅、点对点
+     */
+    public void setMqPubSubDomain(String mqPubSubDomain) {
+        this.mqPubSubDomain = mqPubSubDomain;
+    }
+
+    /**
+     * 获取: MQ队列管理器名称
+     */
+    public String getMqQueueManager() {
+        return mqQueueManager;
+    }
+
+    /**
+     * 设置: MQ队列管理器名称
+     */
+    public void setMqQueueManager(String mqQueueManager) {
+        this.mqQueueManager = mqQueueManager;
+    }
+
+    /**
+     * 获取: MQ通信通道名称
+     */
+    public String getMqChannel() {
+        return mqChannel;
+    }
+
+    /**
+     * 设置: MQ通信通道名称
+     */
+    public void setMqChannel(String mqChannel) {
+        this.mqChannel = mqChannel;
+    }
+
+    /**
+     * 获取: MQ主机和端口列表
+     */
+    public String getMqConnectionNameList() {
+        return mqConnectionNameList;
+    }
+
+    /**
+     * 设置: MQ主机和端口列表
+     */
+    public void setMqConnectionNameList(String mqConnectionNameList) {
+        this.mqConnectionNameList = mqConnectionNameList;
+    }
+
+    /**
+     * 获取: MQ消息编码类型
+     */
+    public String getMqCcsId() {
+        return mqCcsId;
+    }
+
+    /**
+     * 设置: MQ消息编码类型
+     */
+    public void setMqCcsId(String mqCcsId) {
+        this.mqCcsId = mqCcsId;
     }
 
 }

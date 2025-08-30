@@ -5,17 +5,28 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.zsb.bluex.core.model.entity.BluexJob">
         <id column="JOB_NO" property="jobNo" />
+        <result column="ROW_STATE" property="rowState" />
         <result column="JOB_NAME" property="jobName" />
         <result column="JOB_DESC" property="jobDesc" />
         <result column="CREATE_TIME" property="createTime" />
         <result column="UPDATE_TIME" property="updateTime" />
         <result column="JOB_TYPE" property="jobType" />
+        <result column="PROGRAM_NO" property="programNo" />
         <result column="CRON_EXPRESSION" property="cronExpression" />
         <result column="FILE_PATH" property="filePath" />
         <result column="HTTP_METHOD" property="httpMethod" />
         <result column="HTTP_URL_MAPPING" property="httpUrlMapping" />
-        <result column="PROGRAM_NO" property="programNo" />
-        <result column="ROW_STATE" property="rowState" />
+        <result column="WS_ENDPOINT" property="wsEndpoint" />
+        <result column="MQ_DRIVER_NAME" property="mqDriverName" />
+        <result column="MQ_URI" property="mqUri" />
+        <result column="MQ_USERNAME" property="mqUsername" />
+        <result column="MQ_PASSWORD" property="mqPassword" />
+        <result column="MQ_DESTINATION_NAME" property="mqDestinationName" />
+        <result column="MQ_PUB_SUB_DOMAIN" property="mqPubSubDomain" />
+        <result column="MQ_QUEUE_MANAGER" property="mqQueueManager" />
+        <result column="MQ_CHANNEL" property="mqChannel" />
+        <result column="MQ_CONNECTION_NAME_LIST" property="mqConnectionNameList" />
+        <result column="MQ_CCS_ID" property="mqCcsId" />
     </resultMap>
 
 </mapper>

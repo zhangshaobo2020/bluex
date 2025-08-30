@@ -20,6 +20,8 @@ public class DelegateResolver {
         map.put("DELEGATE:HttpJob", new HttpJob().provideDefinition());
         // WebSocketJob节点
         map.put("DELEGATE:WebSocketJob", new WebSocketJob().provideDefinition());
+        // MQJob节点
+        map.put("DELEGATE:MQJob", new MQJob().provideDefinition());
         return map;
     }
 }

@@ -16,12 +16,12 @@ strategy:
   entitySerialVersionUID: false
   entityColumnConstant: true
   include:
-    #        - BLUEX_PROGRAM
-    #        - BLUEX_JOB
-    - PRODUCTS
+#    - BLUEX_PROGRAM
+    - BLUEX_JOB
+#    - PRODUCTS
 
 packageInfo:
-  parent: com.zsb.bluex.model
+  parent: com.zsb.bluex.core.model
 
 template:
   controller:

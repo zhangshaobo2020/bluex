@@ -9,6 +9,7 @@ import com.zsb.bluex.core.model.entity.BluexJob;
 import com.zsb.bluex.core.model.entity.BluexProgram;
 import com.zsb.bluex.core.model.service.BluexJobService;
 import com.zsb.bluex.core.model.service.BluexProgramService;
+import com.zsb.bluex.model.entity.Products;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
@@ -135,6 +136,26 @@ public class JobRegistry implements InitializingBean {
                     );
                     mqJob.start();
                     activatedJobs.put(job.getJobNo(), mqJob);
+                } else {
+                    throw new RuntimeException("MQJob的事件委托入口不存在");
+                }
+                break;
+            }
+            case "OracleTableListenerJob": {
+                if ("DELEGATE:OracleTableListenerJob".equals(delegateNode.getQualifiedName())) {
+                    OracleTableListenerJob oracleTableListenerJob = new OracleTableListenerJob(
+                            graphView,
+                            "oracle.jdbc.OracleDriver",
+                            "jdbc:oracle:thin:@10.100.3.238:1521:orcl",
+                            "sw_ori",
+                            "sw",
+                            Products.class,
+                            true,
+                            true,
+                            true
+                    );
+                    oracleTableListenerJob.start();
+                    activatedJobs.put(job.getJobNo(), oracleTableListenerJob);
                 } else {
                     throw new RuntimeException("MQJob的事件委托入口不存在");
                 }

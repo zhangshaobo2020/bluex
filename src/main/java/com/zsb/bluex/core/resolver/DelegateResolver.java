@@ -22,6 +22,8 @@ public class DelegateResolver {
         map.put("DELEGATE:WebSocketJob", new WebSocketJob().provideDefinition());
         // MQJob节点
         map.put("DELEGATE:MQJob", new MQJob().provideDefinition());
+        // OracleTableListenerJob节点
+        map.put("DELEGATE:OracleTableListenerJob", new OracleTableListenerJob().provideDefinition());
         return map;
     }
 }

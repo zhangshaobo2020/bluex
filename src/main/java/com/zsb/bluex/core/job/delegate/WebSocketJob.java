@@ -23,7 +23,6 @@ public class WebSocketJob extends EventDelegate {
 
     private DynamicWebSocketHandlerMapping handlerMapping;
     private String wsUrlMapping;
-    private boolean registered = false;
 
     public WebSocketJob() {
     }
@@ -42,17 +41,13 @@ public class WebSocketJob extends EventDelegate {
             throw new RuntimeException("DynamicWebSocketHandlerMapping 未注入");
         }
         handlerMapping.register(wsUrlMapping, new WebSocketJobHandler(this));
-        registered = true;
         log.info("注册 WebSocket Endpoint: {} -> {}", wsUrlMapping, this);
     }
 
     @Override
     public void end() {
-        if (registered) {
-            handlerMapping.unregister(wsUrlMapping);
-            registered = false;
-            log.info("注销 WebSocket Endpoint: {} -> {}", wsUrlMapping, this);
-        }
+        handlerMapping.unregister(wsUrlMapping);
+        log.info("注销 WebSocket Endpoint: {} -> {}", wsUrlMapping, this);
     }
 
     @Override

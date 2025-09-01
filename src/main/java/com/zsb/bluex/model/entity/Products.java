@@ -15,7 +15,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author ${author}
- * @since 2025-08-29
+ * @since 2025-09-01
  */
 @BluexClass()
 @TableName("PRODUCTS")
@@ -51,7 +51,7 @@ public class Products extends Model<Products> {
      * 商品编号，主键
      */
     @TableId("PRODUCT_ID")
-    private Long productId;
+    private String productId;
 
     /**
      * 商品名称
@@ -78,11 +78,11 @@ public class Products extends Model<Products> {
     private LocalDateTime createDate;
 
 
-    public Long getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 

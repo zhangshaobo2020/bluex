@@ -21,13 +21,25 @@ public class SysLib_String {
         log.info(Str.value);
     }
 
-    @BluexFunction(category = "操作|字符串连接", executable = false)
+    @BluexFunction(category = "操作|两个字符串拼接", executable = false)
     public static void Concat(
             INPUT<String> Str1,
             INPUT<String> Str2,
             OUTPUT<String> Out
     ) {
         Out.value = (Str1.value == null ? "" : Str1.value) + (Str2.value == null ? "" : Str2.value);
+    }
+
+    @BluexFunction(category = "操作|三个字符串拼接", executable = false)
+    public static void ConcatThreeParam(
+            INPUT<String> Str1,
+            INPUT<String> Str2,
+            INPUT<String> Str3,
+            OUTPUT<String> Out
+    ) {
+        Out.value = (Str1.value == null ? "" : Str1.value)
+                + (Str2.value == null ? "" : Str2.value)
+                + (Str3.value == null ? "" : Str3.value);
     }
 
     @BluexFunction(category = "其他|字符串长度", executable = false)

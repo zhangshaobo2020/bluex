@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author ${author}
- * @since 2025-08-29
+ * @since 2025-09-01
  */
 public interface ProductsService extends IService<Products> {
 

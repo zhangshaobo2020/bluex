@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author ${author}
- * @since 2025-08-29
+ * @since 2025-09-01
  */
 @TableName("PRODUCTS")
 public class ProductsSearch implements Serializable {
@@ -22,19 +22,8 @@ public class ProductsSearch implements Serializable {
      * 商品编号，主键
      */
     @TableField("PRODUCT_ID")
-    private Long productId;
+    private String productId;
 
-    /**
-     * 商品编号，主键 - 开始
-     */
-    @TableField("PRODUCT_ID")
-    private Long productIdStart;
-
-    /**
-     * 商品编号，主键 - 结束
-     */
-    @TableField("PRODUCT_ID")
-    private Long productIdEnd;
     /**
      * 商品名称
      */
@@ -96,44 +85,17 @@ public class ProductsSearch implements Serializable {
     /**
      * 获取: 商品编号，主键
      */
-    public Long getProductId() {
+    public String getProductId() {
         return productId;
     }
 
     /**
      * 设置: 商品编号，主键
      */
-    public void setProductId(Long productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 
-    /**
-     * 获取: 商品编号，主键 - 开始
-     */
-    public Long getProductIdStart() {
-        return productIdStart;
-    }
-
-    /**
-     * 设置: 商品编号，主键 - 开始
-     */
-    public void setProductIdStart(Long productId) {
-        this.productIdStart = productId;
-    }
-
-    /**
-     * 获取: 商品编号，主键 - 结束
-     */
-    public Long getProductIdEnd() {
-        return productIdEnd;
-    }
-
-    /**
-     * 设置: 商品编号，主键 - 结束
-     */
-    public void setProductIdEnd(Long productId) {
-        this.productIdEnd = productId;
-        }
     /**
      * 获取: 商品名称
      */

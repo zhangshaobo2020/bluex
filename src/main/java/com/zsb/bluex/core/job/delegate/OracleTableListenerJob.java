@@ -2,7 +2,6 @@ package com.zsb.bluex.core.job.delegate;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.zsb.bluex.core.def.ControlDef;
 import com.zsb.bluex.core.def.ParamDef;
 import com.zsb.bluex.core.graph.GraphView;
@@ -12,11 +11,11 @@ import com.zsb.bluex.core.param.OUTPUT;
 import com.zsb.bluex.core.runtime.ExecutionContext;
 import com.zsb.bluex.core.runtime.node.delegate.DelegateNode;
 import com.zsb.bluex.defaults.enums.RowOpType;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
 import java.sql.*;
-import java.util.Locale;
 
 /**
  * Oracle 表行级监听 Job
@@ -30,7 +29,7 @@ public class OracleTableListenerJob extends EventDelegate {
     private String password;
     private String driverClass;
 
-    private Class<? extends Model<?>> entityClass;
+    private Class<?> entityClass;
     private String tableName;
     private String pkColumn;
 
@@ -46,24 +45,28 @@ public class OracleTableListenerJob extends EventDelegate {
     public OracleTableListenerJob() {
     }
 
+    @SneakyThrows
     public OracleTableListenerJob(GraphView graphView,
                                   String driverClass,
                                   String jdbcUrl,
                                   String username,
                                   String password,
-                                  Class<? extends Model<?>> entityClass,
-                                  boolean listenInsert,
-                                  boolean listenUpdate,
-                                  boolean listenDelete) {
+                                  String entityClass,
+                                  String listenInsert,
+                                  String listenUpdate,
+                                  String listenDelete) {
         super(graphView);
-        this.driverClass = driverClass;
+        if (!"oracle".equals(driverClass)) {
+            throw new RuntimeException("不支持的 数据库 驱动: " + driverClass);
+        }
+        this.driverClass = "oracle.jdbc.OracleDriver";
         this.jdbcUrl = jdbcUrl;
         this.username = username;
         this.password = password;
-        this.entityClass = entityClass;
-        this.listenInsert = listenInsert;
-        this.listenUpdate = listenUpdate;
-        this.listenDelete = listenDelete;
+        this.entityClass = Class.forName(entityClass);
+        this.listenInsert = "Y".equals(listenInsert);
+        this.listenUpdate = "Y".equals(listenUpdate);
+        this.listenDelete = "Y".equals(listenDelete);
 
         resolveTableMeta();
     }
@@ -76,7 +79,7 @@ public class OracleTableListenerJob extends EventDelegate {
         if (tn == null || tn.value().isEmpty()) {
             throw new IllegalArgumentException("实体类必须有 @TableName 注解");
         }
-        this.tableName = tn.value().toUpperCase(Locale.ROOT);
+        this.tableName = tn.value().toUpperCase();
 
         // 找主键
         String pk = null;
@@ -226,8 +229,6 @@ public class OracleTableListenerJob extends EventDelegate {
                         if (msg != null) {
                             handleMessage(msg);
                         }
-                    } else {
-                        log.info("WAITONE 超时或未收到消息，status={}", status);
                     }
                 } catch (SQLException e) {
                     if (!running) break; // 正常结束

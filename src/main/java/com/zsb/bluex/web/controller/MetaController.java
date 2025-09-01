@@ -20,7 +20,8 @@ public class MetaController {
                         MetaHolder.CONTROL_DEFINITION,
                         MetaHolder.DELEGATE_DEFINITION,
                         MetaHolder.FUNCTION_DEFINITION,
-                        MetaHolder.GENERATED_DEFINITION
+                        MetaHolder.GENERATED_DEFINITION,
+                        MetaHolder.ENTITY_DEFINITION
                 )
         );
     }

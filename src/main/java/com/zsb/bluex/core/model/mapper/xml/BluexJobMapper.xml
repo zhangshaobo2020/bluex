@@ -27,6 +27,14 @@
         <result column="MQ_CHANNEL" property="mqChannel" />
         <result column="MQ_CONNECTION_NAME_LIST" property="mqConnectionNameList" />
         <result column="MQ_CCS_ID" property="mqCcsId" />
+        <result column="DB_DRIVER_NAME" property="dbDriverName" />
+        <result column="DB_URL" property="dbUrl" />
+        <result column="DB_USERNAME" property="dbUsername" />
+        <result column="DB_PASSWORD" property="dbPassword" />
+        <result column="DB_ENTITY" property="dbEntity" />
+        <result column="DB_LISTEN_INSERT" property="dbListenInsert" />
+        <result column="DB_LISTEN_UPDATE" property="dbListenUpdate" />
+        <result column="DB_LISTEN_DELETE" property="dbListenDelete" />
     </resultMap>
 
 </mapper>

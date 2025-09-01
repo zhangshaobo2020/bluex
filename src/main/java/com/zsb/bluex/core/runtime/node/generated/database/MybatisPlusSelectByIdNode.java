@@ -17,7 +17,7 @@ public class MybatisPlusSelectByIdNode extends PureNode {
     @Override
     public Object evaluate(String outputName, ExecutionContext ctx) throws Exception {
         // 获取主键
-        Serializable entityId = (Serializable) inputParams.get("Id").getValue(ctx);
+        String entityId = (String) inputParams.get("Id").getValue(ctx);
         // 通过反射创建 Model 实例
         Model<?> model = (Model<?>) clazz.getDeclaredConstructor().newInstance();
         // 调用 ActiveRecord 的 selectById 方法

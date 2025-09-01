@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author ${author}
- * @since 2025-08-30
+ * @since 2025-09-01
  */
 @TableName("BLUEX_JOB")
 public class BluexJobSearch implements Serializable {
@@ -119,7 +119,7 @@ public class BluexJobSearch implements Serializable {
     private String wsEndpoint;
 
     /**
-     * MQ类型
+     * MQ驱动名称
      */
     @TableField("MQ_DRIVER_NAME")
     private String mqDriverName;
@@ -149,7 +149,7 @@ public class BluexJobSearch implements Serializable {
     private String mqDestinationName;
 
     /**
-     * MQ模式：发布/订阅、点对点
+     * MQ模式：发布/订阅、点对点(Y/N)
      */
     @TableField("MQ_PUB_SUB_DOMAIN")
     private String mqPubSubDomain;
@@ -177,6 +177,54 @@ public class BluexJobSearch implements Serializable {
      */
     @TableField("MQ_CCS_ID")
     private String mqCcsId;
+
+    /**
+     * 数据库驱动名称
+     */
+    @TableField("DB_DRIVER_NAME")
+    private String dbDriverName;
+
+    /**
+     * 数据库连接地址
+     */
+    @TableField("DB_URL")
+    private String dbUrl;
+
+    /**
+     * 数据库用户名
+     */
+    @TableField("DB_USERNAME")
+    private String dbUsername;
+
+    /**
+     * 数据库密码
+     */
+    @TableField("DB_PASSWORD")
+    private String dbPassword;
+
+    /**
+     * 数据库实体类
+     */
+    @TableField("DB_ENTITY")
+    private String dbEntity;
+
+    /**
+     * 数据表是否监听INSERT(Y/N)
+     */
+    @TableField("DB_LISTEN_INSERT")
+    private String dbListenInsert;
+
+    /**
+     * 数据表是否监听UPDATE(Y/N)
+     */
+    @TableField("DB_LISTEN_UPDATE")
+    private String dbListenUpdate;
+
+    /**
+     * 数据表是否监听DELETE(Y/N)
+     */
+    @TableField("DB_LISTEN_DELETE")
+    private String dbListenDelete;
 
 
     /**
@@ -416,14 +464,14 @@ public class BluexJobSearch implements Serializable {
     }
 
     /**
-     * 获取: MQ类型
+     * 获取: MQ驱动名称
      */
     public String getMqDriverName() {
         return mqDriverName;
     }
 
     /**
-     * 设置: MQ类型
+     * 设置: MQ驱动名称
      */
     public void setMqDriverName(String mqDriverName) {
         this.mqDriverName = mqDriverName;
@@ -486,14 +534,14 @@ public class BluexJobSearch implements Serializable {
     }
 
     /**
-     * 获取: MQ模式：发布/订阅、点对点
+     * 获取: MQ模式：发布/订阅、点对点(Y/N)
      */
     public String getMqPubSubDomain() {
         return mqPubSubDomain;
     }
 
     /**
-     * 设置: MQ模式：发布/订阅、点对点
+     * 设置: MQ模式：发布/订阅、点对点(Y/N)
      */
     public void setMqPubSubDomain(String mqPubSubDomain) {
         this.mqPubSubDomain = mqPubSubDomain;
@@ -553,6 +601,118 @@ public class BluexJobSearch implements Serializable {
      */
     public void setMqCcsId(String mqCcsId) {
         this.mqCcsId = mqCcsId;
+    }
+
+    /**
+     * 获取: 数据库驱动名称
+     */
+    public String getDbDriverName() {
+        return dbDriverName;
+    }
+
+    /**
+     * 设置: 数据库驱动名称
+     */
+    public void setDbDriverName(String dbDriverName) {
+        this.dbDriverName = dbDriverName;
+    }
+
+    /**
+     * 获取: 数据库连接地址
+     */
+    public String getDbUrl() {
+        return dbUrl;
+    }
+
+    /**
+     * 设置: 数据库连接地址
+     */
+    public void setDbUrl(String dbUrl) {
+        this.dbUrl = dbUrl;
+    }
+
+    /**
+     * 获取: 数据库用户名
+     */
+    public String getDbUsername() {
+        return dbUsername;
+    }
+
+    /**
+     * 设置: 数据库用户名
+     */
+    public void setDbUsername(String dbUsername) {
+        this.dbUsername = dbUsername;
+    }
+
+    /**
+     * 获取: 数据库密码
+     */
+    public String getDbPassword() {
+        return dbPassword;
+    }
+
+    /**
+     * 设置: 数据库密码
+     */
+    public void setDbPassword(String dbPassword) {
+        this.dbPassword = dbPassword;
+    }
+
+    /**
+     * 获取: 数据库实体类
+     */
+    public String getDbEntity() {
+        return dbEntity;
+    }
+
+    /**
+     * 设置: 数据库实体类
+     */
+    public void setDbEntity(String dbEntity) {
+        this.dbEntity = dbEntity;
+    }
+
+    /**
+     * 获取: 数据表是否监听INSERT(Y/N)
+     */
+    public String getDbListenInsert() {
+        return dbListenInsert;
+    }
+
+    /**
+     * 设置: 数据表是否监听INSERT(Y/N)
+     */
+    public void setDbListenInsert(String dbListenInsert) {
+        this.dbListenInsert = dbListenInsert;
+    }
+
+    /**
+     * 获取: 数据表是否监听UPDATE(Y/N)
+     */
+    public String getDbListenUpdate() {
+        return dbListenUpdate;
+    }
+
+    /**
+     * 设置: 数据表是否监听UPDATE(Y/N)
+     */
+    public void setDbListenUpdate(String dbListenUpdate) {
+        this.dbListenUpdate = dbListenUpdate;
+    }
+
+    /**
+     * 获取: 数据表是否监听DELETE(Y/N)
+     */
+    public String getDbListenDelete() {
+        return dbListenDelete;
+    }
+
+    /**
+     * 设置: 数据表是否监听DELETE(Y/N)
+     */
+    public void setDbListenDelete(String dbListenDelete) {
+        this.dbListenDelete = dbListenDelete;
     }
 
 }

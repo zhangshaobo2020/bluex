@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author ${author}
- * @since 2025-08-30
+ * @since 2025-09-01
  */
 @Service
 public class BluexJobServiceImpl extends ServiceImpl<BluexJobMapper, BluexJob> implements BluexJobService {

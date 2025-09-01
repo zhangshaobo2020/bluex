@@ -215,7 +215,7 @@ public class MQJob extends EventDelegate {
                     return (ConnectionFactory) factory;
                 }
                 default:
-                    throw new IllegalArgumentException("不支持的 MQ 驱动: " + mqDriverName);
+                    throw new RuntimeException("不支持的 MQ 驱动: " + mqDriverName);
             }
         } catch (Exception e) {
             throw new RuntimeException("创建 ConnectionFactory 失败, driver=" + mqDriverName, e);

@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author ${author}
- * @since 2025-08-30
+ * @since 2025-09-01
  */
 @TableName("BLUEX_JOB")
 public class BluexJob extends Model<BluexJob> {
@@ -75,7 +75,7 @@ public class BluexJob extends Model<BluexJob> {
         */
         public static final String wsEndpoint = "WS_ENDPOINT";
         /**
-        * MQ类型
+        * MQ驱动名称
         */
         public static final String mqDriverName = "MQ_DRIVER_NAME";
         /**
@@ -95,7 +95,7 @@ public class BluexJob extends Model<BluexJob> {
         */
         public static final String mqDestinationName = "MQ_DESTINATION_NAME";
         /**
-        * MQ模式：发布/订阅、点对点
+        * MQ模式：发布/订阅、点对点(Y/N)
         */
         public static final String mqPubSubDomain = "MQ_PUB_SUB_DOMAIN";
         /**
@@ -114,6 +114,38 @@ public class BluexJob extends Model<BluexJob> {
         * MQ消息编码类型
         */
         public static final String mqCcsId = "MQ_CCS_ID";
+        /**
+        * 数据库驱动名称
+        */
+        public static final String dbDriverName = "DB_DRIVER_NAME";
+        /**
+        * 数据库连接地址
+        */
+        public static final String dbUrl = "DB_URL";
+        /**
+        * 数据库用户名
+        */
+        public static final String dbUsername = "DB_USERNAME";
+        /**
+        * 数据库密码
+        */
+        public static final String dbPassword = "DB_PASSWORD";
+        /**
+        * 数据库实体类
+        */
+        public static final String dbEntity = "DB_ENTITY";
+        /**
+        * 数据表是否监听INSERT(Y/N)
+        */
+        public static final String dbListenInsert = "DB_LISTEN_INSERT";
+        /**
+        * 数据表是否监听UPDATE(Y/N)
+        */
+        public static final String dbListenUpdate = "DB_LISTEN_UPDATE";
+        /**
+        * 数据表是否监听DELETE(Y/N)
+        */
+        public static final String dbListenDelete = "DB_LISTEN_DELETE";
     }
 
     /**
@@ -195,7 +227,7 @@ public class BluexJob extends Model<BluexJob> {
     private String wsEndpoint;
 
     /**
-     * MQ类型
+     * MQ驱动名称
      */
     @TableField("MQ_DRIVER_NAME")
     private String mqDriverName;
@@ -225,7 +257,7 @@ public class BluexJob extends Model<BluexJob> {
     private String mqDestinationName;
 
     /**
-     * MQ模式：发布/订阅、点对点
+     * MQ模式：发布/订阅、点对点(Y/N)
      */
     @TableField("MQ_PUB_SUB_DOMAIN")
     private String mqPubSubDomain;
@@ -253,6 +285,54 @@ public class BluexJob extends Model<BluexJob> {
      */
     @TableField("MQ_CCS_ID")
     private String mqCcsId;
+
+    /**
+     * 数据库驱动名称
+     */
+    @TableField("DB_DRIVER_NAME")
+    private String dbDriverName;
+
+    /**
+     * 数据库连接地址
+     */
+    @TableField("DB_URL")
+    private String dbUrl;
+
+    /**
+     * 数据库用户名
+     */
+    @TableField("DB_USERNAME")
+    private String dbUsername;
+
+    /**
+     * 数据库密码
+     */
+    @TableField("DB_PASSWORD")
+    private String dbPassword;
+
+    /**
+     * 数据库实体类
+     */
+    @TableField("DB_ENTITY")
+    private String dbEntity;
+
+    /**
+     * 数据表是否监听INSERT(Y/N)
+     */
+    @TableField("DB_LISTEN_INSERT")
+    private String dbListenInsert;
+
+    /**
+     * 数据表是否监听UPDATE(Y/N)
+     */
+    @TableField("DB_LISTEN_UPDATE")
+    private String dbListenUpdate;
+
+    /**
+     * 数据表是否监听DELETE(Y/N)
+     */
+    @TableField("DB_LISTEN_DELETE")
+    private String dbListenDelete;
 
 
     public String getJobNo() {
@@ -439,6 +519,70 @@ public class BluexJob extends Model<BluexJob> {
         this.mqCcsId = mqCcsId;
     }
 
+    public String getDbDriverName() {
+        return dbDriverName;
+    }
+
+    public void setDbDriverName(String dbDriverName) {
+        this.dbDriverName = dbDriverName;
+    }
+
+    public String getDbUrl() {
+        return dbUrl;
+    }
+
+    public void setDbUrl(String dbUrl) {
+        this.dbUrl = dbUrl;
+    }
+
+    public String getDbUsername() {
+        return dbUsername;
+    }
+
+    public void setDbUsername(String dbUsername) {
+        this.dbUsername = dbUsername;
+    }
+
+    public String getDbPassword() {
+        return dbPassword;
+    }
+
+    public void setDbPassword(String dbPassword) {
+        this.dbPassword = dbPassword;
+    }
+
+    public String getDbEntity() {
+        return dbEntity;
+    }
+
+    public void setDbEntity(String dbEntity) {
+        this.dbEntity = dbEntity;
+    }
+
+    public String getDbListenInsert() {
+        return dbListenInsert;
+    }
+
+    public void setDbListenInsert(String dbListenInsert) {
+        this.dbListenInsert = dbListenInsert;
+    }
+
+    public String getDbListenUpdate() {
+        return dbListenUpdate;
+    }
+
+    public void setDbListenUpdate(String dbListenUpdate) {
+        this.dbListenUpdate = dbListenUpdate;
+    }
+
+    public String getDbListenDelete() {
+        return dbListenDelete;
+    }
+
+    public void setDbListenDelete(String dbListenDelete) {
+        this.dbListenDelete = dbListenDelete;
+    }
+
     @Override
     public Serializable pkVal() {
         return this.jobNo;
@@ -470,6 +614,14 @@ public class BluexJob extends Model<BluexJob> {
         ", mqChannel=" + mqChannel +
         ", mqConnectionNameList=" + mqConnectionNameList +
         ", mqCcsId=" + mqCcsId +
+        ", dbDriverName=" + dbDriverName +
+        ", dbUrl=" + dbUrl +
+        ", dbUsername=" + dbUsername +
+        ", dbPassword=" + dbPassword +
+        ", dbEntity=" + dbEntity +
+        ", dbListenInsert=" + dbListenInsert +
+        ", dbListenUpdate=" + dbListenUpdate +
+        ", dbListenDelete=" + dbListenDelete +
         "}";
     }
 }

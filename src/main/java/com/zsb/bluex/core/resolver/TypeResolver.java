@@ -60,7 +60,7 @@ public class TypeResolver {
             ParameterizedType pt = (ParameterizedType) genericType;
             Class<?> rawType = (Class<?>) pt.getRawType();
             def.setName(rawType.getSimpleName());
-            def.setQualifiedName("TYPE:" + rawType.getName());
+            def.setQualifiedName(rawType.getName());
 
             // 标记为 List 或 Map
             def.setPrimitive(false);
@@ -79,7 +79,7 @@ public class TypeResolver {
         } else if (genericType instanceof Class<?>) {
             Class<?> clazz = (Class<?>) genericType;
             def.setName(clazz.getSimpleName());
-            def.setQualifiedName("TYPE:" + clazz.getName());
+            def.setQualifiedName(clazz.getName());
 
             // 处理枚举
             if (clazz.isEnum()) {

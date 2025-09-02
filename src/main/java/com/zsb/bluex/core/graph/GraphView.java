@@ -223,7 +223,7 @@ public class GraphView implements Serializable {
                             .findFirst()
                             .orElseThrow(() -> new RuntimeException("FUNCTION[" + qualifiedName + "]中参数" + paramName + "不存在!"));
                     // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
-                    String className = paramDef.getTypeDef().getQualifiedName().replace("TYPE:", "");
+                    String className = paramDef.getTypeDef().getQualifiedName();
                     paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
                 } else if (metaType == MetaType.DELEGATE) {
                     // 尝试去匹配事件委托节点
@@ -233,7 +233,7 @@ public class GraphView implements Serializable {
                             .findFirst()
                             .orElseThrow(() -> new RuntimeException("DELEGATE[" + qualifiedName + "]中参数" + paramName + "不存在!"));
                     // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
-                    String className = paramDef.getTypeDef().getQualifiedName().replace("TYPE:", "");
+                    String className = paramDef.getTypeDef().getQualifiedName();
                     paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
                 } else if (metaType == MetaType.GENERATED) {
                     FunctionDef functionDef = MetaHolder.GENERATED_DEFINITION.get(qualifiedName);
@@ -242,7 +242,7 @@ public class GraphView implements Serializable {
                             .findFirst()
                             .orElseThrow(() -> new RuntimeException("GENERATED[" + qualifiedName + "]中参数" + paramName + "不存在!"));
                     // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
-                    String className = paramDef.getTypeDef().getQualifiedName().replace("TYPE:", "");
+                    String className = paramDef.getTypeDef().getQualifiedName();
                     paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
                 } else if (metaType == MetaType.CONTROL) {
                     ControlDef controlDef = MetaHolder.CONTROL_DEFINITION.get(qualifiedName);
@@ -251,7 +251,7 @@ public class GraphView implements Serializable {
                             .findFirst()
                             .orElseThrow(() -> new RuntimeException("CONTROL[" + qualifiedName + "]中参数" + paramName + "不存在!"));
                     // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
-                    String className = paramDef.getTypeDef().getQualifiedName().replace("TYPE:", "");
+                    String className = paramDef.getTypeDef().getQualifiedName();
                     paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
                 } else {
                     throw new RuntimeException(qualifiedName + "不存在!");

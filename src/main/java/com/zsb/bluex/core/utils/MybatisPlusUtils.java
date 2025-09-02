@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.zsb.bluex.core.groovy.GroovyFieldUtils;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 public class MybatisPlusUtils {
     public static <T1, T2> QueryWrapper<T1> getQueryWrapper(T2 searchEntity) {
         QueryWrapper<T1> wrapper = new QueryWrapper<>();
-        for (Field field : searchEntity.getClass().getDeclaredFields()) {
+        for (Field field : GroovyFieldUtils.getUserDeclaredFields(searchEntity.getClass())) {
             try {
                 field.setAccessible(true);
                 Object value = field.get(searchEntity);
@@ -67,8 +68,8 @@ public class MybatisPlusUtils {
         }
 
         // 2. 查找所有带 @TableId 的字段
-        Field[] fields = clazz.getDeclaredFields();
-        List<Field> tableIdFields = Arrays.stream(fields)
+        List<Field> tableIdFields = GroovyFieldUtils.getUserDeclaredFields(clazz)
+                .stream()
                 .filter(f -> f.isAnnotationPresent(TableId.class))
                 .collect(Collectors.toList());
 

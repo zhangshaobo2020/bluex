@@ -2,6 +2,7 @@ package com.zsb.bluex.core.resolver;
 
 import com.zsb.bluex.core.anno.BluexClass;
 import com.zsb.bluex.core.def.TypeDef;
+import com.zsb.bluex.core.groovy.GroovyFieldUtils;
 import org.springframework.web.socket.WebSocketSession;
 
 import javax.servlet.http.HttpServletRequest;
@@ -118,7 +119,7 @@ public class TypeResolver {
 
     private static Map<String, TypeDef> resolveFields(Class<?> clazz) {
         Map<String, TypeDef> fields = new HashMap<>();
-        for (Field field : clazz.getDeclaredFields()) {
+        for (Field field : GroovyFieldUtils.getUserDeclaredFields(clazz)) {
             fields.put(field.getName(), resolveType(field.getGenericType()));
         }
         return fields;

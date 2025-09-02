@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.zsb.bluex.core.def.ControlDef;
 import com.zsb.bluex.core.def.ParamDef;
 import com.zsb.bluex.core.graph.GraphView;
+import com.zsb.bluex.core.groovy.GroovyFieldUtils;
 import com.zsb.bluex.core.job.EventDelegate;
 import com.zsb.bluex.core.launch.MetaHolder;
 import com.zsb.bluex.core.param.OUTPUT;
@@ -83,7 +84,7 @@ public class OracleTableListenerJob extends EventDelegate {
 
         // 找主键
         String pk = null;
-        for (Field field : entityClass.getDeclaredFields()) {
+        for (Field field : GroovyFieldUtils.getUserDeclaredFields(entityClass)) {
             if (field.isAnnotationPresent(TableId.class)) {
                 TableId idAnn = field.getAnnotation(TableId.class);
                 pk = idAnn.value();

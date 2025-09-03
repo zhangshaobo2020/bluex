@@ -2,7 +2,7 @@ package com.zsb.bluex.core.resolver;
 
 import com.zsb.bluex.core.anno.BluexClass;
 import com.zsb.bluex.core.def.TypeDef;
-import com.zsb.bluex.core.groovy.GroovyFieldUtils;
+import com.zsb.bluex.core.script.GroovyFieldUtils;
 import org.springframework.web.socket.WebSocketSession;
 
 import javax.servlet.http.HttpServletRequest;

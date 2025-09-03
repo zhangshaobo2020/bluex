@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsb.bluex.core.model.mapper.BluexScriptMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zsb.bluex.core.model.entity.BluexScript">
+        <id column="SCRIPT_NO" property="scriptNo" />
+        <result column="ROW_STATE" property="rowState" />
+        <result column="SCRIPT_NAME" property="scriptName" />
+        <result column="SCRIPT_DESC" property="scriptDesc" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="SCRIPT_CONTENT" property="scriptContent" />
+    </resultMap>
+
+</mapper>

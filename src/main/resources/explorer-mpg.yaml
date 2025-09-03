@@ -17,7 +17,8 @@ strategy:
   entityColumnConstant: true
   include:
 #    - BLUEX_PROGRAM
-    - BLUEX_JOB
+#    - BLUEX_JOB
+    - BLUEX_SCRIPT
 #    - PRODUCTS
 
 packageInfo:

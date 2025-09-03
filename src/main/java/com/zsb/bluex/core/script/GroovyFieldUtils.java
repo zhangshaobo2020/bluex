@@ -1,4 +1,4 @@
-package com.zsb.bluex.core.groovy;
+package com.zsb.bluex.core.script;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;

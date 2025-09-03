@@ -5,7 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.zsb.bluex.core.def.ControlDef;
 import com.zsb.bluex.core.def.ParamDef;
 import com.zsb.bluex.core.graph.GraphView;
-import com.zsb.bluex.core.groovy.GroovyFieldUtils;
+import com.zsb.bluex.core.resolver.ClassResolver;
+import com.zsb.bluex.core.script.GroovyFieldUtils;
 import com.zsb.bluex.core.job.EventDelegate;
 import com.zsb.bluex.core.launch.MetaHolder;
 import com.zsb.bluex.core.param.OUTPUT;
@@ -64,7 +65,7 @@ public class OracleTableListenerJob extends EventDelegate {
         this.jdbcUrl = jdbcUrl;
         this.username = username;
         this.password = password;
-        this.entityClass = Class.forName(entityClass);
+        this.entityClass = ClassResolver.forClass(entityClass);
         this.listenInsert = "Y".equals(listenInsert);
         this.listenUpdate = "Y".equals(listenUpdate);
         this.listenDelete = "Y".equals(listenDelete);

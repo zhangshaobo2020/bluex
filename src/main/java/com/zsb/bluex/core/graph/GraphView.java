@@ -7,6 +7,7 @@ import com.zsb.bluex.core.def.ParamDef;
 import com.zsb.bluex.core.enums.MetaType;
 import com.zsb.bluex.core.launch.MetaHolder;
 import com.zsb.bluex.core.param.OUTPUT;
+import com.zsb.bluex.core.resolver.ClassResolver;
 import com.zsb.bluex.core.runtime.ExecutionContext;
 import com.zsb.bluex.core.runtime.node.BaseNode;
 import com.zsb.bluex.core.runtime.node.control.BranchNode;
@@ -89,7 +90,7 @@ public class GraphView implements Serializable {
                             // 进到这里，说明匹配上了CONTROL:ENUMSWITCH:
                             if (node.getQualifiedName().startsWith("CONTROL:ENUMSWITCH:")) {
                                 String className = node.getQualifiedName().replace("CONTROL:ENUMSWITCH:", "");
-                                Class<?> clazz = Class.forName(className);
+                                Class<?> clazz = ClassResolver.forClass(className);
                                 // 根据所有枚举值查找下一个引脚
                                 Map<String, String> execMapping = new HashMap<>();
                                 Object[] enumConstants = clazz.getEnumConstants();
@@ -122,7 +123,7 @@ public class GraphView implements Serializable {
                 } else if (node.getQualifiedName().startsWith("GENERATED:")) {
                     if (node.getQualifiedName().startsWith("GENERATED:SETTER:")) {
                         String className = node.getQualifiedName().replace("GENERATED:SETTER:", "");
-                        SetterNode setterNode = new SetterNode(node.getId(), Class.forName(className));
+                        SetterNode setterNode = new SetterNode(node.getId(), ClassResolver.forClass(className));
                         processNodeParams(setterNode, node, MetaType.GENERATED);
                         setterNode.nextExec = findForNextExecNode(node, "Exec");
                         ctx.addExecNode(setterNode);
@@ -138,59 +139,59 @@ public class GraphView implements Serializable {
                 } else if (node.getQualifiedName().startsWith("GENERATED:")) {
                     if (node.getQualifiedName().startsWith("GENERATED:GETTER:")) {
                         String className = node.getQualifiedName().replace("GENERATED:GETTER:", "");
-                        GetterNode getterNode = new GetterNode(node.getId(), Class.forName(className));
+                        GetterNode getterNode = new GetterNode(node.getId(), ClassResolver.forClass(className));
                         processNodeParams(getterNode, node, MetaType.GENERATED);
                         ctx.addPureNode(getterNode);
                     }
                     if (node.getQualifiedName().startsWith("GENERATED:CONSTRUCTOR:")) {
                         String className = node.getQualifiedName().replace("GENERATED:CONSTRUCTOR:", "");
-                        ConstructorNode constructorNode = new ConstructorNode(node.getId(), Class.forName(className));
+                        ConstructorNode constructorNode = new ConstructorNode(node.getId(), ClassResolver.forClass(className));
                         processNodeParams(constructorNode, node, MetaType.GENERATED);
                         ctx.addPureNode(constructorNode);
                     }
                     // JSON相关
                     if (node.getQualifiedName().startsWith("GENERATED:FROMJSON:")) {
                         String className = node.getQualifiedName().replace("GENERATED:FROMJSON:", "");
-                        FromJSONNode fromJSONNode = new FromJSONNode(node.getId(), Class.forName(className));
+                        FromJSONNode fromJSONNode = new FromJSONNode(node.getId(), ClassResolver.forClass(className));
                         processNodeParams(fromJSONNode, node, MetaType.GENERATED);
                         ctx.addPureNode(fromJSONNode);
                     }
                     if (node.getQualifiedName().startsWith("GENERATED:TOJSON:")) {
                         String className = node.getQualifiedName().replace("GENERATED:TOJSON:", "");
-                        ToJSONNode toJSONNode = new ToJSONNode(node.getId(), Class.forName(className));
+                        ToJSONNode toJSONNode = new ToJSONNode(node.getId(), ClassResolver.forClass(className));
                         processNodeParams(toJSONNode, node, MetaType.GENERATED);
                         ctx.addPureNode(toJSONNode);
                     }
                     // XML相关
                     if (node.getQualifiedName().startsWith("GENERATED:FROMXML:")) {
                         String className = node.getQualifiedName().replace("GENERATED:FROMXML:", "");
-                        FromXMLNode fromXMLNode = new FromXMLNode(node.getId(), Class.forName(className));
+                        FromXMLNode fromXMLNode = new FromXMLNode(node.getId(), ClassResolver.forClass(className));
                         processNodeParams(fromXMLNode, node, MetaType.GENERATED);
                         ctx.addPureNode(fromXMLNode);
                     }
                     if (node.getQualifiedName().startsWith("GENERATED:TOXML:")) {
                         String className = node.getQualifiedName().replace("GENERATED:TOXML:", "");
-                        ToXMLNode toXMLNode = new ToXMLNode(node.getId(), Class.forName(className));
+                        ToXMLNode toXMLNode = new ToXMLNode(node.getId(), ClassResolver.forClass(className));
                         processNodeParams(toXMLNode, node, MetaType.GENERATED);
                         ctx.addPureNode(toXMLNode);
                     }
                     // Enum相关
                     if (node.getQualifiedName().startsWith("GENERATED:FROMENUM:")) {
                         String className = node.getQualifiedName().replace("GENERATED:FROMENUM:", "");
-                        FromEnumNode fromEnumNode = new FromEnumNode(node.getId(), Class.forName(className));
+                        FromEnumNode fromEnumNode = new FromEnumNode(node.getId(), ClassResolver.forClass(className));
                         processNodeParams(fromEnumNode, node, MetaType.GENERATED);
                         ctx.addPureNode(fromEnumNode);
                     }
                     if (node.getQualifiedName().startsWith("GENERATED:TOENUM:")) {
                         String className = node.getQualifiedName().replace("GENERATED:TOENUM:", "");
-                        ToEnumNode toEnumNode = new ToEnumNode(node.getId(), Class.forName(className));
+                        ToEnumNode toEnumNode = new ToEnumNode(node.getId(), ClassResolver.forClass(className));
                         processNodeParams(toEnumNode, node, MetaType.GENERATED);
                         ctx.addPureNode(toEnumNode);
                     }
                     // 数据库相关
                     if (node.getQualifiedName().startsWith("GENERATED:MYBATISPLUSSELECTBYID:")) {
                         String className = node.getQualifiedName().replace("GENERATED:MYBATISPLUSSELECTBYID:", "");
-                        MybatisPlusSelectByIdNode selectByIdNode = new MybatisPlusSelectByIdNode(node.getId(), Class.forName(className));
+                        MybatisPlusSelectByIdNode selectByIdNode = new MybatisPlusSelectByIdNode(node.getId(), ClassResolver.forClass(className));
                         processNodeParams(selectByIdNode, node, MetaType.GENERATED);
                         ctx.addPureNode(selectByIdNode);
                     }
@@ -224,7 +225,7 @@ public class GraphView implements Serializable {
                             .orElseThrow(() -> new RuntimeException("FUNCTION[" + qualifiedName + "]中参数" + paramName + "不存在!"));
                     // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
                     String className = paramDef.getTypeDef().getQualifiedName();
-                    paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
+                    paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, ClassResolver.forClass(className)));
                 } else if (metaType == MetaType.DELEGATE) {
                     // 尝试去匹配事件委托节点
                     ControlDef controlDef = MetaHolder.DELEGATE_DEFINITION.get(qualifiedName);
@@ -234,7 +235,7 @@ public class GraphView implements Serializable {
                             .orElseThrow(() -> new RuntimeException("DELEGATE[" + qualifiedName + "]中参数" + paramName + "不存在!"));
                     // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
                     String className = paramDef.getTypeDef().getQualifiedName();
-                    paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
+                    paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, ClassResolver.forClass(className)));
                 } else if (metaType == MetaType.GENERATED) {
                     FunctionDef functionDef = MetaHolder.GENERATED_DEFINITION.get(qualifiedName);
                     ParamDef paramDef = functionDef.getInputParamDefs()
@@ -243,7 +244,7 @@ public class GraphView implements Serializable {
                             .orElseThrow(() -> new RuntimeException("GENERATED[" + qualifiedName + "]中参数" + paramName + "不存在!"));
                     // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
                     String className = paramDef.getTypeDef().getQualifiedName();
-                    paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
+                    paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, ClassResolver.forClass(className)));
                 } else if (metaType == MetaType.CONTROL) {
                     ControlDef controlDef = MetaHolder.CONTROL_DEFINITION.get(qualifiedName);
                     ParamDef paramDef = controlDef.getInputParamDefs()
@@ -252,7 +253,7 @@ public class GraphView implements Serializable {
                             .orElseThrow(() -> new RuntimeException("CONTROL[" + qualifiedName + "]中参数" + paramName + "不存在!"));
                     // 理论上LiteralValueSource肯定是基本数据类型，不是泛型等
                     String className = paramDef.getTypeDef().getQualifiedName();
-                    paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, Class.forName(className)));
+                    paramPin = new LiteralValueSource<>(findForCurrentPinValue(node, paramName, ClassResolver.forClass(className)));
                 } else {
                     throw new RuntimeException(qualifiedName + "不存在!");
                 }
@@ -279,7 +280,7 @@ public class GraphView implements Serializable {
         int lastDot = functionQualifiedName.lastIndexOf(':');
         String className = functionQualifiedName.substring(0, lastDot);
         String methodName = functionQualifiedName.substring(lastDot + 1);
-        Class<?> clazz = Class.forName(className);
+        Class<?> clazz = ClassResolver.forClass(className);
         for (Method method : clazz.getMethods()) {
             if (method.getName().equals(methodName)) {
                 return method;

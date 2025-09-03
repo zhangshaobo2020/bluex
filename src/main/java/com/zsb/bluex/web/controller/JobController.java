@@ -33,7 +33,7 @@ public class JobController {
         QueryWrapper<BluexJob> queryWrapper = MybatisPlusUtils.getQueryWrapper(search);
         Page<BluexJob> page = bluexJobService.page(pagination.generate(), queryWrapper);
         for (BluexJob record : page.getRecords()) {
-            boolean activated = jobRegistry.activatedJobs.containsKey(record.getJobNo());
+            boolean activated = JobRegistry.ACTIVATED_JOBS.containsKey(record.getJobNo());
             record.setRowState(activated ? "Y" : "N");
         }
         return WebResult.success(pagination.transfer(page));

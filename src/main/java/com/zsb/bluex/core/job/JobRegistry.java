@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class JobRegistry implements InitializingBean {
 
     // 存储被激活的任务
-    public static final Map<String, EventDelegate> activatedJobs = new ConcurrentHashMap<>();
+    public static final Map<String, EventDelegate> ACTIVATED_JOBS = new ConcurrentHashMap<>();
 
     @Resource
     private RequestMappingHandlerMapping requestMappingHandlerMapping;
@@ -73,7 +73,7 @@ public class JobRegistry implements InitializingBean {
                 if ("DELEGATE:CronJob".equals(delegateNode.getQualifiedName())) {
                     CronJob cronJob = new CronJob(graphView, job.getCronExpression());
                     cronJob.start();
-                    activatedJobs.put(job.getJobNo(), cronJob);
+                    ACTIVATED_JOBS.put(job.getJobNo(), cronJob);
                 } else {
                     throw new RuntimeException("CronJob的事件委托入口不存在");
                 }
@@ -83,7 +83,7 @@ public class JobRegistry implements InitializingBean {
                 if ("DELEGATE:FileSystemJob".equals(delegateNode.getQualifiedName())) {
                     FileSystemJob fileSystemJob = new FileSystemJob(graphView, job.getFilePath());
                     fileSystemJob.start();
-                    activatedJobs.put(job.getJobNo(), fileSystemJob);
+                    ACTIVATED_JOBS.put(job.getJobNo(), fileSystemJob);
                 } else {
                     throw new RuntimeException("FileSystemJob的事件委托入口不存在");
                 }
@@ -98,7 +98,7 @@ public class JobRegistry implements InitializingBean {
                             job.getHttpUrlMapping()
                     );
                     httpJob.start();
-                    activatedJobs.put(job.getJobNo(), httpJob);
+                    ACTIVATED_JOBS.put(job.getJobNo(), httpJob);
                 } else {
                     throw new RuntimeException("HttpJob的事件委托入口不存在");
                 }
@@ -112,7 +112,7 @@ public class JobRegistry implements InitializingBean {
                             job.getWsEndpoint()
                     );
                     webSocketJob.start();
-                    activatedJobs.put(job.getJobNo(), webSocketJob);
+                    ACTIVATED_JOBS.put(job.getJobNo(), webSocketJob);
                 } else {
                     throw new RuntimeException("WebSocketJob的事件委托入口不存在");
                 }
@@ -134,7 +134,7 @@ public class JobRegistry implements InitializingBean {
                             job.getMqCcsId()
                     );
                     mqJob.start();
-                    activatedJobs.put(job.getJobNo(), mqJob);
+                    ACTIVATED_JOBS.put(job.getJobNo(), mqJob);
                 } else {
                     throw new RuntimeException("MQJob的事件委托入口不存在");
                 }
@@ -154,7 +154,7 @@ public class JobRegistry implements InitializingBean {
                             job.getDbListenDelete()
                     );
                     oracleTableListenerJob.start();
-                    activatedJobs.put(job.getJobNo(), oracleTableListenerJob);
+                    ACTIVATED_JOBS.put(job.getJobNo(), oracleTableListenerJob);
                 } else {
                     throw new RuntimeException("MQJob的事件委托入口不存在");
                 }
@@ -170,7 +170,7 @@ public class JobRegistry implements InitializingBean {
      * 注销任务
      */
     public void unregisterJob(String jobNo) throws Exception {
-        EventDelegate delegate = activatedJobs.remove(jobNo);
+        EventDelegate delegate = ACTIVATED_JOBS.remove(jobNo);
         if (delegate == null) return;
         delegate.end();
         log.info("任务 [{}] 已注销", jobNo);

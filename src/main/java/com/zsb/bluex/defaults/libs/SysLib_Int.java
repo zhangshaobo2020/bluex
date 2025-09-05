@@ -17,7 +17,7 @@ public class SysLib_Int {
         Ret.value = Num1.value + Num2.value;
     }
 
-    @BluexFunction(category = "运算|Int相加", executable = false)
+    @BluexFunction(category = "运算|Int相减", executable = false)
     public static void SubtractInteger(
             INPUT<Integer> Num1,
             INPUT<Integer> Num2,

@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author ${author}
- * @since 2025-08-28
+ * @since 2025-09-05
  */
 @TableName("BLUEX_PROGRAM")
 public class BluexProgramSearch implements Serializable {
@@ -35,6 +35,12 @@ public class BluexProgramSearch implements Serializable {
      */
     @TableField("PROGRAM_DESC")
     private String programDesc;
+
+    /**
+     * 程序类型
+     */
+    @TableField("PROGRAM_TYPE")
+    private String programType;
 
     /**
      * 创建时间
@@ -117,6 +123,20 @@ public class BluexProgramSearch implements Serializable {
      */
     public void setProgramDesc(String programDesc) {
         this.programDesc = programDesc;
+    }
+
+    /**
+     * 获取: 程序类型
+     */
+    public String getProgramType() {
+        return programType;
+    }
+
+    /**
+     * 设置: 程序类型
+     */
+    public void setProgramType(String programType) {
+        this.programType = programType;
     }
 
     /**

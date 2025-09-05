@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author ${author}
- * @since 2025-09-01
+ * @since 2025-09-05
  */
 @TableName("BLUEX_JOB")
 public class BluexJob extends Model<BluexJob> {
@@ -47,11 +47,11 @@ public class BluexJob extends Model<BluexJob> {
         */
         public static final String updateTime = "UPDATE_TIME";
         /**
-        * 任务类型
+        * 程序类型
         */
-        public static final String jobType = "JOB_TYPE";
+        public static final String programType = "PROGRAM_TYPE";
         /**
-        * 绑定的程序编号
+        * 程序编号
         */
         public static final String programNo = "PROGRAM_NO";
         /**
@@ -185,13 +185,13 @@ public class BluexJob extends Model<BluexJob> {
     private LocalDateTime updateTime;
 
     /**
-     * 任务类型
+     * 程序类型
      */
-    @TableField("JOB_TYPE")
-    private String jobType;
+    @TableField("PROGRAM_TYPE")
+    private String programType;
 
     /**
-     * 绑定的程序编号
+     * 程序编号
      */
     @TableField("PROGRAM_NO")
     private String programNo;
@@ -383,12 +383,12 @@ public class BluexJob extends Model<BluexJob> {
         this.updateTime = updateTime;
     }
 
-    public String getJobType() {
-        return jobType;
+    public String getProgramType() {
+        return programType;
     }
 
-    public void setJobType(String jobType) {
-        this.jobType = jobType;
+    public void setProgramType(String programType) {
+        this.programType = programType;
     }
 
     public String getProgramNo() {
@@ -597,7 +597,7 @@ public class BluexJob extends Model<BluexJob> {
         ", jobDesc=" + jobDesc +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +
-        ", jobType=" + jobType +
+        ", programType=" + programType +
         ", programNo=" + programNo +
         ", cronExpression=" + cronExpression +
         ", filePath=" + filePath +

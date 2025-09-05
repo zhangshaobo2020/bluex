@@ -68,7 +68,17 @@ public class JobRegistry implements InitializingBean {
 
         // 开始注册
         unregisterJob(job.getJobNo()); // 避免重复注册
-        switch (job.getJobType()) {
+        switch (job.getProgramType()) {
+            case "SingleTriggerJob": {
+                if ("DELEGATE:SingleTriggerJob".equals(delegateNode.getQualifiedName())) {
+                    SingleTriggerJob singleTriggerJob = new SingleTriggerJob(graphView);
+                    singleTriggerJob.start();
+                    ACTIVATED_JOBS.put(job.getJobNo(), singleTriggerJob);
+                } else {
+                    throw new RuntimeException("SingleTriggerJob的事件委托入口不存在");
+                }
+                break;
+            }
             case "CronJob": {
                 if ("DELEGATE:CronJob".equals(delegateNode.getQualifiedName())) {
                     CronJob cronJob = new CronJob(graphView, job.getCronExpression());
@@ -79,13 +89,13 @@ public class JobRegistry implements InitializingBean {
                 }
                 break;
             }
-            case "FileSystemJob": {
-                if ("DELEGATE:FileSystemJob".equals(delegateNode.getQualifiedName())) {
-                    FileSystemJob fileSystemJob = new FileSystemJob(graphView, job.getFilePath());
-                    fileSystemJob.start();
-                    ACTIVATED_JOBS.put(job.getJobNo(), fileSystemJob);
+            case "FileSystemListenJob": {
+                if ("DELEGATE:FileSystemListenJob".equals(delegateNode.getQualifiedName())) {
+                    FileSystemListenerJob fileSystemListenerJob = new FileSystemListenerJob(graphView, job.getFilePath());
+                    fileSystemListenerJob.start();
+                    ACTIVATED_JOBS.put(job.getJobNo(), fileSystemListenerJob);
                 } else {
-                    throw new RuntimeException("FileSystemJob的事件委托入口不存在");
+                    throw new RuntimeException("FileSystemListenJob的事件委托入口不存在");
                 }
                 break;
             }
@@ -161,7 +171,7 @@ public class JobRegistry implements InitializingBean {
                 break;
             }
             default:
-                throw new RuntimeException("未知任务类型:" + job.getJobType());
+                throw new RuntimeException("未知程序类型:" + job.getProgramType());
         }
         log.info("任务 [{}] 已注册", jobNo);
     }

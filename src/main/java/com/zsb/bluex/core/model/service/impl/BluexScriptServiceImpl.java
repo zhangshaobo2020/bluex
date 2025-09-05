@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author ${author}
- * @since 2025-09-03
+ * @since 2025-09-05
  */
 @Service
 public class BluexScriptServiceImpl extends ServiceImpl<BluexScriptMapper, BluexScript> implements BluexScriptService {

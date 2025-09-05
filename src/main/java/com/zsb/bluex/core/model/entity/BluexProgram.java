@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author ${author}
- * @since 2025-08-28
+ * @since 2025-09-05
  */
 @TableName("BLUEX_PROGRAM")
 public class BluexProgram extends Model<BluexProgram> {
@@ -34,6 +34,10 @@ public class BluexProgram extends Model<BluexProgram> {
         * 程序描述
         */
         public static final String programDesc = "PROGRAM_DESC";
+        /**
+        * 程序类型
+        */
+        public static final String programType = "PROGRAM_TYPE";
         /**
         * 创建时间
         */
@@ -65,6 +69,12 @@ public class BluexProgram extends Model<BluexProgram> {
      */
     @TableField("PROGRAM_DESC")
     private String programDesc;
+
+    /**
+     * 程序类型
+     */
+    @TableField("PROGRAM_TYPE")
+    private String programType;
 
     /**
      * 创建时间
@@ -109,6 +119,14 @@ public class BluexProgram extends Model<BluexProgram> {
         this.programDesc = programDesc;
     }
 
+    public String getProgramType() {
+        return programType;
+    }
+
+    public void setProgramType(String programType) {
+        this.programType = programType;
+    }
+
     public LocalDateTime getCreateTime() {
         return createTime;
     }
@@ -144,6 +162,7 @@ public class BluexProgram extends Model<BluexProgram> {
         "programNo=" + programNo +
         ", programName=" + programName +
         ", programDesc=" + programDesc +
+        ", programType=" + programType +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +
         ", jsonContent=" + jsonContent +

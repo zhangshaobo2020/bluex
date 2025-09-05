@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author ${author}
- * @since 2025-09-01
+ * @since 2025-09-05
  */
 @TableName("BLUEX_JOB")
 public class BluexJobSearch implements Serializable {
@@ -77,13 +77,13 @@ public class BluexJobSearch implements Serializable {
     @TableField("UPDATE_TIME")
     private LocalDateTime updateTimeEnd;
     /**
-     * 任务类型
+     * 程序类型
      */
-    @TableField("JOB_TYPE")
-    private String jobType;
+    @TableField("PROGRAM_TYPE")
+    private String programType;
 
     /**
-     * 绑定的程序编号
+     * 程序编号
      */
     @TableField("PROGRAM_NO")
     private String programNo;
@@ -366,28 +366,28 @@ public class BluexJobSearch implements Serializable {
         this.updateTimeEnd = updateTime;
         }
     /**
-     * 获取: 任务类型
+     * 获取: 程序类型
      */
-    public String getJobType() {
-        return jobType;
+    public String getProgramType() {
+        return programType;
     }
 
     /**
-     * 设置: 任务类型
+     * 设置: 程序类型
      */
-    public void setJobType(String jobType) {
-        this.jobType = jobType;
+    public void setProgramType(String programType) {
+        this.programType = programType;
     }
 
     /**
-     * 获取: 绑定的程序编号
+     * 获取: 程序编号
      */
     public String getProgramNo() {
         return programNo;
     }
 
     /**
-     * 设置: 绑定的程序编号
+     * 设置: 程序编号
      */
     public void setProgramNo(String programNo) {
         this.programNo = programNo;

@@ -7,6 +7,7 @@
         <id column="PROGRAM_NO" property="programNo" />
         <result column="PROGRAM_NAME" property="programName" />
         <result column="PROGRAM_DESC" property="programDesc" />
+        <result column="PROGRAM_TYPE" property="programType" />
         <result column="CREATE_TIME" property="createTime" />
         <result column="UPDATE_TIME" property="updateTime" />
         <result column="JSON_CONTENT" property="jsonContent" />

@@ -69,7 +69,11 @@ public class ProgramController {
     @GetMapping("/programDropdown")
     public WebResult<List<BluexProgram>> programDropdown() {
         QueryWrapper<BluexProgram> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select(BluexProgram.Columns.programNo, BluexProgram.Columns.programName);
+        queryWrapper.select(
+                BluexProgram.Columns.programNo,
+                BluexProgram.Columns.programName,
+                BluexProgram.Columns.programType
+        );
         return WebResult.success(bluexProgramService.list(queryWrapper));
     }
 }

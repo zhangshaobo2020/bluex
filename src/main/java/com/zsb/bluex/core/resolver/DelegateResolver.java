@@ -14,8 +14,8 @@ public class DelegateResolver {
         map.put("DELEGATE:SingleTriggerJob", new SingleTriggerJob().provideDefinition());
         // CronJob节点
         map.put("DELEGATE:CronJob", new CronJob().provideDefinition());
-        // FileSystemJob节点
-        map.put("DELEGATE:FileSystemJob", new FileSystemJob().provideDefinition());
+        // FileSystemListenJobJob节点
+        map.put("DELEGATE:FileSystemListenJob", new FileSystemListenerJob().provideDefinition());
         // HttpJob节点
         map.put("DELEGATE:HttpJob", new HttpJob().provideDefinition());
         // WebSocketJob节点

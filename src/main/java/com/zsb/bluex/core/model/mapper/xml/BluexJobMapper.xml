@@ -10,7 +10,7 @@
         <result column="JOB_DESC" property="jobDesc" />
         <result column="CREATE_TIME" property="createTime" />
         <result column="UPDATE_TIME" property="updateTime" />
-        <result column="JOB_TYPE" property="jobType" />
+        <result column="PROGRAM_TYPE" property="programType" />
         <result column="PROGRAM_NO" property="programNo" />
         <result column="CRON_EXPRESSION" property="cronExpression" />
         <result column="FILE_PATH" property="filePath" />

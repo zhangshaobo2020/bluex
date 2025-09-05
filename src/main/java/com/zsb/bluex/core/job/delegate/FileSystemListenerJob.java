@@ -17,12 +17,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
-public class FileSystemJob extends EventDelegate {
+public class FileSystemListenerJob extends EventDelegate {
 
-    public FileSystemJob() {
+    public FileSystemListenerJob() {
     }
 
-    public FileSystemJob(GraphView graphView, String filePath) {
+    public FileSystemListenerJob(GraphView graphView, String filePath) {
         super(graphView);
         this.filePath = filePath;
     }
@@ -86,9 +86,9 @@ public class FileSystemJob extends EventDelegate {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             } catch (Exception e) {
-                log.error("FileSystemJob异常", e);
+                log.error("FileSystemListenJob异常", e);
             }
-        }, "FileSystemJob-Thread");
+        }, "FileSystemListenJob-Thread");
         watchThread.start();
     }
 
@@ -110,11 +110,11 @@ public class FileSystemJob extends EventDelegate {
     @Override
     public ControlDef provideDefinition() {
         ControlDef def = new ControlDef();
-        def.setName("FileSystemJob");
+        def.setName("FileSystemListenJob");
         def.setDisplayName("文件系统监听");
-        def.setCategory("事件委托|FileSystemJob");
-        def.setQualifiedName("DELEGATE:FileSystemJob");
-        def.setSignature("DELEGATE:FileSystemJob");
+        def.setCategory("事件委托|FileSystemListenJob");
+        def.setQualifiedName("DELEGATE:FileSystemListenJob");
+        def.setSignature("DELEGATE:FileSystemListenJob");
         def.setDelegate(true);
 
         def.getOutputExecDefs().add(new ParamDef("Exec"));
